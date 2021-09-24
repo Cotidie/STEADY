@@ -20,8 +20,8 @@ def create_app(debug=False):
     app.config.update(DEBUG=debug)
 
     # 데이터베이스 등록
-    mongoDB = app.config.get_namespace('MONGODB_')
-    app.db = DataBase(mongoDB.get('host'), mongoDB.get('db'))
+    app.config.db = app.config.get_namespace('MONGODB_')
+    app.db = DataBase(app.config.db.get('host'), app.config.db.get('db'))
 
     # CORS 세팅
     CORS(app, resources={r'/*': {'origins': '*'}})
