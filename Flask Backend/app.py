@@ -1,6 +1,10 @@
+# Third Party
 from flask import Flask
 from flask_cors import CORS
+
+# Custom
 from blueprint import api_main, api_miniter
+from database  import DataBase
 
 
 # 팩토리 패턴
@@ -14,6 +18,10 @@ def create_app(debug=False):
     # config 등록
     app.config.from_pyfile('config.py')
     app.config.update(DEBUG=debug)
+
+    # 데이터베이스 등록
+    mongoDB = app.config.get_namespace('MONGODB_')
+    app.db = DataBase(mongoDB.get('host'), mongoDB.get('db'))
 
     # CORS 세팅
     CORS(app, resources={r'/*': {'origins': '*'}})
