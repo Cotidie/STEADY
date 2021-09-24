@@ -15,6 +15,11 @@ if not isfile('db_host.0'):
 with open('db_host.0') as file:
     MONGODB_HOST = file.readline()
 MONGODB_DB = 'miniter'
+MONGODB_COLLECTIONS = {
+    'users': 'users',
+    'article': 'article',
+    'follow': 'follow'
+}
 
 # Custom Settings
 ADMINS = [
