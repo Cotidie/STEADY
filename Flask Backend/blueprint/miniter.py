@@ -1,15 +1,8 @@
 from datetime import datetime
-from flask import Blueprint, jsonify, request
-
+from flask import Blueprint, jsonify, request, current_app as app
+from pymongo.errors import DuplicateKeyError
 api_miniter = Blueprint('miniter', import_name=__name__)
-
-SIMPLE_DB = {
-    'users': {},     # id가 key
-    'articles': {},  # id가 key, value는 {datetime, content}
-    'follows': {},   # id가 key, value는 {ids} (set)
-}
-
-
+SIMPLE_DB = {}
 @api_miniter.route('/ping', methods=['GET', 'POST'])
 def health_check():
     return "pong"
@@ -24,20 +17,27 @@ def sign_up():
     :return: json { 'status': true|false }
     """
     req_data = request.get_json()
-    res_data = {'status': False}
+    res_data = {
+        'status': False,
+        'message': ""
+    }
     if (not req_data):
         return jsonify(res_data), 400
 
     new_user = {
         'name'      : req_data['name'],
         'password'  : req_data['password'],
+        'email'     : req_data['email'],
         'profile'   : req_data['profile']
     }
-    SIMPLE_DB['users'][int(req_data['id'])] = new_user
 
-    print(new_user)
+    try:
+        app.db.add_new_user(new_user)
+    except DuplicateKeyError:
+        res_data['message'] = "이메일이 중복됩니다."
+        return jsonify(res_data), 400
 
-    return jsonify(new_user)
+    return jsonify(new_user), 200
 
 
 # 2. 300자 제한 글 올리기
