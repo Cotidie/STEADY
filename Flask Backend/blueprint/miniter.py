@@ -1,13 +1,39 @@
 from datetime import datetime, timedelta
-
+from functools import wraps
 import bcrypt
 import jwt
-from flask import Blueprint, jsonify, request, current_app as app
+from flask import Blueprint, jsonify, request, current_app as app, Response
 from pymongo.errors import DuplicateKeyError
 from bcrypt import hashpw
 
 api_miniter = Blueprint('miniter', import_name=__name__)
 SIMPLE_DB = {}
+
+# 인증 데코레이터
+def login_required(f):
+    @wraps(f)
+    def decorated_func(*args, **kwargs):
+        access_token = request.headers.get('Authorization')
+        if not access_token:
+            # 토큰이 없는 경우
+            return Response(status=401)
+
+        # 토큰 복호화 시도
+        try:
+            payload = jwt.decode(access_token,
+                                 app.config.get('JWT_SECRETKEY'),
+                                 'HS256')
+        except jwt.InvalidTokenError:
+            payload = None
+
+        # 유효하지 않은 토큰
+        if not payload:
+            return Response(status=401) # 401: 인증 오류
+
+        return f(*args, **kwargs)
+    return decorated_func
+
+
 @api_miniter.route('/ping', methods=['GET', 'POST'])
 def health_check():
     return "pong"
@@ -78,8 +104,6 @@ def login():
 
     # 패스워드 검증
     hashed = hashpw(password.encode(encoding='utf-8'), cred['salt'])
-    print(f"저장된 패스워드: {cred['password']}")
-    print(f"전달된 패스워드: {hashed}, {password}")
     if hashed != cred['password']:
         res_data['message'] = "패스워드가 올바르지 않습니다."
         return jsonify(res_data), 400
@@ -91,7 +115,6 @@ def login():
     }
     key = app.config.get('JWT_SECRETKEY')
     token = jwt.encode(payload, key)
-    print(token)
 
     res_data['status'] = True
     res_data['access_token'] = token
@@ -101,41 +124,36 @@ def login():
 
 # 300자 제한 글 올리기
 # * Response에 status code 명시하기
-@api_miniter.route('/post', methods=['POST'])
-def post_article():
+@api_miniter.route('/article', methods=['POST'])
+@login_required
+def create_article():
     """
     - 사용자는 300자를 초과하지 않는 글을 올릴 수 있다.
     - 300자를 초과한다면 400 Bad Request 응답을 내보내야 한다.
     - 300자 이내의 글을 전송하면 글을 저장하고, 유저에 따라 타임라인을 볼 수 있어야 한다.
-    - id, content로 구성된 json이 필요하다.
+    - email, content로 구성된 json이 필요하다.
     """
     payload = request.get_json()
     res_data = {'status': False}
     if not payload:
         return jsonify(res_data), 400
 
-    user_id = int(payload['id'])
-    # id 존재여부 검사
-    if not SIMPLE_DB['users'].get(user_id):
-        return jsonify(res_data), 400
-
+    email = str(payload['email']); print(email)
     content = str(payload['content'])
+    user = app.db.get_user(email)
+    if not user:
+        res_data['message'] = '존재하지 않는 유저입니다.'
+        return jsonify(res_data), 400
+    print('checkpoint2')
     # 300자 초과 검사
     if len(content) > 300:
+        res_data['message'] = '내용이 300자를 초과했습니다.'
         return jsonify(res_data), 400
-
-    new_article = {
-        'datetime': datetime.now(),
-        'content': content
-    }
-
-    timeline = SIMPLE_DB['articles'].get(user_id)
-    if not timeline:
-        SIMPLE_DB['articles'][user_id] = [new_article]
-    else:
-        SIMPLE_DB['articles'][user_id].append(new_article)
-
-    return user_id, 200
+    print('checkpoint3')
+    app.db.create_article(payload)
+    print('checkpoint4')
+    res_data['status'] = True
+    return jsonify(res_data), 200
 
 
 # 팔로우 기능
