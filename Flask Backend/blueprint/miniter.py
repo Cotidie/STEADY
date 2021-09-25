@@ -1,13 +1,44 @@
 from datetime import datetime, timedelta
-
+from functools import wraps
 import bcrypt
 import jwt
-from flask import Blueprint, jsonify, request, current_app as app
+from flask import Blueprint, jsonify, request, current_app as app, Response
 from pymongo.errors import DuplicateKeyError
 from bcrypt import hashpw
 
 api_miniter = Blueprint('miniter', import_name=__name__)
 SIMPLE_DB = {}
+
+# 인증 데코레이터
+def login_required(f):
+    @wraps(f)
+    def decorated_func(*args, **kwargs):
+        access_token = request.headers.get('Authorization')
+        if not access_token:
+            # 토큰이 없는 경우
+            return Response(status=401)
+
+        # 토큰 복호화 시도
+        try:
+            payload = jwt.decode(access_token,
+                                 app.config.get('JWT_SECRETKEY'),
+                                 'HS256')
+        except jwt.InvalidTokenError:
+            payload = None
+
+        # 유효하지 않은 토큰
+        if not payload:
+            return Response(status=401) # 401: 인증 오류
+
+        # 존재하는 유저인지 검색: 탈퇴한 계정으로 접속하는 경우
+        email = payload['email']
+        if not app.db.get_user(email):
+            return jsonify({'message: "유저가 존재하지 않습니다."'}), 400
+
+        return f(*args, **kwargs)
+    return decorated_func
+
+
 @api_miniter.route('/ping', methods=['GET', 'POST'])
 def health_check():
     return "pong"
