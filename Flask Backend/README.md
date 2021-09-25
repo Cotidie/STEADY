@@ -3,7 +3,10 @@
  
 ## 주요 노트
 #### 인증
-* 암호화: 비밀번호 암호화는 단방향 해시함수 라이브러리인 bcrypt 활용
+* 암호화: 비밀번호 암호화는 단방향 해시함수 라이브러리인 bcrypt 활용  
+   => database/db.py::add_new_user()
+* 인증토큰: JWT(JSON Web Token)으로 인증토큰 발급  
+   => blueprint/miniter.py::login()
 
 ## 고민
 * **MongoDB의 아키텍처**  
