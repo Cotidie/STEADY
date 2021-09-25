@@ -9,9 +9,11 @@ from bcrypt import hashpw
 from config import MONGODB_COLLECTIONS as COLS
 
 # 컬렉션 명
-USERS   = COLS['users']
-FOLLOW  = COLS['follow']
-ARTICLE = COLS['article']
+USERS       = COLS['users']
+FOLLOW      = COLS['follow']
+ARTICLE     = COLS['article']
+CONFIG      = COLS['config']
+CREDENTIAL  = COLS['credential']
 
 class DataBase(MongoClient):
     """MongoDB 설정해주는 클래스
@@ -45,15 +47,53 @@ class DataBase(MongoClient):
         """
         'users' 컬렉션에 새로운 유저를 추가한다.
             :param data: name, email. password, profile로 구성된 dict
+            :return: boolean
         """
-        collection = self.get_collection(USERS)
+        col_user = self.get_collection(USERS)
+        col_cred = self.get_collection(CREDENTIAL)
+
+        password = data['password']
+        salt = bcrypt.gensalt()
 
         new_user = {
             'name': data['name'],
-            'password': hashpw(data['password'].encode(encoding='utf-8')
-                               , bcrypt.gensalt()).decode('utf-8'), # salting(임의의 문자열 추가)
             'email': data['email'],
             'profile': data['profile']
         }
+        new_cred = {
+            'email': data['email'],
+            'password': hashpw(password.encode(encoding='utf-8'), salt), # salting(임의의 문자열 추가)
+            'salt': salt
+        }
 
-        return collection.insert_one(new_user)
+        try:
+            col_user.insert_one(new_user)
+            col_cred.insert_one(new_cred)
+        except:
+            return False
+
+        return True
+
+    def get_user(self, email: str):
+        """ DB에 저장된 유저 정보를 모두 가져온다. 없으면 None
+
+        :param email: 찾고자 하는 유저의 이메일 주소
+        :return: dictionary
+        """
+        collection = self.get_collection(USERS)
+
+        my_query = {'email': email}
+
+        return collection.find_one(my_query)
+
+    def get_cred(self, email: str):
+        """ DB에 저장된 유저의 보안 정보를 가져온다. 없으면 None
+
+        :param email: 찾고자 하는 유저의 이메일 주소
+        :return: dictionary
+        """
+        collection = self.get_collection(CREDENTIAL)
+
+        my_query = {'email': email}
+
+        return collection.find_one(my_query)
