@@ -18,8 +18,13 @@ MONGODB_DB = 'miniter'
 MONGODB_COLLECTIONS = {
     'users': 'users',
     'article': 'article',
-    'follow': 'follow'
+    'follow': 'follow',
+    'config': 'config',
+    'credential': 'credential'
 }
+
+# Authentication
+JWT_SECRETKEY = '9dT8Q1m7CmAU2SURM4liu2czyYCLXvdb'
 
 # Custom Settings
 ADMINS = [
