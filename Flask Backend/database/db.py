@@ -1,5 +1,5 @@
 import bcrypt
-from flask  import current_app as app
+from datetime import datetime
 
 from pymongo import MongoClient, collection
 from pymongo.errors import CollectionInvalid
@@ -97,3 +97,23 @@ class DataBase(MongoClient):
         my_query = {'email': email}
 
         return collection.find_one(my_query)
+
+    def create_article(self, data: dict):
+        """ 새로운 글을 등록한다.
+
+        :param data: email, content로 이루어진 dict
+        :return: None
+        """
+        collection = self.get_collection(ARTICLE)
+        print(data)
+        email = data['email']
+        content = data['content']
+
+        new_article = {
+            'email': email,
+            'content': content,
+            'created': datetime.now(),
+            'edited': datetime.now()
+        }
+
+        return collection.insert_one(new_article)
