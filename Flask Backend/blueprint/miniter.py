@@ -1,6 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+
+import bcrypt
+import jwt
 from flask import Blueprint, jsonify, request, current_app as app
 from pymongo.errors import DuplicateKeyError
+from bcrypt import hashpw
+
 api_miniter = Blueprint('miniter', import_name=__name__)
 SIMPLE_DB = {}
 @api_miniter.route('/ping', methods=['GET', 'POST'])
@@ -8,12 +13,13 @@ def health_check():
     return "pong"
 
 
-# 1. 회원가입하기
-# * json으로 받기, 보내기
+# 회원가입하기
 @api_miniter.route('/sign-up', methods=['POST'])
 def sign_up():
     """
     회원가입 API. id, name, email, password, profile로 구성된 json이 필요하다.
+    * 비밀번호는 bcrypt로 암호화된다.
+    * email 필드는 unique index로 설정되어 중복이 불가능하다.
     :return: json { 'status': true|false }
     """
     req_data = request.get_json()
@@ -39,8 +45,61 @@ def sign_up():
 
     return jsonify(new_user), 200
 
+# 로그인하기
+@api_miniter.route('/login', methods=['POST'])
+def login():
+    """
+    로그인 API. 로그인에 성공하면 access token을 발급한다.
+    - 들어오는 JSON은 'email', 'password'로 구성된다.
+    - pyJWT로 access token을 발급한다.
+    """
+    # 데이터 받기
+    credential = request.get_json()
+    user_id     = str(credential.get('email'))
+    password    = str(credential.get('password'))
 
-# 2. 300자 제한 글 올리기
+    # 결과물
+    res_data = {
+        'status': False,
+        'message': ""
+    }
+
+    # 오류 검사
+    if not user_id or not password:
+        res_data['message'] = "데이터가 올바르지 않습니다."
+        return jsonify(res_data), 400
+
+    # 유저 데이터
+    user = app.db.get_user(user_id)
+    cred = app.db.get_cred(user_id)
+    if not user or not cred:
+        res_data['message'] = "유저가 존재하지 않습니다."
+        return jsonify(res_data), 400
+
+    # 패스워드 검증
+    hashed = hashpw(password.encode(encoding='utf-8'), cred['salt'])
+    print(f"저장된 패스워드: {cred['password']}")
+    print(f"전달된 패스워드: {hashed}, {password}")
+    if hashed != cred['password']:
+        res_data['message'] = "패스워드가 올바르지 않습니다."
+        return jsonify(res_data), 400
+
+    # 토큰 발급
+    payload = {
+        'email': user_id,
+        'exp': datetime.now() + timedelta(days=365)
+    }
+    key = app.config.get('JWT_SECRETKEY')
+    token = jwt.encode(payload, key)
+    print(token)
+
+    res_data['status'] = True
+    res_data['access_token'] = token
+
+    return jsonify(res_data), 200
+
+
+# 300자 제한 글 올리기
 # * Response에 status code 명시하기
 @api_miniter.route('/post', methods=['POST'])
 def post_article():
@@ -79,7 +138,7 @@ def post_article():
     return user_id, 200
 
 
-# 3. 팔로우 기능
+# 팔로우 기능
 @api_miniter.route('/follow', methods=['POST'])
 def follow():
     """
@@ -100,7 +159,7 @@ def follow():
     return user_id, 200
 
 
-# 4. 언팔로우
+# 언팔로우
 @api_miniter.route('/unfollow', methods=['POST'])
 def unfollow():
     """
@@ -124,7 +183,7 @@ def unfollow():
     return user_id, 200
 
 
-# 5. 유저 정보 얻기
+# 유저 정보 얻기
 @api_miniter.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id: int):
     user = SIMPLE_DB['users'].get(user_id)
