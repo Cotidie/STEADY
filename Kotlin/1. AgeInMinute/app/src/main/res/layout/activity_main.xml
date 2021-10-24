@@ -21,6 +21,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
+
     <Button
         android:id="@+id/header_btn_1"
         android:layout_width="wrap_content"
@@ -33,6 +34,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+
     <TextView
         android:id="@+id/header_text_2"
         android:layout_width="wrap_content"
@@ -45,7 +47,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+
     <Button
+        android:id="@+id/btn_select_date"
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:backgroundTint="@color/white"
@@ -53,9 +57,58 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20sp"
-
         app:layout_constraintTop_toBottomOf="@id/header_text_2"
         android:layout_marginTop="20sp"
         />
+
+    <TextView
+        android:id="@+id/text_date_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="20sp"
+        app:layout_constraintTop_toBottomOf="@id/btn_select_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/text_selected_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Date"
+        android:textSize="18sp"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/text_date_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10sp"
+        />
+
+    <TextView
+        android:id="@+id/age_in_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="30sp"
+        app:layout_constraintTop_toBottomOf="@id/text_selected_date"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age In Day"
+        android:textSize="20sp"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/age_in_day"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10sp"
+        />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
