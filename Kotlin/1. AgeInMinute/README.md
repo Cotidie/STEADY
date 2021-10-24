@@ -11,3 +11,10 @@
     1. \[Tools\] > \[AVD Manager\]에서 장치 삭제 후 새로운 장치 생성
     2. \[Console\] > 'adb kill-server' 및 'adb start-server'
         - 단, 환경변수 PATH에 sdk\\platform-tools 경로가 지정되어 있어야 함. (Tools > SDK Manager에서 경로 확인 가능)
+ * **findViewByID 문제**: Android Studio 4.1.1 이후부터 findViewByID 없이 ID로 객체에 접근할 수 없는 문제
+    * 참고링크: [Youtube](https://www.youtube.com/watch?v=w5SYDRbGNXU)  
+    ```kotlin
+    // build.gradle(Module: ...)의 dependencies에 다음 2줄 추가
+    apply plugin : "kotlin-android"
+    apply plugin : "kotlin-android-extensions"
+    ```
