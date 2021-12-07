@@ -11,6 +11,23 @@
     <item name="android:windowFullscreen">true</item>
 </style>
 ```
+* **Drawable**: 이미지파일, 도형 등 화면에 나타낼 수 있는 그래픽 요소. xml로 표현할 수도 있으며 레이아웃 요소의 background에 적용한다. (=> [State List](https://developer.android.com/guide/topics/resources/drawable-resource#StateList), [Shape](https://developer.android.com/guide/topics/resources/drawable-resource#Shape))
+```xml
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    >
+    // stroke: 테두리 속성
+    <stroke
+        android:width="2dp"
+        android:color="@color/design_default_color_primary"
+        />
+    // solid: 배경 속성
+    <solid android:color="@color/white"/>
+    // corners: 가장자리 radius 속성
+    <corners android:radius="6dp"/>
+    // 그외: gradient, padding, size
+</shape>
+```
 * **ProgressBar**: 원형, 일자형 등 다양한 스타일로 진행상황을 표시한다.
 ```xml
 <ProgressBar
@@ -39,7 +56,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     setContentView(viewBinding.root)
 }
 ```
-* **Intent**: Activity 간 이동, 통신을 위한 클래스
+* **Intent**: Activity 간 이동, 통신을 위한 클래스. MainActivity -> QuizActivity 전환에 사용했다.
 ```kotlin
 // 현재 -> QuizApp Activity
 val intent = Intent(this, QuizQuestionsActivity::class.java)
@@ -47,7 +64,25 @@ startActivity(intent)
 // 현재 Activity 종료
 finish()
 ```
-
+* **View.onClickListener**: Activity나 Fragment에 상속하여 버튼 등의 이벤트를 한 곳에서 관리할 수 있다. 개별 객체의 ***setOnClickListener {}***에 콜백을 등록해도 된다.
+```kotlin
+override fun onClick(v: View?) {
+    when (v.id) {
+        R.id.someButton -> {
+            // 처리할 함수
+        }
+        ...
+    }
+}
+// 이후 viewObj.setOnClickListener(this)로 활용
+```
+* **ContextCompat**: getColor, getString 등 현재 컨텍스트(앱, 액티비티)의 리소스를 불러온다.
+```kotlin
+// TextView의 배경을 해당 Drawable로 변경한다.
+selectedOption.background = ContextCompat.getDrawable(
+        this, R.drawable.selected_option_border_bg
+    )
+```
 
 # 이슈
 * **Android SDK Downgrade**

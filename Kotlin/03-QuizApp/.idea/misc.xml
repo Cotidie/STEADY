@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/daily/Desktop/STEADY/Programminng/STEADY/Kotlin/03-QuizApp/app/src/main/res/drawable/default_option_border_bg.xml" value="0.14479166666666668" />
+        <entry key="..\:/Users/daily/Desktop/STEADY/Programminng/STEADY/Kotlin/03-QuizApp/app/src/main/res/drawable/selected_option_border_bg.xml" value="0.1390625" />
         <entry key="..\:/Users/daily/Desktop/STEADY/Programminng/STEADY/Kotlin/03-QuizApp/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
-        <entry key="..\:/Users/daily/Desktop/STEADY/Programminng/STEADY/Kotlin/03-QuizApp/app/src/main/res/layout/activity_quiz_questions.xml" value="0.16" />
+        <entry key="..\:/Users/daily/Desktop/STEADY/Programminng/STEADY/Kotlin/03-QuizApp/app/src/main/res/layout/activity_quiz_questions.xml" value="0.1" />
       </map>
     </option>
   </component>
