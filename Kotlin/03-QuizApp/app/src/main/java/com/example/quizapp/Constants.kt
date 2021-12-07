@@ -2,6 +2,8 @@ package com.example.quizapp
 
 import android.util.Log
 
+// 모든 Activity에서 이용할 클래스 (Object => Singleton)
+// 데이터 클래스 Question을 이용한다.
 object Constants {
     val flags = mapOf<String, Int>(
         "Argentina" to R.drawable.ic_flag_of_argentina,
