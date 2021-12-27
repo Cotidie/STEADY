@@ -19,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,9 +58,7 @@ fun MessageCard(msg: Message) {
         // mutableState(false)를 기억하는 변수
         // 단순 boolean으로 하지 않는 이유는?
         var isExpanded by remember { mutableStateOf(false) }
-        val surfaceColor by animateColorAsState(
-            if (isExpanded) MaterialTheme.colors.primary else MaterialTheme.colors.surface
-        )
+        val surfaceColor: Color = if (isExpanded) MaterialTheme.colors.primary else MaterialTheme.colors.surface
 
         Column (modifier = Modifier.clickable { isExpanded = !isExpanded }){
             Row {
@@ -80,6 +79,7 @@ fun MessageCard(msg: Message) {
                 color = surfaceColor,
                 shape = MaterialTheme.shapes.medium,
                 elevation = 2.dp,
+                modifier = Modifier.animateContentSize()
             ) {
                 Text(
                     text = "Message: ${msg.msg}",
