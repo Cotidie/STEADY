@@ -47,7 +47,7 @@ object Constants {
                 flags.get(correctAnswer)!!,
                 options.get(0), options.get(1),
                 options.get(2), options.get(3),
-                answerIndex+1
+                answerIndex
             ))
         }
 

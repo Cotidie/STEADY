@@ -14,8 +14,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivityQuizQuestionsBinding
     private val questionList = Constants.getQeustions(5)
     private val tvOptions = ArrayList<TextView>()
-    private var currentIndex: Int = 0
-    private var selectedIndex: Int = 0
+    private var currentStage: Int = 0
+    private var selectedIndex: Int = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityQuizQuestionsBinding.inflate(layoutInflater)
 
         initializeUI()
-        setQuestion(0)
+        setQuestion(currentStage)
         setContentView(binding.root)
     }
 
@@ -37,6 +37,15 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         for (i in 0 until tvOptions.size) {
             tvOptions.get(i).setOnClickListener {
                 selectedOptionView(i)
+            }
+        }
+        binding.btnSubmit.setOnClickListener {
+            if (selectedIndex > 0) {
+                answerView()
+                selectedIndex = -1
+            } else {
+                currentStage++
+                setQuestion(currentStage)
             }
         }
     }
@@ -53,8 +62,12 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         binding.tvOptionThree.setText(question.optionThree)
         binding.tvOptionFour.setText(question.optionFour)
 
+        defaultOptionsView()
+
         if (idx == questionList.size-1) {
             binding.btnSubmit.text = "FINISH"
+        } else {
+            binding.btnSubmit.text = "SUBMIT"
         }
     }
 
@@ -87,7 +100,24 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             Typeface.BOLD
         )
 
-        selectedIndex = selected
+        this.selectedIndex = selected
+    }
+
+    private fun answerView() {
+        val question = questionList.get(currentStage)
+        val selectedOption = tvOptions.get(selectedIndex)
+        val answerOption = tvOptions.get(question.correctAnswer)
+
+        answerOption.background = ContextCompat.getDrawable(
+            this, R.drawable.correct_answer_border_bg
+        )
+        if (selectedIndex != question.correctAnswer) {
+            selectedOption.background = ContextCompat.getDrawable(
+                this, R.drawable.wrong_answer_border_bg
+            )
+            selectedOption.setTextColor(Color.GRAY)
+        }
+        binding.btnSubmit.setText("Go Next")
     }
 
     override fun onClick(v: View?) {
