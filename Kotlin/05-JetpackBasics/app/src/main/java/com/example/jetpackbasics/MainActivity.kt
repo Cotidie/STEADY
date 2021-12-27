@@ -3,9 +3,19 @@ package com.example.jetpackbasics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +36,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     var isExpanded by remember {mutableStateOf(false)}
-    val extraPadding = if (isExpanded) 48.dp else 0.dp
+    val tempString = ("Composem ipsum color sit lazy, " +
+            "padding theme elit, sed do bouncy. ").repeat(4)
 
     Surface(
         color = MaterialTheme.colors.primary,
@@ -34,19 +45,25 @@ fun Greeting(name: String) {
             .padding(vertical = 5.dp, horizontal = 8.dp)
             .fillMaxWidth()
     ) {
-        Row(modifier = Modifier.padding(24.dp)) {
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(bottom = extraPadding)) {
+        Row(
+            modifier = Modifier.padding(24.dp)
+                .animateContentSize(
+                    spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(text = "Hello,")
-                Text(text = name)
+                Text(text = name, style=MaterialTheme.typography.h4)
+                if (isExpanded) Text(text = tempString)
             }
 
-            OutlinedButton(onClick = {
-                isExpanded = !isExpanded
-            }) {
-                Text(
-                    text = if (isExpanded) "Show Less" else "Show More"
+            IconButton(onClick = { isExpanded = !isExpanded }) {
+                Icon(
+                    imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                    "아이콘"
                 )
             }
         }
@@ -56,11 +73,12 @@ fun Greeting(name: String) {
 
 @Composable
 fun MyApp() {
-    val names = listOf("Andrew", "Finn")
+    // it은 인덱스
+    val names = List(1000) { "$it" }
 
-    Column (modifier = Modifier.padding(vertical=5.dp)){
-        for (name in names) {
-            Greeting(name = name)
+    LazyColumn (modifier = Modifier.padding(vertical=5.dp)) {
+        items(items=names) { name ->
+            Greeting(name)
         }
     }
 }
@@ -87,7 +105,7 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
 fun OnboardingPreview() {
-    var shouldShowOnboarding by remember {mutableStateOf(true)}
+    var shouldShowOnboarding by rememberSaveable {mutableStateOf(true)}
     JetpackBasicsTheme {
         if (shouldShowOnboarding) {
             OnboardingScreen({shouldShowOnboarding = false})
