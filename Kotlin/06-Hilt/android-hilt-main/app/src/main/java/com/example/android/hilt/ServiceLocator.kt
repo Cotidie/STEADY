@@ -27,6 +27,7 @@ import com.example.android.hilt.util.DateFormatter
 
 class ServiceLocator(applicationContext: Context) {
 
+    // Singleton Scope
     private val logsDatabase = Room.databaseBuilder(
         applicationContext,
         AppDatabase::class.java,
@@ -36,8 +37,4 @@ class ServiceLocator(applicationContext: Context) {
     val loggerLocalDataSource = LoggerLocalDataSource(logsDatabase.logDao())
 
     fun provideDateFormatter() = DateFormatter()
-
-    fun provideNavigator(activity: FragmentActivity): AppNavigator {
-        return AppNavigatorImpl(activity)
-    }
 }
