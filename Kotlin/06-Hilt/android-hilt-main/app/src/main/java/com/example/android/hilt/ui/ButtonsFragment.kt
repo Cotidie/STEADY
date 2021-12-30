@@ -25,7 +25,11 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.android.hilt.LogApplication
 import com.example.android.hilt.R
+import com.example.android.hilt.data.ICounter
+import com.example.android.hilt.data.LoggerDataSource
 import com.example.android.hilt.data.LoggerLocalDataSource
+import com.example.android.hilt.di.DatabaseLogger
+import com.example.android.hilt.di.InMemoryLogger
 import com.example.android.hilt.navigator.AppNavigator
 import com.example.android.hilt.navigator.Screens
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +41,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ButtonsFragment : Fragment() {
 
-    @Inject
-    lateinit var logger: LoggerLocalDataSource
-    @Inject
-    lateinit var navigator: AppNavigator
+    @DatabaseLogger
+    @Inject lateinit var logger: LoggerDataSource
+    @Inject lateinit var navigator: AppNavigator
+
+    @Inject lateinit var counter: ICounter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,11 +57,11 @@ class ButtonsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<Button>(R.id.button1).setOnClickListener {
-            logger.addLog("Interaction with 'Button 1'")
+            counter.increase()
         }
 
         view.findViewById<Button>(R.id.button2).setOnClickListener {
-            logger.addLog("Interaction with 'Button 2'")
+            counter.decrease()
         }
 
         view.findViewById<Button>(R.id.button3).setOnClickListener {
@@ -64,7 +69,7 @@ class ButtonsFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.all_logs).setOnClickListener {
-            navigator.navigateTo(Screens.LOGS)
+            counter.show()
         }
 
         view.findViewById<Button>(R.id.delete_logs).setOnClickListener {
