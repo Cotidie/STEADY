@@ -19,6 +19,9 @@ package com.example.android.kotlincoroutines.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.android.kotlincoroutines.util.BACKGROUND
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 /**
  * TitleRepository provides an interface to fetch a title or request a new one be generated.
@@ -43,34 +46,15 @@ class TitleRepository(val network: MainNetwork, val titleDao: TitleDao) {
 
 
     // TODO: Add coroutines-based `fun refreshTitle` here
-
-    /**
-     * Refresh the current title and save the results to the offline cache.
-     *
-     * This method does not return the new title. Use [TitleRepository.title] to observe
-     * the current tile.
-     */
-    fun refreshTitleWithCallbacks(titleRefreshCallback: TitleRefreshCallback) {
-        // This request will be run on a background thread by retrofit
-        BACKGROUND.submit {
-            try {
-                // Make network request using a blocking call
-                val result = network.fetchNextTitle().execute()
-                if (result.isSuccessful) {
-                    // Save it to database
-                    titleDao.insertTitle(Title(result.body()!!))
-                    // Inform the caller the refresh is completed
-                    titleRefreshCallback.onCompleted()
-                } else {
-                    // If it's not successful, inform the callback of the error
-                    titleRefreshCallback.onError(
-                            TitleRefreshError("Unable to refresh title", null))
-                }
-            } catch (cause: Throwable) {
-                // If anything throws an exception, inform the caller
-                titleRefreshCallback.onError(
-                        TitleRefreshError("Unable to refresh title", cause))
-            }
+    suspend fun refreshTitle() {
+        // 현재 스레드는 Main이다.
+        try {
+            // Retrofit은 고유의 Dispatcher를 사용한다. => 스레드 변경
+            val result = network.fetchNextTitle()
+            // Room 또한 고유의 Dispatcher를 사용한다. => 스레드 변경
+            titleDao.insertTitle(Title(result))
+        } catch(cause: Throwable) {
+            throw TitleRefreshError("네트워크 통신 중 오류 발생", cause)
         }
     }
 }
