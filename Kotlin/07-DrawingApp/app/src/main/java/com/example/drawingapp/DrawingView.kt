@@ -3,7 +3,6 @@ package com.example.drawingapp
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 
@@ -16,6 +15,8 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     // View가 그려질 화면과 그 색상
     private var canvas: Canvas? = null
     private var color = Color.BLACK
+    // 그려진 Path를 저장할 곳
+    private val mPaths = ArrayList<CustomPath>()
 
     // Primary Constructor 이후에 실행
     init {
@@ -53,6 +54,12 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         // 초기화하지 않으면 Path는 계속 덧씌워진다 => 메모리 낭비
         canvas?.drawBitmap(mCanvasBitmap!!, 0f, 0f, mCanvasPaint)
 
+        for (path in mPaths) {
+            mDrawPaint!!.strokeWidth = path.brushThickness
+            mDrawPaint!!.color = path.color
+            canvas?.drawPath(path, mDrawPaint!!)
+        }
+
         if (!mDrawPath!!.isEmpty) {
             mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness
             mDrawPaint!!.color = Color.GREEN
@@ -78,6 +85,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             MotionEvent.ACTION_UP -> {
                 // 선 초기화
                 // 아래 invalidate()에서 초기화되면서 화면에서 사라짐
+                mPaths.add(mDrawPath!!)
                 mDrawPath = CustomPath(color, mBrushSize)
             }
             MotionEvent.ACTION_MOVE -> {
