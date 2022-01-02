@@ -14,9 +14,10 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class CounterModule {
+class CounterModule {
 
-
-    @Binds
-    abstract fun provideCounter(impl: Counter): ICounter
+    @Provides
+    fun provideCounter() : Counter {
+        return Counter()
+    }
 }

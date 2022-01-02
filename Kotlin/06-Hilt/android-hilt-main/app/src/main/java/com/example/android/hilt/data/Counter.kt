@@ -6,19 +6,18 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-class Counter @Inject constructor() : ICounter{
+class Counter @Inject constructor(){
     private var value = 0
 
-    override fun increase() {
+    fun increase() {
         value += 1
     }
 
-    override fun decrease() {
+    fun decrease() {
         value -= 1
     }
 
-    override fun show() {
+    fun show() {
         Log.d("카운터값", value.toString())
     }
-
 }

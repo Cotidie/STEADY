@@ -25,6 +25,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.android.hilt.LogApplication
 import com.example.android.hilt.R
+import com.example.android.hilt.data.Counter
 import com.example.android.hilt.data.ICounter
 import com.example.android.hilt.data.LoggerDataSource
 import com.example.android.hilt.data.LoggerLocalDataSource
@@ -45,7 +46,7 @@ class ButtonsFragment : Fragment() {
     @Inject lateinit var logger: LoggerDataSource
     @Inject lateinit var navigator: AppNavigator
 
-    @Inject lateinit var counter: ICounter
+    @Inject lateinit var counter: Counter
 
     override fun onCreateView(
         inflater: LayoutInflater,
