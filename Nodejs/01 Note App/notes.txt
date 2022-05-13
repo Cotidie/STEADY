@@ -1,0 +1,2 @@
+This file was created by Node.js!
+The second row is appended.
