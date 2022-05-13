@@ -2,7 +2,7 @@
 
 
 ## 배운점
-#### import/export
+### import/export
 기본 모듈의 사용법은 [공식 문서](https://nodejs.org/docs/latest-v17.x/api/)에서 확인 가능하다.
 ```js
 // lib\의 라이브러리는 모듈명으로 import한다.
@@ -17,6 +17,7 @@ const add = function (a, b) { return a + b } // 함수도 export 가능
 module.exports = name
 ```
 
+### I/O
 #### File System
 ```js
 const fs = require('fs')
@@ -26,7 +27,32 @@ fs.writeFileSync(fileName, data);  // 파일 쓰기
 fs.appendFileSync(fileName, data); // 내용 추가하기
 ```
 
-#### NPM
+#### Command Line
+```js
+> node app.js WSJ
+
+// app.js
+console.log(process.argv)
+
+// 출력 결과
+[node 실행파일경로, 현재파일 경로, <CLI 입력값, ...>]
+```
+
+#### JSON Read/Write
+```js
+import fs from 'fs'
+
+// Read: Binary Buffer -> String -> JSON
+const buffer = fs.readFileSync('1-json.json')
+const data = buffer.toString()
+const json = JSON.parse(data)
+console.log(json)
+
+// Write: Object -> JSON String
+fs.writeFileSync('2-json.json', JSON.stringify(json))s
+```
+
+### NPM
 Node.js Package Manager. 터미널을 통해 설치하고 패키지 간 종속성을 관리한다.
 * 패키지 저장소: [https://www.npmjs.com/](https://www.npmjs.com/)
 ```js
@@ -59,7 +85,37 @@ const successMsg = chalk.white.bgGreen.bold("Success!!")
 console.log(successMsg)
 ```
 
-[**nodemon**](https://www.npmjs.com/package/nodemon): 
+[**nodemon**](https://www.npmjs.com/package/nodemon): 실행한 .js/.mjs 파일의 변경 마다 자동으로 재시작하도록 하는 패키지. .js/.mjs 실행 시 node 대신 nodemon으로 실행한다.
+
+[**Yargs**](https://www.npmjs.com/package/yargs): CLI 입력과 그 옵션 값에 대해 손쉽게 파싱해주는 패키지. .mjs(Module, ES)를 지원하지 않으므로 require를 사용해야 한다.
+```js
+> node input.js add --title="aaa"
+
+// input.js
+const yargs = require('yargs')
+// process.argv 대신 yargs.argv
+console.log(yargs.argv)  // { _: [ 'remove' ], title: 'aaa', '$0': 'input.js' }
+// 명령어 추가
+yargs.command({
+    command: "add",
+    describe: "Add a new note",
+    // Options Builder
+    builder: {
+        title: {
+            describe: "Set a note's title",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    // The first argument is always argv
+    handler: function(argv) {
+        console.log("Adding a new note! (" + argv['title'] + ")")
+    }
+})
+
+// yargs 사용 명시
+yargs.parse()
+```
 
 ## 오류
 ### **import 오류**
