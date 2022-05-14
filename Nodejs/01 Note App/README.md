@@ -1,4 +1,13 @@
 # Note App
+![nodejs note app](https://user-images.githubusercontent.com/51331195/168443997-715fa1fa-1868-488d-9f60-39d9f5c4ade2.png)  
+제목(title)과 본문(body)를 같는 메모를 notes.json에 저장하고 불러오는 앱. 다음과 같은 명령어를 제공한다.
+* **add**: --title, --body 옵션을 받아 notes.json에 저장한다.
+    * 동일한 title이 있으면 오류 메시지를 출력한다.
+* **list**: notes.json에 저장중인 메모를 모두 불러와 출력한다.
+* **read**: --title 옵션을 받아 제목(styled)과 본문을 출력한다.
+    * 찾는 title이 없으면 오류 메시지를 출력한다.
+* **remove**: --title 옵션을 받아 제목과 일치하는 메모를 notes.json에서 삭제한다.
+    * 찾는 title이 없으면 오류 메시지를 출력한다.
 
 ## 배운점
 ### **require**
@@ -139,7 +148,7 @@ fs.writeFileSync('2-json.json', JSON.stringify(json))s
 ```
 
 ### **Debug**
-![nodejs Debugger](https://user-images.githubusercontent.com/51331195/168443669-934423a2-3ba0-4959-a3eb-8294bbdbfa64.png)
+![nodejs Debugger](https://user-images.githubusercontent.com/51331195/168444350-0c6aebe0-da02-432c-8506-e03d6317ccfa.png)
 Node.js 전용 debugger를 사용하며, ```node ~~```대신에  ```node inspect ~~```으로 프로세스를 실행하여 디버거를 부착한다. 디버거는 Chrome의 chrome://inspect/에서 확인할 수 있으며, 코드 중 ```debugger``` 줄을 넣어 Breakpoint를 설정한다.
 
 ### **Third Party Packages**
