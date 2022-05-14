@@ -139,6 +139,7 @@ fs.writeFileSync('2-json.json', JSON.stringify(json))s
 ```
 
 ### **Debug**
+![nodejs Debugger](https://user-images.githubusercontent.com/51331195/168443669-934423a2-3ba0-4959-a3eb-8294bbdbfa64.png)
 Node.js 전용 debugger를 사용하며, ```node ~~```대신에  ```node inspect ~~```으로 프로세스를 실행하여 디버거를 부착한다. 디버거는 Chrome의 chrome://inspect/에서 확인할 수 있으며, 코드 중 ```debugger``` 줄을 넣어 Breakpoint를 설정한다.
 
 ### **Third Party Packages**
