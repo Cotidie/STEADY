@@ -1,23 +1,109 @@
 # Note App
 
-
 ## 배운점
-### import/export
+### **require**
 기본 모듈의 사용법은 [공식 문서](https://nodejs.org/docs/latest-v17.x/api/)에서 확인 가능하다.
 ```js
-// lib\의 라이브러리는 모듈명으로 import한다.
-// require 순간에 모듈이 import/실행된다.
+// test.js
+// 기본 라이브러리는 모듈명으로 import한다.
+// require 순간에 모듈이 실행된다.
 const fs = require('fs')
 
 const name = "myName"
 const add = function (a, b) { return a + b } // 함수도 export 가능
 
 // require(module)의 반환값을 설정
-// exports는 하나만 설정 가능하다.
-module.exports = name
+// exports는 최상위 객체로, Object를 담는다.
+module.exports = {
+    name: name,
+    add: add
+}
+
+// 다른 파일에서 사용
+const test = require('test.js')
+test.name          // myName
+test.add(1, 2)     // 3
+```
+### **import/export**
+Node.js 13.2 버전부터 지원하는 ES 기능. 파일은 .mjs 확장자여야 하며, 외부로 export하고자 하는 함수, 변수 앞에 export 키워드를 붙인다.
+* package.json에 ```type: "module"```을 추가한 경우 .js도 가능
+```js
+// test.mjs
+export add(a, b) { return a + b }
+export const PI = 3.141592
+
+// 다른 파일
+import { add, PI } from './test.mjs'
+import * as test from './test.mjs'
 ```
 
-### I/O
+### **NPM**
+Node.js Package Manager. 터미널을 통해 설치하고 패키지 간 종속성을 관리한다.
+* 패키지 저장소: [https://www.npmjs.com/](https://www.npmjs.com/)
+```js
+> npm init
+// 패키지 설치 및 삭제 (-g: 전역 패키지)
+> npm install <package name>@version
+> npm install <package name>@version -g
+> npm uninstall <package name>
+> npm uninstall <package name> -g
+
+// 종속성 설치 (package.json)
+> npm install 
+```
+
+### **Array**
+* forEach: 배열의 각 원소를 순회한다. ```const notes = ["a", "b", "c"]```에 대하여,
+```js
+for (const note of notes) { // async friendly
+    ...
+}
+for (const [index, value] of notes.entries()) { // indexedForEach
+    ...
+}
+notes.forEach((element, index) => { // not async friendly
+    ...
+})
+```
+* filter: 조건에 맞는 요소만을 필터링하여 새로운 배열로 반환한다.
+```js
+const filtered = notes.filter(function(note) {
+    return note !== "b"
+}) // ["a", "c"]
+```
+* find: filter와 다르게 조건을 만족하는 하나를 찾아 반환한다. 없을 경우 undefined를 반환한다.
+```js
+const found = notes.find((note) => note == "b")
+const notFound = notes.find((note) => note == "$")
+console.log(found) // b
+console.log(notFound) // undefined
+```
+
+### **Arrow Function**
+: Arrow Function은 람다와 같은 개념이나, this가 메소드의 위치에 바인드되지 않고 메소드를 사용하는 곳에 바인드되는 특징이 있다. this의 위치에 따라 기존 function 문법을 적절히 섞어 사용한다.
+```js
+const event = {
+    title: "Birthday Party",
+    people: ["Andrew", "Tom", "Lily"],
+    printInfo() {
+        // event를 가리키는 this를 사용할 것이므로 function 구문을 사용한다.
+        console.log("The event is", this.title)
+
+        // function 구문을 사용할 때, forEach의 this는 global obejct이다.
+        // 또는 2번째 매개변수에 전달한 객체가 this가 된다.
+        this.people.forEach(function(name, index) {
+            console.log("Person:", this.people[index])
+        }, this)
+
+        // Arrow Function을 호출하는 곳은 printInfo()이므로 이 scope의 this가 바인드된다.
+        this.people.forEach((name, index) => {
+            console.log("Arrow Function:", this.people[index])
+        })
+    }
+}
+```
+
+### **I/O**
 #### File System
 ```js
 const fs = require('fs')
@@ -52,22 +138,10 @@ console.log(json)
 fs.writeFileSync('2-json.json', JSON.stringify(json))s
 ```
 
-### NPM
-Node.js Package Manager. 터미널을 통해 설치하고 패키지 간 종속성을 관리한다.
-* 패키지 저장소: [https://www.npmjs.com/](https://www.npmjs.com/)
-```js
-> npm init
-// 패키지 설치 및 삭제 (-g: 전역 패키지)
-> npm install <package name>@version
-> npm install <package name>@version -g
-> npm uninstall <package name>
-> npm uninstall <package name> -g
+### **Debug**
+Node.js 전용 debugger를 사용하며, ```node ~~```대신에  ```node inspect ~~```으로 프로세스를 실행하여 디버거를 부착한다. 디버거는 Chrome의 chrome://inspect/에서 확인할 수 있으며, 코드 중 ```debugger``` 줄을 넣어 Breakpoint를 설정한다.
 
-// 종속성 설치 (package.json)
-> npm install 
-```
-
-#### Third Party Packages
+### **Third Party Packages**
 [**Validator**](https://www.npmjs.com/package/validator): 이메일, 전화번호 등 여러 양식을 검사해주는 패키지
 ```js
 > npm install validator
@@ -131,3 +205,10 @@ yargs.parse()
 
 ### **Powershell 보안 오류**
 Windows Powershell이 제3자 스크립트 실행을 제한하는 문제. Powershell을 관리자의 권한으로 실행하여 ```Set-ExecutionPolicy Unrestricted```를 입력하여 외부 스크립트를 실행 가능하도록 한다.
+
+### **import, require 동시 사용**
+.mjs 확장자 또는 ```type: "module"```이 명시된 경우 require을 사용할 수 없던 문제. 다음 두 줄을 파일에 추가하여 import와 require을 동시에 사용할 수 있다.
+```js
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+```

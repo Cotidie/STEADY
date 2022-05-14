@@ -1,10 +1,4 @@
-import validator from 'validator';
+const notes = ["a", "b"]
+const notFound = notes.find((note) => note == 'c')
 
-const add = require('./libraries/utils.js')
-const getNotes = require('./libraries/notes.js')
-
-const msg = getNotes()
-console.log(msg)
-
-const email = 'wsj@gmai'
-console.log(validator.isEmail(email))
+console.log(notFound)
