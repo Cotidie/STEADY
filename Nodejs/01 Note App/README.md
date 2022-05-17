@@ -9,6 +9,26 @@
 * **remove**: --title 옵션을 받아 제목과 일치하는 메모를 notes.json에서 삭제한다.
     * 찾는 title이 없으면 오류 메시지를 출력한다.
 
+## 목차
+- [Note App](#note-app)
+  - [목차](#목차)
+  - [배운점](#배운점)
+    - [**require**](#require)
+    - [**import/export**](#importexport)
+    - [**NPM**](#npm)
+    - [**Array**](#array)
+    - [**Arrow Function**](#arrow-function)
+    - [**I/O**](#io)
+      - [File System](#file-system)
+      - [Command Line](#command-line)
+      - [JSON Read/Write](#json-readwrite)
+    - [**Debug**](#debug)
+    - [**Third Party Packages**](#third-party-packages)
+  - [오류](#오류)
+    - [**import 오류**](#import-오류)
+    - [**Powershell 보안 오류**](#powershell-보안-오류)
+    - [**import, require 동시 사용**](#import-require-동시-사용)
+
 ## 배운점
 ### **require**
 기본 모듈의 사용법은 [공식 문서](https://nodejs.org/docs/latest-v17.x/api/)에서 확인 가능하다.
