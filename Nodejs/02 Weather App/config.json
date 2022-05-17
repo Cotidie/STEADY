@@ -1,0 +1,10 @@
+{
+    "weatherStack": {
+        "endpoint": "http://api.weatherstack.com/",
+        "apiKey": "d87a77a5ad6342ad9ea5ff3696d70c65",
+        "location": {
+            "lat": 129.0756416,
+            "lng": 35.1795543
+        }
+    }
+}
