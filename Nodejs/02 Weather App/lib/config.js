@@ -8,12 +8,17 @@ export const config = {
             lat: "",
             lng: ""
         }
+    },
+    mapBox: {
+        endpoint: "",
+        apiKey: ""
     }
 }
 
 function parseConfig() {
     const raw = readJSON('config.json')
     config.weatherStack = raw.weatherStack
+    config.mapBox = raw.mapBox
 }
 
 function readJSON(path) {

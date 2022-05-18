@@ -6,5 +6,9 @@
             "lat": 129.0756416,
             "lng": 35.1795543
         }
+    },
+    "mapBox": {
+        "endpoint": "https://api.mapbox.com/geocoding/v5/mapbox.places/",
+        "apiKey": "pk.eyJ1IjoiY290aWRpZSIsImEiOiJjbDNiNHhzZzMwODRtM3BydW11eXMzdjU3In0.AqLK3FOMRB9qel8tNtvwqA"
     }
 }
