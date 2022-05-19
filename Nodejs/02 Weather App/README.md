@@ -1,4 +1,5 @@
 # Weather App
+![Weather App 스크린샷](https://user-images.githubusercontent.com/51331195/169198609-c68077b2-243b-43ca-816e-6e60a3db466d.png)
 
  지역, 도시 또는 국가명을 인자로 입력하면 현재 날씨와 온도, 체감 온도를 알려주는 앱. 다음과 같은 기능을 구현해야 한다.
 - Open API를 활용해 필요한 정보를 불러온다.
@@ -11,20 +12,17 @@
   - 가독성을 위해 Object Property Shorthand, Destructure를 이용한다.
    
 ## 목차
-- [Weather App](#weather-app)
-  - [목차](#목차)
-  - [배운점](#배운점)
-    - [Event Loop](#event-loop)
-    - [HTTP Request](#http-request)
-      - [Standard Library(http, https)](#standard-libraryhttp-https)
-      - [NPM Library(postman-request)](#npm-librarypostman-request)
-    - [Callback](#callback)
-    - [ES6 Features](#es6-features)
-      - [Object Property Shorthands](#object-property-shorthands)
-      - [Object Desctructing](#object-desctructing)
-    - [Open API](#open-api)
-      - [Weather Stack](#weather-stack)
-      - [Mapbox](#mapbox)
+- [Event Loop](#event-loop)
+- [HTTP Request](#http-request)
+  - [Standard Library(http, https)](#standard-libraryhttp-https)
+  - [NPM Library(postman-request)](#npm-librarypostman-request)
+- [Callback](#callback)
+- [ES6 Features](#es6-features)
+  - [Object Property Shorthands](#object-property-shorthands)
+  - [Object Desctructing](#object-desctructing)
+- [Open API](#open-api)
+  - [Weather Stack](#weather-stack)
+  - [Mapbox](#mapbox)
   
 ## 배운점
 ### Event Loop
