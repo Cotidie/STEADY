@@ -1,12 +1,22 @@
 # Weather App
 
+ 지역, 도시 또는 국가명을 인자로 입력하면 현재 날씨와 온도, 체감 온도를 알려주는 앱. 다음과 같은 기능을 구현해야 한다.
+- Open API를 활용해 필요한 정보를 불러온다.
+  - 지역, 도시, 국가명으로부터 위도와 경도를 알아낸다. (MapBox)
+  - 위도와 경도로부터 날씨 정보를 불러온다. (Weather Stack)
+- API 통신과 관련된 오류 처리를 해야 한다
+  - (Low): 인터넷과 연결되지 않은 경우
+  - (Middle): 잘못된 쿼리 인자 등 서버 측 오류
+- 통신 결과를 활용하기 위해 콜백함수를 이용한다.
+  - 가독성을 위해 Object Property Shorthand, Destructure를 이용한다.
+   
 ## 목차
 - [Weather App](#weather-app)
   - [목차](#목차)
   - [배운점](#배운점)
     - [Event Loop](#event-loop)
     - [HTTP Request](#http-request)
-      - [Standard Library(request)](#standard-libraryrequest)
+      - [Standard Library(http, https)](#standard-libraryhttp-https)
       - [NPM Library(postman-request)](#npm-librarypostman-request)
     - [Callback](#callback)
     - [ES6 Features](#es6-features)
@@ -15,7 +25,7 @@
     - [Open API](#open-api)
       - [Weather Stack](#weather-stack)
       - [Mapbox](#mapbox)
-
+  
 ## 배운점
 ### Event Loop
 ![Event Loop](https://i.imgur.com/zCgCjYs.png)
@@ -45,7 +55,7 @@ After 2 seconds
 ```
 
 ### HTTP Request
-#### Standard Library(request)
+#### Standard Library(http, https)
 ```js
 // 프로토콜에 따라 다른 STL을 사용한다.
 import https from 'https'
@@ -160,6 +170,8 @@ function releaseMovie(date, { title, desc }) {
   ...
 }
 ```
+
+
 ### Open API
 #### [Weather Stack](https://weatherstack.com/)
 위도와 경도 또는 지역/도시 명을 토대로 상세한 날씨 정보를 알려주는 서비스.
