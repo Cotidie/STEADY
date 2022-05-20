@@ -1,4 +1,17 @@
 # Web Server
+![webserver](https://i.imgur.com/uY5EKbT.gif)
+
+동적 템플릿을 이용하여 웹 페이지를 렌더링하는 서버. 이전에 제작한 일기예보를 활용하여 입력한 주소지의 날씨를 알려준다.
+* index, about, help 페이지를 갖는다.
+  * localhost:3000/: index 페이지
+  * localhost:3000/about: about 페이지
+  * localhost:3000/help: help 페이지
+  * 네비게이션 메뉴를 갖는 header와 작성자를 표지하는 footer의 partial을 이용한다.
+  * 유효하지 않은 주소로 접근할 시 404 페이지를 반환한다.
+* index 페이지의 input에 도시명을 입력할 시 현재 날씨를 알려준다.
+  * 오류일 경우 오류 메시지를 표시한다.
+  * 정상일 경우 다음 형식으로 표시한다.
+    * ```${location} is ${weatherState} throughout a day. Temperture is ${temperature} degrees, and it feels like ${feelsLike} degrees.```
 
 ## 목차
 - [Web Server](#web-server)
@@ -38,7 +51,7 @@ path는 디렉토리 경로를 파싱하는 STL로, 경로명을 이어붙일 �
 | response.render(view, data) | /views 폴더의 뷰 엔진(hbs 등) 템플릿을 HTML로 렌더링하여 반환한다. |
 
 #### Middle-Ware
-![mw](https://media.geeksforgeeks.org/wp-content/uploads/20211007175759/MiddlewareChaining.png)
+![mw](https://media.geeksforgeeks.org/wp-content/uploads/20211007175759/MiddlewareChaining.png)  
 Middle-Ware 함수는 Express.js의 핵심 중 하나로, request, response 및 다음 middle-ware 함수에 대한 접근 권한을 갖는 콜백 함수를 말한다. 라우터의 콜백 함수 또한 middle-ware 함수이며, Application 레벨과 Router 레벨로 구분하여 등록한다.
 * middle-ware 함수는 등록된 순서대로 실행된다. (Queue)
 * application 레벨의 middle-ware는 반드시 next()를 실행해야 한다.
@@ -87,6 +100,8 @@ const port = 3000
 
 // app.<method>로 라우팅 설정
 app.get('/path',(req, res) => {
+    // query는 req.query로 접근한다 (object)
+    const query = req.query
     res.send(<Response Body>)
 })
 
@@ -151,7 +166,7 @@ router.get('/about', (req, res, next) => {
     })
 })
 ```
-hbs 등 뷰 엔진을 이용해 동적 HTML 템플릿을 이용한다. 컴포넌트 역할을 하는 Partial과 템플릿 역할을 하는 View로 구분된다. Partial이 필요로 하는 변수명은 해당 partial에 숨겨져 있는 점은 불편한 점이다.
+hbs 등 뷰 엔진을 이용해 동적 HTML 템플릿을 이용한다. 컴포넌트 역할을 하는 Partial과 템플릿 역할을 하는 View로 구분된다. Partial이 필요로 하는 변수명은 해당 partial에 숨겨져 있는 점은 불편하다.
 * **app.set('views', path)**: 템플릿을 찾을 폴더의 경로를 설정한다.
 * **app.render(view, variables)**: 렌더링할 뷰 엔진 파일과 내부의 변수를 설정한다.
 * **hbs.registerPartials(partialsPath)**: 컴포넌트 역할을 할 partial들이 위치한 경로를 설정한다.

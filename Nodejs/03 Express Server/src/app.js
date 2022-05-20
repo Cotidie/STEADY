@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import hbs from 'hbs'
+import { forecastWeahter } from './utils/forecast.js'
 
 const app = express()
 const port = 3000     // 개발용 포트
@@ -38,8 +39,21 @@ app.get('/help', (req, res) => {
     })
 })
 
-app.get('/hello', (req, res) => {
-    res.send("This is hello page!")
+app.get('/weather', (req, res) => {
+    const address = req.query.address
+    if (!address) {
+        return res.send({
+            errorMessage: "Address query should be passed!"
+        })
+    }
+
+    forecastWeahter(address, (error, forecast) => {
+        if (error) {
+            return res.send({ error })
+        }
+        
+        return res.send({ forecast })
+    })
 })
 
 app.get('/help/(.*)', (req, res) => {
