@@ -14,19 +14,14 @@
     * ```${location} is ${weatherState} throughout a day. Temperture is ${temperature} degrees, and it feels like ${feelsLike} degrees.```
 
 ## 목차
-- [Web Server](#web-server)
-  - [목차](#목차)
-  - [배운점](#배운점)
-    - [Absolute Path](#absolute-path)
-    - [Express.js](#expressjs)
-      - [Middle-Ware](#middle-ware)
-      - [Routing](#routing)
-      - [Static files](#static-files)
-      - [Dynamic Templates](#dynamic-templates)
-    - [NPM package](#npm-package)
-      - [hbs](#hbs)
-  - [오류](#오류)
-    - [__dirname undefined](#__dirname-undefined)
+- [Absolute Path](#absolute-path)
+- [Express.js](#expressjs)
+  - [Middle-Ware](#middle-ware)
+  - [Routing](#routing)
+  - [Static files](#static-files)
+  - [Dynamic Templates](#dynamic-templates)
+- [NPM package](#npm-package)
+  - [hbs](#hbs)
 
 ## 배운점
 ### Absolute Path
