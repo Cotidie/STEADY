@@ -4,7 +4,7 @@ import hbs from 'hbs'
 import { forecastWeahter } from './utils/forecast.js'
 
 const app = express()
-const port = 3000     // 개발용 포트
+const port = process.env.PORT || 3000     // 개발용 포트
 
 const dirname = path.resolve()
 const staticPath = path.join(dirname, 'static')

@@ -77,6 +77,21 @@ Node.js Package Manager. 터미널을 통해 설치하고 패키지 간 종속�
 > npm uninstall <package name>
 > npm uninstall <package name> -g
 
+// 전역 패키지 설치는 되도록 피해야 한다.
+// 대신 dev Dependency로 설치하고, script로 실행한다.
+> npm install <package name>@version --save-dev
+// package.json
+{
+    ...
+    "script": {
+        "dev": "nodemon app.js -e js, hbs"
+    },
+    "devDependencies": {
+        ...
+    }
+}
+> npm run dev
+
 // 종속성 설치 (package.json)
 > npm install 
 ```

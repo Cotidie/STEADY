@@ -14,7 +14,7 @@ form.addEventListener('submit', (event) => {
 
     const address = input.value
     const query = `address=${address}`
-    const url = `${host}:${port}/${endpoint}?${query}`
+    const url = `/${endpoint}?${query}`
     fetch(url).then((response) => {
         response.json().then((data) => {
             if (data.error) {

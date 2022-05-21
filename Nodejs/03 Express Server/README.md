@@ -14,14 +14,20 @@
     * ```${location} is ${weatherState} throughout a day. Temperture is ${temperature} degrees, and it feels like ${feelsLike} degrees.```
 
 ## 목차
-- [Absolute Path](#absolute-path)
-- [Express.js](#expressjs)
-  - [Middle-Ware](#middle-ware)
-  - [Routing](#routing)
-  - [Static files](#static-files)
-  - [Dynamic Templates](#dynamic-templates)
-- [NPM package](#npm-package)
-  - [hbs](#hbs)
+- [Web Server](#web-server)
+  - [목차](#목차)
+  - [배운점](#배운점)
+    - [Absolute Path](#absolute-path)
+    - [Express.js](#expressjs)
+      - [Middle-Ware](#middle-ware)
+      - [Routing](#routing)
+      - [Static files](#static-files)
+      - [Dynamic Templates](#dynamic-templates)
+    - [NPM package](#npm-package)
+      - [hbs](#hbs)
+    - [Heroku Deployment](#heroku-deployment)
+  - [오류](#오류)
+    - [__dirname undefined](#__dirname-undefined)
 
 ## 배운점
 ### Absolute Path
@@ -171,7 +177,39 @@ hbs 등 뷰 엔진을 이용해 동적 HTML 템플릿을 이용한다. 컴포넌
 * 패키지 주소: [hbs](https://www.npmjs.com/package/hbs)
 express.js를 위한 view 엔진. Dynamic HTML Template을 지원한다.
 
-
+### Heroku Deployment
+1. **스크립트 설정**: ```npm run start```, heroku에서 진입점을 설정한다.
+```js
+// package.json
+{
+  ...
+  "scripts": {
+    "start": <앱 구동 경로>,
+  },
+  ...
+}
+```
+2. **port 번호 설정**: heroku 서버에서 사용할 port 번호를 설정한다. 포트 번호는 실행마다 달라질 수 있다. 
+```js
+//app.js
+const port = process.env.PORT || 3000
+app.listen(port, function() {
+    // 구동 직후 실행할 스크립트
+})
+```
+3. **heroku 연동**: heroku에 생성된 앱은 전용 git remote에 저장되고, CI/CD에 의해 배포된다. 이 저장소를 로컬로 옮긴다.
+  * package.json에 종속성이 모두 명시되어 있어야 한다.
+```js
+// package.json이 위치한 루트폴더에서 실행
+> git init
+> heroku git:remote -a <existing app>
+> git remote
+heroku
+> git add .
+> git commit -m "..."
+> git push heroku master
+<빌드 진행>
+```
 ## 오류
 ### __dirname undefined
 * **문제**: 전역 변수로 제공되던 __dirname, __filename이 더이상 존재하지 않는 문제
