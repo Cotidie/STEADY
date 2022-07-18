@@ -1,8 +1,17 @@
 package main
 
-import "fmt"
-
 func main() {
-	var card string = "Ace of Spades"
-	fmt.Println(card)
+	cards := newDeckFromFile("remainingDeck.json")
+	cards.shuffle()
+
+	cards.print()
+}
+
+func createHand(d deck) (deck, deck) {
+	return deal(d, 2)
+}
+
+func saveDeck(hand deck, reamining deck) {
+	hand.saveToFile("hand")
+	reamining.saveToFile("remainingDeck")
 }
