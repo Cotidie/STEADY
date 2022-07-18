@@ -8,6 +8,14 @@ From the deck of 52 cards, the program provides those functions: create a deck, 
   - it should use JSON format
 - **readFromFile()**: reads JSON file into deck type.
 
+## Testing
+: To make a test file, create a go file ending with **'_test.go'** and test methods starting with **'Test'**. Then run the test with ```go test``` command.
+  - Each test methods should accept [*testing.T](https://pkg.go.dev/testing#T) as a testing handler
+  - at the end of the test, any files created during test should be cleaned ()
+```bash
+go test deck_test.go
+```
+
 
 
 ## Standard Packages
@@ -34,3 +42,4 @@ From the deck of 52 cards, the program provides those functions: create a deck, 
 
 ### os
 - [Exit(code int)](https://pkg.go.dev/os#Exit): Completely finishes the program with exit code
+- [Remove(name string)](https://pkg.go.dev/os#Remove)

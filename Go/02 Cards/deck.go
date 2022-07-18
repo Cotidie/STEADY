@@ -28,6 +28,7 @@ func newDeck() deck {
 }
 
 func newDeckFromFile(filename string) deck {
+	filename = filename + ".json"
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Println("Error:", err)
