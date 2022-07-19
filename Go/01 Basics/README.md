@@ -59,7 +59,8 @@ import standard or reusable packages. The root path is where the main package is
 
 ### Variables
 Go is referred to a static typed language. The variable name is followed by its type declaration.  
-  * **baisc types**: bool, string, int, float64, array, map
+  * **value types**: bool, string, int, float64, struct
+  * **Reference types**: slice, map, channel, pointer, function
   * types can be inferred from its declaration
   * global variables can be declared, but cannot be initialized
   
@@ -107,6 +108,7 @@ func main() {
 ```
 
 ### Class
+- receivers are also passed by value by default
 ```go
 // Declare a new type deck
 type deck []string
