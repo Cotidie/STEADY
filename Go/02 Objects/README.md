@@ -45,9 +45,9 @@ color := map[string][int] {
     "green": 2,
     "blue": 3,
 }
-// Just declaring a map
+// Just declaring an empty map
 colors := make(map[string]string)
-var colors map[string][string]
+var colors map[string]string
 
 // Write and Read
 colors["red"] = 1
@@ -62,3 +62,70 @@ for key, value := range colors {
 }
 ```
 ## Interface
+ To implement an interface, all needs to be done is to implement right signitures of interface members. Those types are called *honorary members*
+  - Compiler simply seeks signitures of an interface in a type
+  - Interfaces can have another interface.
+```go
+// Defining an interface
+type Bot interface {
+    Introducer          // interfaces can be folded
+    getVersion() float64
+}
+
+type Introducer interface {
+    introduce(string) string
+}
+
+type EnglishBot struct{}
+
+// EnglishBot is now an honorary member of the interface 'Introducer'
+func (EnglishBot) introduce(prefix string) string {
+    return ...
+}
+
+// EnglishBot is now a member of both 'Introducer' and 'Bot'
+func (EnglishBot) getVersion() float64 {
+    return 0.1
+}
+```
+
+## HTTP Package
+| https://pkg.go.dev/net/http
+
+Golang's HTTP package has [io.ReadCloser](https://pkg.go.dev/io#ReadCloser) type as its body, which implements Reader and Closer
+  -  Reader gets ```[]byte``` as avcontainer, and put data
+  -  Writer takes ```[]byte``` as input, and pass to a destination (stdOut, file...etc.)
+```go
+Response
+    - Status        string
+    - StatusCode    int
+    - Header        Header
+    - Body          io.ReadCloser
+        - Reader
+            - Read([]byte) (int, error)
+        - Closer
+            - Close()      (error)
+
+resp, err := http.Get("http://google.com")
+// 1. Directly reads from response body
+buffer := make([]byte, 32 * 1024)
+resp.Body.Read(buffer)
+fmt.Println(string(buffer))
+
+// 2. Use a Writer to hide buffer
+io.Copy(os.Stdout, resp.Body)
+
+// 3. Use a custum writer
+type LogWriter struct{}
+
+func (LogWriter) Write(bs []byte) (int, error) {
+    fmt.Println(string(bs))
+	return len(bs), nil
+}
+
+lw := LogWriter{}
+io.Copy(lw, resp.Body)
+```
+
+Q. How to track which type is implementing which interface?
+    => You should look at documents and find whether it satisfies.

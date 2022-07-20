@@ -38,5 +38,5 @@ func printMap() {
 }
 
 func main() {
-	printMap()
+	getGoogleHTMLandLog()
 }
