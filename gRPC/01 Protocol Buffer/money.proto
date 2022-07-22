@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+/* Money
+    represents a currency value e.g. USD 35.42, 35 for integral and 42 for decimal
+*/
+message Money {
+    string code = 1;
+    int32 integral = 2;
+    int32 decimal = 3;
+}

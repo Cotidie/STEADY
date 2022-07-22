@@ -40,6 +40,22 @@ func main() {
     fmt.Println("Hello, world!")
 }
 ```
+### Module
+Golang's module equals to a workspace or a library. go.mod file contains the **module name**, **go version** and **dependencies**.
+- ```go mod init <module>```: Creates a module that can be imported. The best practice is to have module name as approchable url.
+```go
+module github.com/cotidie/cards
+
+go 1.18
+
+// dependencies
+require (
+	github.com/golang/mock v1.6.0
+	github.com/google/uuid v1.3.0
+	...
+)
+```
+- ```go mod tidy```: 
 ### Package
  Package refers to a workspace or a project. 
 * **Executable**: Generate a .exe file we can run, by 'go build command'
