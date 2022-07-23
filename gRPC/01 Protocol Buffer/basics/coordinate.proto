@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package basic;
+
 message LatLong {
     double latitude = 1;
     double longitude = 2;

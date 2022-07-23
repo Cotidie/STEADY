@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package basic;
+
 enum EyeColor {
     EYE_COLOR_UNSPECIFIED = 0;
     EYE_COLOR_GREEN = 1;

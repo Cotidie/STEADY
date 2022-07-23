@@ -25,7 +25,7 @@ Protocol Buffer is a format of data structure for serializing and deserializing 
 // Decide which protocol buffer syntax to use
 syntax = "proto3";
 
-import "google/protobuf.timestamp.proto"
+import "google/protobuf.timestamp.proto";
 
 // Enum
 enum EyeColor {
@@ -36,10 +36,14 @@ enum EyeColor {
 
 // Define a message schema(ref. Class)
 message User {
+    // Nested Message
+    message Status {}
+
     // <type> <field> = <field number>
     uint32 id = 1;
-    string lname = 2;
+    EyeColor eye_color = 2;
     repeated string phones = 3;
+    Status status = 4;
 }
 ```
 - it won't compile if there is a unpopulated field
@@ -61,3 +65,27 @@ Field numbers are unique numbers that each field has as a binary identifier.
     => Use for frequently occuring data
 - range 16 to 2047 takes two bytes.
 - range 19000 to 19999 is reserved by compiler
+
+## Import
+Import path is relative to the project path or the workspace path and it must specify the full path of the filename including its extension(.proto). **Package** names can be defined as namespaces. 
+```proto3
+// Project Structure
+project
+  |-- basics
+    - account.proto
+  |-- custom
+    - import.proto
+
+// account.proto
+package basic;
+
+message Account {}
+
+// import.proto
+import "basics/account.proto";
+
+message Import {
+  // If not defined package in account.proto, it should be just Account.
+  basic.Account account = 1;
+}
+```
