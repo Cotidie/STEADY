@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package address;
+
+message City {
+    string name = 1;
+    int32 zip = 2;
+    string country = 3;
+}

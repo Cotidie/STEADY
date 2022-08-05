@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package cotidie.dummy;
+
+option go_package = "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto";
+
+message Dummy {
+    uint32 id = 1;
+    string name = 2;
+}

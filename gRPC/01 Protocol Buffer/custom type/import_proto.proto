@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-import "basics/account.proto";
-import "basics/coordinate.proto";
-
-message UsingImport {
-    basic.Account account = 1;
-    basic.LatLong coordinate = 2;
-}

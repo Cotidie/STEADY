@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package cotidie.complex;
+
+import "dummy.proto";
+
+option go_package = "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto";
+
+message Complex {
+    cotidie.dummy.Dummy one_dummy = 1;
+    repeated cotidie.dummy.Dummy multiple_dummies = 2;
+}

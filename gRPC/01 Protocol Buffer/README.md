@@ -7,6 +7,14 @@
 - [Basics](#basics)
   - [Type](#type)
   - [Tag (Field Number)](#tag-field-number)
+  - [Import](#import)
+  - [Compiler](#compiler)
+- [Golang](#golang)
+  - [Packages](#packages)
+  - [Compile](#compile)
+- [Errors](#errors)
+  - [go: could not create module cache](#go-could-not-create-module-cache)
+  - [Cannot use <type> as type <type2> in struct literal](#cannot-use-type-as-type-type2-in-struct-literal)
 
 ## Overview
 ![Protocol Buffer](https://i.imgur.com/bBXCEpw.png)
@@ -25,7 +33,11 @@ Protocol Buffer is a format of data structure for serializing and deserializing 
 // Decide which protocol buffer syntax to use
 syntax = "proto3";
 
+// parent of /google directory should specified with -I option to the compiler
 import "google/protobuf.timestamp.proto";
+
+// what package name to use. variable name is reserved
+option go_package = "proto";
 
 // Enum
 enum EyeColor {
@@ -66,8 +78,10 @@ Field numbers are unique numbers that each field has as a binary identifier.
 - range 16 to 2047 takes two bytes.
 - range 19000 to 19999 is reserved by compiler
 
-## Import
+### Import
 Import path is relative to the project path or the workspace path and it must specify the full path of the filename including its extension(.proto). **Package** names can be defined as namespaces. 
+- -I(--proto_path) can be specified multiple times
+- proto files in the same directory should have the same package name
 ```proto3
 // Project Structure
 project
@@ -81,7 +95,7 @@ package basic;
 
 message Account {}
 
-// import.proto
+// parent of /basics directory should specified with -I option to the compiler
 import "basics/account.proto";
 
 message Import {
@@ -89,3 +103,57 @@ message Import {
   basic.Account account = 1;
 }
 ```
+
+### Compiler
+```bash
+# 1. Find the latest release and download
+# -O: Keeps file name as remote file name
+# -L: Allows any redirections
+curl -OL https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_64.zip
+
+# 2. Unzip the file to ./protoc3 (-d option)
+unzip protoc-3.5.1-linux-x86_64.zip -d protoc3
+
+# 3. Add the path ~/protoc3 to $PATH
+export PATH=$PATH:~/protoc3
+```
+
+## Golang
+### Packages
+```go
+go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
+```
+
+### Compile
+```bash
+# -I spectifies import path
+# --go_out specifies where to reside output files
+protoc -I proto --go_out proto address/*.proto
+```
+
+## Errors
+### go: could not create module cache
+```bash
+protoc -I proto --go_opt=module=github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang --go_out=. proto/*.proto
+go build .
+go: could not create module cache: stat /usr/bin/go/bin/pkg/mod: not a directory
+go: could not create module cache: stat /usr/bin/go/bin/pkg/mod: not a directory
+make: *** [Makefile:6: build] Error 1
+```
+- **Context**: When compiling golang file
+- **Cause**: Go compiler automatically finds modules in ```$GOPATH/pkg/mod```, but this directory doesn't exist
+- **Solve**: Check $GOPATH env variable and set it to the right directory
+
+### Cannot use <type> as type <type2> in struct literal
+```bash
+protoc -I proto --go_opt=module=github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang --go_out=. proto/*.proto
+go build .
+# github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang
+./main.go:29:20: cannot use dummy_one (variable of type "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto".Dummy) as type *"github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto".Dummy in struct literal
+./main.go:30:20: cannot use []pb.Dummy{…} (value of type []"github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto".Dummy) as type []*"github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto".Dummy in struct literal
+make: *** [Makefile:6: build] Error 2
+```
+- **Context**: When creating a complex protocol buffer object
+  - **struct literal** means newly allocated struct value itself
+- **Cause**: the types for the struct fields don't match. Protoc always returns pointer types when importing another message type.
+- **Solve**: Provide pointers to protocol buffer objects

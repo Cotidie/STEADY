@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package cotidie.simple;
+
+option go_package = "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto";
+
+message Simple {
+    uint32 id = 1;
+    bool is_simple = 2;
+    string name = 3;
+    repeated int32 simple_list = 4;
+}
