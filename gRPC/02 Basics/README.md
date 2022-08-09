@@ -14,3 +14,14 @@ gRPC is a API architecture developed by Google. It uses **protocol buffers** and
 - **Client Streaming**: Client one or more requests 
   - ex) uploading, updating information..
 - **Bi-directional Streaming**: Client and Server both can send multiple requests/responses
+
+## Error
+### make: ... is up to date
+```bash
+.PHONY: greet
+
+# won't work if there's a physical file named with 'greet'
+greet: ...
+```
+- **Cause**: There is a physical file/directory name same with the name of a command
+- **Solve**: Use ```.PHONY``` keyword to cut association with physical files

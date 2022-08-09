@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package greet;
+
+// --go_opt=module=github.com/Cotidie/STEADY/gRPC/Basics
+option go_package = "github.com/Cotidie/STEADY/gRPC/Basics/greet/proto";
+
+message GreetRequest {
+    string first_name = 2;
+}
+
+message GreetResponse {
+    string result = 1;
+}
+
+service GreetService {
+    // Unary Type
+    rpc Greet (GreetRequest) returns (GreetResponse);
+}
