@@ -78,6 +78,23 @@ Field numbers are unique numbers that each field has as a binary identifier.
 - range 16 to 2047 takes two bytes.
 - range 19000 to 19999 is reserved by compiler
 
+### OneOf
+OneOf type allows optional member which can be either of different types.
+```proto
+// proto file
+message Result {
+  oneof result {
+    string message = 1;
+    uint32 id = 2;
+  }
+}
+```
+```go
+// go file
+message := proto.Result_Message{Message: "msg"}
+result := proto.Result{Result: &message}
+```
+
 ### Import
 Import path is relative to the project path or the workspace path and it must specify the full path of the filename including its extension(.proto). **Package** names can be defined as namespaces. 
 - -I(--proto_path) can be specified multiple times
@@ -130,6 +147,41 @@ go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
 # --go_out specifies where to reside output files
 protoc -I proto --go_out proto address/*.proto
 ```
+
+### Usage
+```go
+// import the directory (package name: proto)
+import (
+  pb "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto"
+)
+
+// created protocol buffers are always pointer types to each other
+func doComplex() pb.Complex {
+	dummy_one := &pb.Dummy{
+		Id:   1,
+		Name: "one",
+	}
+	dummy_two := &pb.Dummy{
+		Id:   2,
+		Name: "two",
+	}
+
+	return pb.Complex{
+		OneDummy:        dummy_one,
+		MultipleDummies: []*pb.Dummy{dummy_one, dummy_two},
+    EyeColor:        pb.EyeColor_EYE_COLOR_GREEN,
+	}
+}
+```
+
+### I/O
+- Disk
+  - Write: Serialize(proto.Marshal) -> Save(ioutil.WriteFile)
+  - Read: Read(ioutil.ReadFile) -> Deserialize(proto.Unmarshal)
+- Json
+  - Write: Serialize(protojson.Marshal)
+  - Read: Deserialize(protojson.Unmarshal)
+
 
 ## Errors
 ### go: could not create module cache

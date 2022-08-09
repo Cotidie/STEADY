@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package cotidie.oneofs;
+
+option go_package = "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto";
+
+message Result {
+    oneof result {
+        string message = 1;
+        uint32 id = 2;
+    }
+}
