@@ -168,6 +168,14 @@ message Import {
 }
 ```
 
+### optional
+| https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto
+Options affect how proto files are compiled. 
+```proto
+// go_package defines the package name to be used
+option go_package="";
+```
+
 ### Compiler
 #### Intsallation
 ```bash
