@@ -1,0 +1,24 @@
+one_dummy {
+  id: 1
+  name: "one"
+}
+multiple_dummies {
+  id: 1
+  name: "one"
+}
+multiple_dummies {
+  id: 2
+  name: "two"
+}
+eye_color: EYE_COLOR_GREEN
+result {
+  id: 32
+}
+maps {
+  key: "a"
+  value: 1
+}
+maps {
+  key: "b"
+  value: 2
+}

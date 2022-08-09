@@ -80,7 +80,7 @@ message User {
 ```
 - it won't compile if there is a unpopulated field
   
-### Type
+### Basic Type
 Default value of Number types is 0. Put ```repeated``` keyword in the front to indicate an array type.
 - **(s)int32/64**
 - **uint32/64**
@@ -91,15 +91,11 @@ Default value of Number types is 0. Put ```repeated``` keyword in the front to i
 - **bytes**: raw data bytes. default to NULL
 - **enum**: user defined type. default to its first field, with field number 0
 
-### Tag (Field Number)
-Field numbers are unique numbers that each field has as a binary identifier.
-- range 1 to 15 takes one byte to encode
-    => Use for frequently occuring data
-- range 16 to 2047 takes two bytes.
-- range 19000 to 19999 is reserved by compiler
-
-### OneOf
+### Advanced Type
+#### OneOf
 OneOf type allows optional member which can be either of different types.
+- cannot be repeated
+- complex for backwards/forwards compatibility
 ```proto
 // proto file
 message Result {
@@ -114,6 +110,37 @@ message Result {
 message := proto.Result_Message{Message: "msg"}
 result := proto.Result{Result: &message}
 ```
+
+#### Map
+- cannot be repeated
+- keys cannot be float, double, enums and messages
+- keys will not be ordered
+```proto
+message Maps {
+  map<string, int32> data = 1;
+}
+```
+
+#### Well-known
+| https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration
+implementation for well-known types, provided by google.  
+import form is ```google/protobuf/<type>.proto```
+```proto
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+message Account {
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Duration validity = 4;
+}
+```
+
+### Tag (Field Number)
+Field numbers are unique numbers that each field has as a binary identifier.
+- range 1 to 15 takes one byte to encode
+    => Use for frequently occuring data
+- range 16 to 2047 takes two bytes.
+- range 19000 to 19999 is reserved by compiler
 
 ### Import
 Import path is relative to the project path or the workspace path and it must specify the full path of the filename including its extension(.proto). **Package** names can be defined as namespaces. 
@@ -142,6 +169,7 @@ message Import {
 ```
 
 ### Compiler
+#### Intsallation
 ```bash
 # 1. Find the latest release and download
 # -O: Keeps file name as remote file name
@@ -155,17 +183,29 @@ unzip protoc-3.5.1-linux-x86_64.zip -d protoc3
 export PATH=$PATH:~/protoc3
 ```
 
+#### Options
+```bash
+# --go_opt=module=<module name>: Strips the name from its package name
+# --go_out=<path>: Output path for go compiled code
+# -I: (multiple) Specipies import paths
+protoc -I proto --go_opt=module=${PACKAGE} --go_out=. proto/*.proto
+
+# --decode_raw <[]byte>: takes protocol buffer binary and
+# convert it to text form and print it to stdout
+cat ComplexProto.bin | protoc --decode_raw > ComplexProto.text
+
+# --decode=<package.Message> <[]byte>: takes binary and map to existing proto file
+# and convert it to text form, print ito stdout
+cat ComplexProto | protoc --decode=cotidie.complex.Complex ./proto/complex.proto -I ./proto
+
+# --encode=<message name> <text> <proto file>: takes readable text form and convert it to binary
+cat ComplexProto.txt | protoc --encode=cotidie.complex.Complex proto/complex.proto -I proto > ComplexProto.bin
+```
+
 ## Golang
 ### Packages
 ```go
 go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
-```
-
-### Compile
-```bash
-# -I spectifies import path
-# --go_out specifies where to reside output files
-protoc -I proto --go_out proto address/*.proto
 ```
 
 ### Usage
