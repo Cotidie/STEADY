@@ -28,6 +28,26 @@ Protocol Buffer is a format of data structure for serializing and deserializing 
 * ```vscode-proto3```: vscode extension for syntax highlighting .proto files
 * ```Protoc```: .proto file compiler
 
+### Data Evolution
+Protocol Buffer provides backwards/forwards compatibility with tags, reserved keywords and defaults.
+- Renaming a field will work as long as **the tag is intact**
+- Removing a field will work if **the tag is reserved**
+```proto
+// before
+message Profile {
+  int32 id = 1;
+  string name = 2;
+}
+
+// after
+message Profile {
+  reserved 2;
+  reserved "name";  // optional, won't use the field 'name'
+  
+  int32 id = 1;
+}
+```
+
 ## Basics
 ```proto3
 // Decide which protocol buffer syntax to use
