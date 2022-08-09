@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 type person struct {
 	firstName   string
@@ -37,6 +40,25 @@ func printMap() {
 	}
 }
 
+func typeCheck(obj interface{}) {
+	// Method 1: using reflect.TypeOf()
+	myType := reflect.TypeOf(obj)
+	fmt.Println(myType)
+
+	// Method 2: using .(type) syntax ->
+	switch objType := obj.(type) {
+	case int:
+		println("it's int")
+	default:
+		// raises an error if it doesn't match with the .(type)
+		println("Int?:", objType.(int))
+		println("String?:", objType.(string))
+	}
+}
+
 func main() {
-	getGoogleHTMLandLog()
+	myInt := 32
+
+	typeCheck(myInt)
+	// getGoogleHTMLandLog()
 }

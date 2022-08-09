@@ -89,6 +89,22 @@ func (EnglishBot) getVersion() float64 {
 }
 ```
 
+## Type Check
+```interface{}``` represents anonymous type for all object. Later the type can be checked by ```.(type)``` syntx.
+- ```reflect.```
+- ```.(type)``` can only be used for switch statement
+- ```.(<type>)``` raises an error if the \<type\> doens't match 
+```go
+func typeCheck(obj interface{}) {
+    objType := reflect.TypeOf(obj)
+
+    switch x := obj.(type) {
+    case int:
+        ...
+    }
+}
+```
+
 ## HTTP Package
 | https://pkg.go.dev/net/http
 
