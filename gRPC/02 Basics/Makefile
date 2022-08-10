@@ -30,10 +30,17 @@ ${PROJECTS}:
 	protoc -I $@/${PROTO_DIR} \
 		${GO_OPT} ${GO_GRPC_OPT} \
 		$@/${PROTO_DIR}/*.proto
-	go build -o ./$(BIN_DIR)/$@/$(SERVER_DIR) ./$@/$(SERVER_DIR)
+	go build -o ./$(BIN_DIR)/$@/${SERVER_DIR} ./greet/${SERVER_DIR}
+	go build -o ./$(BIN_DIR)/$@/${CLIENT_DIR} ./greet/${CLIENT_DIR}
 
-clean: clean_greet
+clean: clean_greet clean_server clean_client
+	${RM_RF_CMD} ${BIN_DIR}/
 
 clean_greet:
 	${RM_F_CMD} greet/${PROTO_DIR}/*.pb.go
-	${RM_RF_CMD} ${BIN_DIR}/
+
+clean_server:
+	${RM_F_CMD} server/${PROTO_DIR}/*.pb.go
+
+clean_client:
+	${RM_F_CMD} greet/${PROTO_DIR}/*.pb.go

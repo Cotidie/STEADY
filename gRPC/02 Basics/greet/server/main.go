@@ -25,6 +25,7 @@ func main() {
 
 	// gRPC Server establishes Presentation and Application layers
 	s := grpc.NewServer()
+	pb.RegisterGreetServiceServer(s, &Server{})
 	err = s.Serve(lis)
 	if err != nil {
 		log.Fatalf("Failed to serve: %v\n", err)
