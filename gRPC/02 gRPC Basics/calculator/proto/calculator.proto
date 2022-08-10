@@ -4,16 +4,22 @@ package calculator;
 
 option go_package = "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto";
 
-message CalculatorRequest {
+message SumRequest {
     int32 operand1 = 1;
     int32 operand2 = 2;
 }
 
-message CalculatorResposne {
+message PrimeRequest {
+    int32 number = 1;
+}
+
+message CalculateResposne {
     int64 result = 1;
 }
 
 service CalculatorService {
     // Unary Type
-    rpc calculate(CalculatorRequest) returns (CalculatorResposne);
+    rpc Sum(SumRequest) returns (CalculateResposne);
+    // Server Streaming Type
+    rpc Primes(PrimeRequest) returns (stream CalculateResposne);
 }
