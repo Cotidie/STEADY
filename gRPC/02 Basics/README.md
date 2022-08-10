@@ -1,12 +1,28 @@
 # gRPC
-![APIs](https://www.altexsoft.com/media/2020/05/word-image-53.png)
+![APIs](https://www.altexsoft.com/media/2020/05/word-image-53.png)  
 gRPC is a API architecture developed by Google. It uses **protocol buffers** and **HTTP/2** for communication.
 - Faster than REST API (not stateless, binary encoded) 
 - One TCP connection for streamings
 - Can be bidirectional between Client and Server
 
 ## Table of Contents
-
+- [Basics](#basics)
+	- [Types](#types)
+	- [Implementation](#implementation)
+		- [Protocol Buffer](#protocol-buffer)
+		- [Server](#server)
+		- [Client](#client)
+- [Implementation](#implementation-1)
+	- [Unary](#unary)
+		- [Server](#server-1)
+		- [Client](#client-1)
+	- [Server Streaming](#server-streaming)
+		- [Server](#server-2)
+		- [Client](#client-2)
+	- [Client Streaming](#client-streaming)
+    - [Bi-directional](#bi-directional)
+- [Error](#error)
+	- [make: ... is up to date](#make--is-up-to-date)
 
 ## Basics
 ### Types
@@ -125,7 +141,7 @@ func doGreetManyTimes(client pb.GreetServiceClient) {
 ```
 ### Client Streaming
 
-## Bi-directional
+### Bi-directional
 
 ## Error
 ### make: ... is up to date
