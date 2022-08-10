@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package calculator;
+
+option go_package = "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto";
+
+message CalculatorRequest {
+    int32 operand1 = 1;
+    int32 operand2 = 2;
+}
+
+message CalculatorResposne {
+    int64 result = 1;
+}
+
+service CalculatorService {
+    // Unary Type
+    rpc calculate(CalculatorRequest) returns (CalculatorResposne);
+}

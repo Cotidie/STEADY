@@ -20,9 +20,9 @@ GO_GRPC_OPT = --go-grpc_out=. --go-grpc_opt=module=${MODULE}
 RM_F_CMD = rm -f
 RM_RF_CMD = ${RM_F_CMD} -r
 
-PROJECTS = greet
+PROJECTS = greet calculator
 
-.PHONY: greet
+.PHONY: greet calculator
 
 all: ${PROJECTS}
 
@@ -30,17 +30,14 @@ ${PROJECTS}:
 	protoc -I $@/${PROTO_DIR} \
 		${GO_OPT} ${GO_GRPC_OPT} \
 		$@/${PROTO_DIR}/*.proto
-	go build -o ./$(BIN_DIR)/$@/${SERVER_DIR} ./greet/${SERVER_DIR}
-	go build -o ./$(BIN_DIR)/$@/${CLIENT_DIR} ./greet/${CLIENT_DIR}
+	go build -o ./$(BIN_DIR)/$@/${SERVER_DIR} ./$@/${SERVER_DIR}
+	go build -o ./$(BIN_DIR)/$@/${CLIENT_DIR} ./$@/${CLIENT_DIR}
 
-clean: clean_greet clean_server clean_client
+clean: clean_greet clean_calculator
 	${RM_RF_CMD} ${BIN_DIR}/
 
 clean_greet:
 	${RM_F_CMD} greet/${PROTO_DIR}/*.pb.go
 
-clean_server:
-	${RM_F_CMD} server/${PROTO_DIR}/*.pb.go
-
-clean_client:
-	${RM_F_CMD} greet/${PROTO_DIR}/*.pb.go
+clean_calculator:
+	${RM_F_CMD} calculator/${PROTO_DIR}/*.pb.go
