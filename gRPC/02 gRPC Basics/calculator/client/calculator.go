@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"time"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto"
 )
@@ -47,4 +48,33 @@ func doPrimes(client pb.CalculatorServiceClient, number int32) {
 	}
 
 	fmt.Printf("Primes for %d: %v\n", number, primes)
+}
+
+func doAverage(client pb.CalculatorServiceClient) {
+	fmt.Println("doAverage function invoked!")
+
+	reqs := []*pb.SingleRequest{
+		{Number: 2},
+		{Number: 5},
+		{Number: 7},
+		{Number: 100},
+	}
+	ctx := context.Background()
+	stream, err := client.Average(ctx)
+	if err != nil {
+		log.Fatalf("Failed to open stream: %v\n", err)
+	}
+
+	for _, req := range reqs {
+		fmt.Printf("Sending %d...\n", req.Number)
+		stream.Send(req)
+		time.Sleep(1 * time.Second)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Printf("Failed to close: %v\n", err)
+	}
+
+	fmt.Printf("Average: %v\n", res.Result)
 }

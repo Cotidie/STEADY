@@ -19,5 +19,5 @@ func main() {
 
 	// Creates gRPC client that implements APIs
 	client := pb.NewGreetServiceClient(conn)
-	doGreetManyTimes(client)
+	doGreetLong(client)
 }

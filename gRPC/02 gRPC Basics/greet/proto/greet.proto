@@ -19,4 +19,6 @@ service GreetService {
     rpc Greet (GreetRequest) returns (GreetResponse);
     // Server Streaming Type
     rpc GreetManyTImes (GreetRequest) returns (stream GreetResponse);
+    // Client Streaming Type
+    rpc GreetLong (stream GreetRequest) returns (GreetResponse);
 }

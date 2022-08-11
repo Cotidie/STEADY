@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
+	"log"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto"
 )
@@ -39,4 +41,33 @@ func (s *Server) Primes(request *pb.PrimeRequest, stream pb.CalculatorService_Pr
 
 	fmt.Println("All Primes were sent!")
 	return nil
+}
+
+func (s *Server) Average(stream pb.CalculatorService_AverageServer) error {
+	fmt.Printf("Average function invoked!")
+
+	numbers := []int32{}
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			average := float32(getSum(numbers)) / float32(len(numbers))
+			response := pb.AverageResponse{Result: average}
+			return stream.SendAndClose(&response)
+		}
+		if err != nil {
+			log.Fatalf("Failed to read stream: %v\n", err)
+		}
+
+		numbers = append(numbers, req.Number)
+	}
+}
+
+func getSum(array []int32) int {
+	sum := 0
+
+	for _, num := range array {
+		sum += int(num)
+	}
+
+	return sum
 }

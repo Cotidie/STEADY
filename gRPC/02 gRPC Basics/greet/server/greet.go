@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/greet/proto"
@@ -31,4 +32,22 @@ func (s *Server) GreetManyTImes(in *pb.GreetRequest, stream pb.GreetService_Gree
 
 	fmt.Println("GreetManyTimes Completed!")
 	return nil
+}
+
+func (s *Server) GreetLong(stream pb.GreetService_GreetLongServer) error {
+	fmt.Printf("GreetLong function is invoked")
+	names := []string{}
+
+	for {
+		msg, err := stream.Recv()
+		if err == io.EOF {
+			response := pb.GreetResponse{Result: fmt.Sprintf("%v", names)}
+			return stream.SendAndClose(&response)
+		}
+		if err != nil {
+			log.Fatalf("Failed to read client stream %v\n", err)
+		}
+
+		names = append(names, msg.FirstName)
+	}
 }

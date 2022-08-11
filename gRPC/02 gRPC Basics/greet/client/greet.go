@@ -46,3 +46,30 @@ func doGreetManyTimes(client pb.GreetServiceClient) {
 		time.Sleep(1 * time.Second)
 	}
 }
+
+func doGreetLong(client pb.GreetServiceClient) {
+	log.Println("doGreetLong invoked")
+
+	reqs := []*pb.GreetRequest{
+		{FirstName: "Wonseok"},
+		{FirstName: "Finn"},
+		{FirstName: "Kyle"},
+	}
+	ctx := context.Background()
+	stream, err := client.GreetLong(ctx)
+	if err != nil {
+		log.Fatalf("Failed to connect to server: %v\n", err)
+	}
+
+	for _, req := range reqs {
+		log.Printf("Sending req: %v\n", req)
+		stream.Send(req)
+		time.Sleep(1 * time.Second)
+	}
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatalf("Failed to close stream: %v\n", err)
+	}
+
+	fmt.Printf("GreetLong finished with: %v\n", res.Result)
+}

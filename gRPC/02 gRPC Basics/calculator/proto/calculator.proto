@@ -13,8 +13,16 @@ message PrimeRequest {
     int32 number = 1;
 }
 
+message SingleRequest {
+    int32 number = 1;
+}
+
 message CalculateResposne {
     int64 result = 1;
+}
+
+message AverageResponse {
+    float result = 1;
 }
 
 service CalculatorService {
@@ -22,4 +30,6 @@ service CalculatorService {
     rpc Sum(SumRequest) returns (CalculateResposne);
     // Server Streaming Type
     rpc Primes(PrimeRequest) returns (stream CalculateResposne);
+    // Client Streaming Type
+    rpc Average(stream SingleRequest) returns (AverageResponse);
 }
