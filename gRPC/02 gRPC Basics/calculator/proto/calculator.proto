@@ -32,4 +32,6 @@ service CalculatorService {
     rpc Primes(PrimeRequest) returns (stream CalculateResposne);
     // Client Streaming Type
     rpc Average(stream SingleRequest) returns (AverageResponse);
+    // Bi-directional Type
+    rpc Max(stream SingleRequest) returns (stream CalculateResposne);
 }

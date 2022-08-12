@@ -78,3 +78,50 @@ func doAverage(client pb.CalculatorServiceClient) {
 
 	fmt.Printf("Average: %v\n", res.Result)
 }
+
+func doMax(client pb.CalculatorServiceClient) {
+	fmt.Println("doMax function invoked")
+
+	stream, err := client.Max(context.Background())
+	if err != nil {
+		log.Fatalf("Failed to create stream: %v\n", err)
+	}
+
+	numbers := []int32{1, 5, 3, 6, 2, 20}
+	reqs := []*pb.SingleRequest{}
+	for _, num := range numbers {
+		req := &pb.SingleRequest{Number: num}
+		reqs = append(reqs, req)
+	}
+
+	waitc := make(chan struct{})
+
+	go func() {
+		for _, req := range reqs {
+			fmt.Printf("## Sending %d...\n", req.Number)
+			err = stream.Send(req)
+			if err != nil {
+				fmt.Printf("Failed to send: %v\n", err)
+			}
+			time.Sleep(1 * time.Second)
+		}
+		stream.CloseSend()
+	}()
+
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatalf("Failed to read from server: %v\n", err)
+			}
+			fmt.Println("Current max value:", res.Result)
+		}
+		close(waitc)
+	}()
+
+	fmt.Println("doMax function finished...")
+	<-waitc
+}

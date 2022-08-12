@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto"
 )
@@ -60,6 +61,31 @@ func (s *Server) Average(stream pb.CalculatorService_AverageServer) error {
 
 		numbers = append(numbers, req.Number)
 	}
+}
+
+func (s *Server) Max(stream pb.CalculatorService_MaxServer) error {
+	fmt.Println("Max function invoked")
+
+	max := math.MinInt
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Failed to read stream: %v\n", err)
+		}
+
+		number := int(req.Number)
+		if number > max {
+			max = number
+			response := pb.CalculateResposne{Result: int64(max)}
+			stream.Send(&response)
+		}
+	}
+
+	fmt.Println("Max function executed")
+	return nil
 }
 
 func getSum(array []int32) int {
