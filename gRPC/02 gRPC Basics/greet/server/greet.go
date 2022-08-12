@@ -51,3 +51,32 @@ func (s *Server) GreetLong(stream pb.GreetService_GreetLongServer) error {
 		names = append(names, msg.FirstName)
 	}
 }
+
+func (s *Server) GreetEveryone(stream pb.GreetService_GreetEveryoneServer) error {
+	fmt.Println("GreetEveryone function invoked")
+
+	names := []string{}
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Failed to receive: %v\n", err)
+		}
+		names = append(names, req.FirstName)
+	}
+
+	response := pb.GreetResponse{}
+	for _, name := range names {
+		sayHello := "Hello, " + name
+		response.Result = sayHello
+
+		err := stream.Send(&response)
+		if err != nil {
+			log.Fatalf("Failed to send: %v\n", err)
+		}
+	}
+
+	return nil
+}

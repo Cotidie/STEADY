@@ -43,6 +43,8 @@ service GreetService {
     rpc Greet (GreetRequest) returns (GreetResponse);
 	// Server Streaming Type
 	rpc GreetManyTImes (GreetRequest) returns (stream GreetResponse);
+	// Client Streaming Type
+	rpc GreetLong (stream GreetRequest) returns (GreetResponse);
 }
 ```
 
@@ -104,6 +106,7 @@ func doGreet(client pb.GreetServiceClient) {
 }
 ```
 ### Server Streaming
+- Server ends streaming with return
 - Client waits if there's a delay in server-side
 - Client uses buffer if there's a delay in client-side
 #### Server
@@ -117,6 +120,7 @@ func (s *Server) GreetManyTImes(in *pb.GreetRequest, stream pb.GreetService_Gree
 		}
 		err := stream.Send(&response)
 	}
+	// Close the channel with sending io.EOF
 	return nil
 }
 ```
@@ -140,9 +144,93 @@ func doGreetManyTimes(client pb.GreetServiceClient) {
 }
 ```
 ### Client Streaming
+#### Server
+```go
+func (s *Server) GreetLong(stream pb.GreetService_GreetLongServer) error {
+	for {
+		msg, err := stream.Recv()
+		// Client closed streaming
+		if err == io.EOF {
+			response := pb.GreetResponse{Result: fmt.Sprintf("%v", names)}
+			return stream.SendAndClose(&response)
+		}
+		// msg.Message...
+	}
+}
+```
+#### Client
+```go
+func doGreetLong(client pb.GreetServiceClient) {
+	reqs := []*pb.GreetRequest{...	}
+	ctx := context.Background()
+	stream, err := client.GreetLong(ctx)
+
+	for _, req := range reqs {
+		stream.Send(req)
+	}
+	res, err := stream.CloseAndRecv()
+}
+```
 
 ### Bi-directional
+- Use goroutine to send/receive simultaneously
+- Use channel to wait for the execution
 
+#### Server
+```go
+func (s *Server) GreetEveryone(stream pb.GreetService_GreetEveryoneServer) error {
+	names := []string{}
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		names = append(names, req.FirstName)
+	}
+
+	response := pb.GreetResponse{}
+	for _, name := range names {
+		response.Result = "Hello, " + name
+		err := stream.Send(&response)
+	}
+
+	return nil
+}
+```
+
+#### Client
+```go
+func doGreetEveryone(client pb.GreetServiceClient) {
+	// Open stream
+	ctx := context.Background()
+	stream, err := client.GreetEveryone(ctx)
+	// Channel to wait for goroutine to be finished
+	waitc := make(chan struct{})
+
+	// Stream to server
+	go func() {
+		for _, req := range reqs {
+			stream.Send(req)
+		}
+		stream.CloseSend()
+	}()
+
+	// Receive from server
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			// res.Result...
+		}
+		// wake up main goroutine
+		close(waitc)
+	}()
+	// Wait for all the goroutines to be executed
+	<-waitc
+}
+```
 ## Error
 ### make: ... is up to date
 ```bash
