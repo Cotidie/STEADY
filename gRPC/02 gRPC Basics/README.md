@@ -7,22 +7,22 @@ gRPC is a API architecture developed by Google. It uses **protocol buffers** and
 
 ## Table of Contents
 - [Basics](#basics)
-	- [Types](#types)
-	- [Implementation](#implementation)
-		- [Protocol Buffer](#protocol-buffer)
-		- [Server](#server)
-		- [Client](#client)
-- [Implementation](#implementation-1)
-	- [Unary](#unary)
-		- [Server](#server-1)
-		- [Client](#client-1)
-	- [Server Streaming](#server-streaming)
-		- [Server](#server-2)
-		- [Client](#client-2)
-	- [Client Streaming](#client-streaming)
+  - [Types](#types)
+  - [Implementation](#implementation)
+	- [Protocol Buffer](#protocol-buffer)
+	- [Server](#server)
+	- [Client](#client)
+  - [Implementation](#implementation-1)	
+    - [Unary](#unary)
+    - [Server Streaming](#server-streaming)
+    - [Client Streaming](#client-streaming)
     - [Bi-directional](#bi-directional)
-- [Error](#error)
-	- [make: ... is up to date](#make--is-up-to-date)
+  - [Features](#features)
+    - [Error Handling](#error-handling)
+    - [Deadline](#deadline)
+    - [SSL Security](#ssl-security)
+  - [Error](#error)	
+    - [make: ... is up to date](#make--is-up-to-date)
 
 ## Basics
 ### Types
@@ -34,7 +34,7 @@ gRPC is a API architecture developed by Google. It uses **protocol buffers** and
   - ex) uploading, updating information..
 - **Bi-directional Streaming**: Client and Server both can send multiple requests/responses
 
-### Implementation
+### Initialize
 #### Protocol Buffer
 Protocol buffer supports easy implementation over gRPC. ```service``` object compiles into gRPC server interface.
 ```proto
@@ -231,6 +231,52 @@ func doGreetEveryone(client pb.GreetServiceClient) {
 	<-waitc
 }
 ```
+
+## Features
+### Error Handling
+ Clients can receive errors on server-side produced with gRPC package. ```codes``` package is for gRPC error codes, ```status``` is for gRPC error instances. ```error``` types can be parsed into gRPC errors with ```status.FromError()``` method.
+ - Complete list of error codes can be found [here](https://grpc.github.io/grpc/core/md_doc_statuscodes.html)
+ - Client can set deadline with context
+```go
+// Server Side: returns an error if input is negative
+func (s *Server) Sqrt(ctx context.Context, req *pb.SqrtRequest) (*pb.SqrtResponse, error) {
+	number := req.Number
+	if number < 0 {
+		return nil, status.Errorf(
+			codes.InvalidArgument,
+			fmt.Sprintf("Received a negative number: %d", number),
+		)
+	}
+
+	// Check deadline
+	go func() {
+		for {
+			if ctx.Err() == context.DeadlineExceeded {...}
+		}	
+	}()
+
+	// ....
+}
+
+// Client Side
+func doSqrt(client pb.CalculatorServiceClient) {
+	ctx := context.Background()
+	req := pb.SqrtRequest{Number: -5}
+	res, err := client.Sqrt(ctx, &req)
+
+	if err != nil {
+		// ok bool represents whether the error is produced from grpc package
+		// e.Message(), e.Code()
+		e, ok := status.FromError(err)
+		if !ok {
+			log.Fatalf("A non gRPC error: %v\n", err)
+		}
+		return
+	}
+	// ...
+}
+```
+
 ## Error
 ### make: ... is up to date
 ```bash

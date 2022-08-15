@@ -8,6 +8,7 @@ import (
 	"time"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/greet/proto"
+	"google.golang.org/grpc/status"
 )
 
 // Call Greet() procedure in back-end side
@@ -119,4 +120,29 @@ func doGreetEveryone(client pb.GreetServiceClient) {
 	}()
 
 	<-waitc
+}
+
+func doGreetWithDeadline(client pb.GreetServiceClient, timeout time.Duration) {
+	fmt.Println("doGreetWithDeadline is invoked...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	req := pb.GreetRequest{
+		FirstName: "Wonseok",
+	}
+
+	res, err := client.GreetWithDeadline(ctx, &req)
+	if err != nil {
+		e, ok := status.FromError(err)
+		if !ok {
+			log.Fatalf("None gRPC error has occured: %v\n", err)
+		}
+
+		fmt.Printf("Error message from server: %v\n", e.Message())
+		fmt.Printf("Error code from server: %v\n", e.Code())
+		return
+	}
+
+	fmt.Printf("GreetWithDeadline has finished: %v\n", res.Result)
 }

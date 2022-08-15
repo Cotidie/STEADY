@@ -25,6 +25,14 @@ message AverageResponse {
     float result = 1;
 }
 
+message SqrtRequest {
+    int32 number = 1;
+}
+
+message SqrtResponse {
+    double result = 1;
+}
+
 service CalculatorService {
     // Unary Type
     rpc Sum(SumRequest) returns (CalculateResposne);
@@ -34,4 +42,6 @@ service CalculatorService {
     rpc Average(stream SingleRequest) returns (AverageResponse);
     // Bi-directional Type
     rpc Max(stream SingleRequest) returns (stream CalculateResposne);
+
+    rpc Sqrt(SqrtRequest) returns (SqrtResponse);
 }

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto"
+	"google.golang.org/grpc/status"
 )
 
 func doSum(client pb.CalculatorServiceClient) {
@@ -124,4 +125,26 @@ func doMax(client pb.CalculatorServiceClient) {
 
 	fmt.Println("doMax function finished...")
 	<-waitc
+}
+
+func doSqrt(client pb.CalculatorServiceClient) {
+	fmt.Println("doSqrt is invoked!")
+
+	ctx := context.Background()
+	req := pb.SqrtRequest{Number: -5}
+	res, err := client.Sqrt(ctx, &req)
+
+	if err != nil {
+		// ok bool represents whether the error is produced from grpc package
+		e, ok := status.FromError(err)
+		if !ok {
+			log.Fatalf("A non gRPC error: %v\n", err)
+		}
+
+		fmt.Printf("Error message from server: %v\n", e.Message())
+		fmt.Printf("Error code from server: %v\n", e.Code())
+		return
+	}
+
+	fmt.Printf("doSqrt function finished with: %v\n", res.Result)
 }

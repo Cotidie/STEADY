@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/greet/proto"
 	"google.golang.org/grpc"
@@ -19,5 +20,5 @@ func main() {
 
 	// Creates gRPC client that implements APIs
 	client := pb.NewGreetServiceClient(conn)
-	doGreetEveryone(client)
+	doGreetWithDeadline(client, 5*time.Second)
 }

@@ -17,5 +17,5 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewCalculatorServiceClient(conn)
-	doMax(client)
+	doSqrt(client)
 }

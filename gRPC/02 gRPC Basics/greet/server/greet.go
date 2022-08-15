@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"time"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/greet/proto"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (s *Server) Greet(ctx context.Context, in *pb.GreetRequest) (*pb.GreetResponse, error) {
@@ -79,4 +82,22 @@ func (s *Server) GreetEveryone(stream pb.GreetService_GreetEveryoneServer) error
 	}
 
 	return nil
+}
+
+func (s *Server) GreetWithDeadline(ctx context.Context, req *pb.GreetRequest) (*pb.GreetResponse, error) {
+	fmt.Printf("GreetWithDeadline is invoked with: %v\n", req)
+
+	// Error cases are
+	for i := 0; i < 3; i++ {
+		if ctx.Err() == context.DeadlineExceeded {
+			fmt.Println("The deadline has expired!")
+			return nil, status.Error(codes.DeadlineExceeded, codes.DeadlineExceeded.String())
+		}
+
+		time.Sleep(1 * time.Second)
+	}
+
+	return &pb.GreetResponse{
+		Result: "Hello " + req.FirstName,
+	}, nil
 }

@@ -8,6 +8,8 @@ import (
 	"math"
 
 	pb "github.com/Cotidie/STEADY/gRPC/Basics/calculator/proto"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (s *Server) Sum(ctx context.Context, request *pb.SumRequest) (*pb.CalculateResposne, error) {
@@ -86,6 +88,25 @@ func (s *Server) Max(stream pb.CalculatorService_MaxServer) error {
 
 	fmt.Println("Max function executed")
 	return nil
+}
+
+func (s *Server) Sqrt(ctx context.Context, req *pb.SqrtRequest) (*pb.SqrtResponse, error) {
+	fmt.Printf("Sqrt was invoked with %v\n", req)
+
+	number := req.Number
+
+	if number < 0 {
+		return nil, status.Errorf(
+			codes.InvalidArgument,
+			fmt.Sprintf("Received a negative number: %d", number),
+		)
+	}
+
+	response := pb.SqrtResponse{
+		Result: math.Sqrt(float64(number)),
+	}
+
+	return &response, nil
 }
 
 func getSum(array []int32) int {
