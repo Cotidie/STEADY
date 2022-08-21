@@ -2,6 +2,27 @@
 ![Bazel](https://ik.imagekit.io/pibjyepn7p9/Bazel_Build_Process_2x_BYDtPQkdR.png?updatedAt=1633191206254)  
 Bazel is Google's own build tool for the automation of building and testing of large software repositories. Source files are organized in a nested hierarchy of packages. Bazel makes use of existing [make variables](https://bazel.build/reference/be/make-variables#predefined_genrule_variables) such as ```$@```, ```$<```, ```$n```.
 
+## Table of Contents
+  - [Terms](#terms)
+    - [Workspace](#workspace)
+    - [Package](#package)
+    - [Labels](#labels)
+  - [General Rules](#general-rules)
+    - [Load](#load)
+    - [Genrule](#genrule)
+  - [Gazelle](#gazelle)
+    - [WORKSPACE](#workspace-1)
+    - [BUILD](#build)
+  - [Golang](#golang)
+    - [WORKSPACE](#workspace-2)
+    - [BUILD](#build-1)
+      - [go_library](#go_library)
+      - [go_binary](#go_binary)
+      - [go_repository](#go_repository)
+    - [Protocol Buffer, gRPC](#protocol-buffer-grpc)
+      - [proto_library](#proto_library)
+      - [go_proto_library](#go_proto_library)
+
 ## Terms
 ### Workspace
 Workspace is a root directory of pacakges and is considered as a unit of applications. Directories containing ```WORKSPACE``` file are considered the root of a workspace. It specifies external dependencies for building a workspace.
