@@ -1,7 +1,9 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix github.com/example/project
-gazelle(name = "gazelle")
+gazelle(
+    name = "gazelle",
+    prefix = "github.com/Cotidie/STEADY/gRPC/Basics",
+)
 
 gazelle(
     name = "gazelle-update-repos",

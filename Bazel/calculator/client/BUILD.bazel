@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "client_lib",
+    srcs = [
+        "calculator.go",
+        "main.go",
+    ],
+    importpath = "github.com/Cotidie/STEADY/gRPC/Basics/calculator/client",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//calculator/proto",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//status",
+    ],
+)
+
+go_binary(
+    name = "client",
+    embed = [":client_lib"],
+    visibility = ["//visibility:public"],
+)
