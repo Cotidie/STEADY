@@ -1,7 +1,20 @@
 # Image and Container
 ![Image Layers](https://i.imgur.com/QHzlPeY.png)  
-Images are read-only blueprint for containers and act as a starting point with ```docker run```.  
-For useful commands, see: [docker build](#build), [docker run]()
+Images are read-only blueprint for containers and act as a starting point with ```docker run```. Images then can be shared either by attaching Dockerfile to codebase or pushing itself on **Docker Hub**.  
+For useful commands, see: [docker build](#build), [docker run](#containers)
+
+## Table of Content
+  - [Images](#images)
+    - [Dockerfile](#dockerfile)
+    - [Build](#build)
+    - [Inspect](#inspect)
+  - [Containers](#containers)
+    - [Run, Start, Restart](#run-start-restart)
+    - [Stop, Remove](#stop-remove)
+    - [Copy](#copy)
+  - [Docker Hub](#docker-hub)
+    - [To Upload](#to-upload)
+    - [To Download](#to-download)
 
 ## Images
 | Command | Option | Description |
@@ -42,9 +55,33 @@ CMD ["node", "server.js"]
 Builds an image from ```Dockerfile```. Images can be tagged by ```-t``` option for easy execution.
 - Images can be listed using ```docker image ls```
 - Images use cached layers instead of duplicating, indicated size is not actual volume size.
+- TAG in ```-t``` option defaults to latest
+- Images can be renamed by ```docker tag <previous> REPOSITORY:TAG```
 ```docker
-# docker build -t <tag> <path>
-docker build -t wonseok .
+# docker build -t <REPOSITORY:TAG> <path>
+docker build -t wonseok:tag .
+```
+
+### Inspect
+```docker image inspect <id>``` exposes basic configuration about an image; env-variables, id, layers, os etc. 
+- New containers will apply ```Config```, not ```ContainerConfig```
+- The number of layers can be different from the number of commands in ```Dockerfile``` as it can have base image.
+```json
+{
+  "Id": "sha256:0c45fbfb1ecce397c2cb823d8b3a03392186eb0669780e8a2eacc8c68d3be2dd",
+  "Config": {
+    "Env": [
+      "USER=wonseok",
+      ...
+    ],
+    "CMD": [...],
+    "WorkingDir": "/app"
+  },
+  "Os": "linux",
+  "RootFS": {
+    "Layers": [...]
+  }
+}
 ```
 
 ## Containers
@@ -56,6 +93,9 @@ docker build -t wonseok .
 | run   | --rm   | removes a container when exiting or stopping |
 | logs  | -f     | follow logs in real time. different from attach since ctrl-z/c doesn't stop the container |
 
+```docker
+docker run --rm -p 3000:80 --name goals-app IMAGE:TAG
+```
 
 ### Run, Start, Restart
 - **run**: Creates a container from image and starts it
@@ -66,3 +106,23 @@ docker build -t wonseok .
 ### Stop, Remove
 - **stop**: Turn container's state into Exited and preserve its changes. This gives opportunity to commit it later.
 - **rm**: Removes from existing containers. Loose all its state and changes.
+
+### Copy
+Normally used for getting logs from container, not good solution for updating code since running containers can be affected by it.
+```docker
+# Copy everything into /app folder of CONTAINER
+docker cp ./. CONTAINER:/app
+# Copy text.txt from CONTAINER to current folder
+docker CONTAINER:/app/text.txt ./
+```
+
+## Docker Hub
+Docker hub is a public repository for sharing docker images. docker uses ```push``` for uploading and ```pull``` for downloading.
+### To Upload
+1. Create a repositry on [Docker Hub](https://hub.docker.com/)
+2. ```docker login```
+3. build or rename an image to fit `username/repository` format
+4. ```docker pull username/repository:tag```
+### To Download
+- ```docker pull username/repository:tag```
+- ```docker run repository:tag``` will try to pull from Docker Hub if not in local.
