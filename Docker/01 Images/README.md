@@ -21,6 +21,7 @@ For useful commands, see: [docker build](#build), [docker run](#containers)
 |:-------:|:------:|-------------|
 |image    | ls     | List out all images downloaded |
 |image    | rmi    | Removes images from disk |
+|build    | --build-arg| pass a value to a dockerfile argument |
 - Images are read-only and have to be rebuilt whenever there are changes
 - Images are layer-based upon ```Dockerfile``` and use cache on any layers with no changes
 
@@ -29,6 +30,7 @@ Dockerfile is a instructions for building custom image using ```docker build```.
 - ```EXPOSE``` is optional, as it will be specified in ```docker run -p``` option again
 - ```CMD``` is only executed on each container instantiation
 - ```COPY```, ```RUN npm install``` can be optimized by separating ```package.json```
+- ```ENV``` variables can passed by file with --env-file option
 ```docker
 # baseImage: on which this containaner is based
 FROM node
@@ -43,11 +45,20 @@ COPY . /app
 # After copying files, execute this command
 RUN npm install
 
+# Arg defines a variable available inside Dockerfile
+# default value can be overriden by --build_arg <var>=<val> option
+ARG DEFAULT_PORT=80 
+
+# Env defines environment variable available inside a container
+# value can be overriden by -e <var>=<val>
+ENV PORT $DEFULAT_PORT
+
 # expose this port to the local computer
 # docker run -p 3000:80 connects localhost:3000 to port 80 of this container
-EXPOSE 80
+EXPOSE $DEFAULT_PORT
 
 # Always should be the last instruction
+# executed when running a container
 CMD ["node", "server.js"]
 ```
 
@@ -57,6 +68,7 @@ Builds an image from ```Dockerfile```. Images can be tagged by ```-t``` option f
 - Images use cached layers instead of duplicating, indicated size is not actual volume size.
 - TAG in ```-t``` option defaults to latest
 - Images can be renamed by ```docker tag <previous> REPOSITORY:TAG```
+- ```.dockerignore``` excludes files specified in it, separated by new lines
 ```docker
 # docker build -t <REPOSITORY:TAG> <path>
 docker build -t wonseok:tag .
@@ -91,6 +103,7 @@ docker build -t wonseok:tag .
 | run   | -d     | detach from a terminal and run it in background. |
 | run   | -it    | creates a terminal in a container and listens user input from stdin. if ```-t``` is omitted current stdin will be used. |
 | run   | --rm   | removes a container when exiting or stopping |
+| run   | --env-file| loads env variables from file separated with new lines
 | logs  | -f     | follow logs in real time. different from attach since ctrl-z/c doesn't stop the container |
 
 ```docker
