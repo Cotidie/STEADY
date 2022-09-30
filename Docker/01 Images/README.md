@@ -107,6 +107,7 @@ docker build -t wonseok:tag .
 | logs  | -f     | follow logs in real time. different from attach since ctrl-z/c doesn't stop the container |
 
 ```docker
+// -p <local>:<container>
 docker run --rm -p 3000:80 --name goals-app IMAGE:TAG
 ```
 
