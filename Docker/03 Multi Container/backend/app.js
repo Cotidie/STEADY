@@ -84,7 +84,7 @@ app.delete('/goals/:id', async (req, res) => {
 });
 
 mongoose.connect(
-  'mongodb://mongo/course-goals',
+  'mongodb://wonseok:secret@mongo/course-goals?authSource=admin',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

@@ -24,12 +24,20 @@ If containers are in the same network, they can communicate with their container
 ```js
 // backend/app.js
 $ docker network create goals
-$ docker run --rm --name mongo --network goals mongo
+// id and password can be set for security
+// for persistent data, use internal /data/db 
+$ docker run --rm --name mongo --network goals \
+      -e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+	    -e MONGO_INITDB_ROOT_PASSWORD=secret \
+      -v mongo:/data/db \  // named mount
+      mongo
+// port should be open for javascript access
 $ docker run --rm --name goals-backend --network goals -p 90:80  node-goals 
 
 // connect to 'mongo' container
+// authSource field should be provided if the host contains id/pw
 mongoose.connect(
-  'mongodb://mongo:27014/swfavorites',
+  'mongodb://mongoadmin:secret@mongo:27014/swfavorites?authSource=admin',
   (err) => {
     ...
   }
