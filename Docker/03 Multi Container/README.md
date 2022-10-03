@@ -55,3 +55,68 @@ try {
   ...
 }
 ```
+
+
+## Docker Compose
+![docker compose](https://i.stack.imgur.com/zJxSM.png)  
+Docker compose mainly solves annoying repetition of long commands/options for running containers in a multi-containerized project. Configuration for each container is specified in ```docker-compose.yaml```
+- Compose doesn't replace ```Dockerfiles```
+- Compose doesn't replace images or containers
+
+### Install
+| For linux: https://docs.docker.com/compose/install/linux/
+
+### File Format
+```yaml
+# version of docker compose
+# see: https://docs.docker.com/compose/compose-file/compose-versioning/
+version: "3.8"
+# Services: Container signatures for docker-compose to run
+services:
+  container:
+    build: ...                        # build a custom image
+    image: string                     # tag name
+    container_name: string            # set container's name (optional)
+    environment: map<string, string>  # pairs of env variables (-e)
+    env_file: list<stirng>            # imports env variables from files (--env-file)
+    volumes: list<string>             # volumes to mount (-v)
+    networks: list<string>            # networks to use (--network)
+    ports: list<string>               # ports to open (-p)
+    stdin_open: bool                  # whether to open stdin of a container (-i)
+    tty: bool                         # links terminal with host terminal (-t)
+    depends_on: list<string>          # runs after these dependencies
+
+# Named volumes should be specified before usage
+volumes:
+  data: <empty>
+  ...
+
+# Networks should be specified before usage
+networks:
+  goals: <empty>
+  ...
+```
+- Named volumes, networks should be specified as top-level entries before use
+- Env variables can be provided either with [key-value pairs](https://docs.docker.com/compose/environment-variables/#set-environment-variables-in-containers) or with a [env-file](https://docs.docker.com/compose/environment-variables/#the-env_file-configuration-option)
+- If network is omitted, compose will auto-generate a network
+
+### Build
+```yaml
+service:
+  # Longer Format
+  build:
+    context: string(path)    # a path at which dockerfile is located
+    dockerfile: string       # dockerfile to use
+    args: map<string, any>   # key-value pairs to pass to dockerfile args
+  # Shorter Format
+  build: <path>              # a path where docker file is located 
+```
+If dockerfile access another folder, context should be parent folder that includes it
+
+### Run
+```bash
+$ docker compose up (-d)
+$ docker compose down (-v)
+```
+- `up -d` starts in detached mode
+- `down -v` removes all named volumes used in the compose

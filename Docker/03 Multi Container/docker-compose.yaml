@@ -1,0 +1,54 @@
+# version of docker compose
+# see: https://docs.docker.com/compose/compose-file/compose-versioning/
+version: "3.8"
+# Services: Containers to run
+# services default to --rm, -d
+services:
+  mongo:
+    # Image Tag
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    environment:
+      # - MONGO_INITDB_ROOT_USERNAME=wonseok
+      MONGO_INITDB_ROOT_USERNAME: wonseok
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    networks:
+      - goals
+  backend:
+    build:
+      context: ./backend
+      # Which Dockerfile to be used, can be omitted if it's Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - '90:80' # host:container
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app    # Relative path can be used
+      - /app/node_modules # Annonymous volume
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongo
+    networks:
+      - goals
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+    stdin_open: true    # frontend should be open for user-input (-i)
+    tty: true           # attach a terminal (-t)
+
+# Named volumes should be specified for usage
+volumes:
+  data:
+  logs:
+
+networks:
+  goals:
