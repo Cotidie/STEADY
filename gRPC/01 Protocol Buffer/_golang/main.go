@@ -43,6 +43,12 @@ func doComplex() *pb.Complex {
 	}
 }
 
+func doBoth() *pb.KtBoth {
+	ktOne := &pb.KtOne{Id: 5}
+
+	return &pb.KtBoth{One: ktOne}
+}
+
 // Serialize: proto.Marshal
 // Save: ioutil.WriteFile
 func writeToFile(fname string, pbf proto.Message) {
@@ -132,5 +138,7 @@ func doJson(fname string) {
 }
 
 func main() {
-	doJson("ComplexProto")
+	both := doBoth()
+
+	fmt.Printf("Both: %v\n", both)
 }

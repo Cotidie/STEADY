@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package Kt;
+
+option go_package = "github.com/Cotidie/STEADY/gRPC/protocol_buffer/golang/proto";
+
+message KtOne {
+    int32 id = 1;
+}
+
+message KtTwo {
+    string name = 1;
+}
+
+message KtBoth {
+    KtOne one = 1;
+    KtTwo two = 2;
+}
