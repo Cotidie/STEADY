@@ -242,3 +242,17 @@ go_proto_library(
     visibility = ["//visibility:public"],
 )
 ```
+
+## Troubleshoot
+### \<filename\>: undefined: \<member\>
+```bash
+# Error Message
+tracing/tracer.go:29:27: undefined: Option
+tracing/tracer.go:30:12: undefined: newConfig
+tracing/tracer.go:78:25: undefined: Config
+tracing/tracer.go:83:7: undefined: Stdout
+tracing/tracer.go:98:25: undefined: Config
+```
+- Context: When referencing a file in the same pacakge
+- Solution: Adds all the files in the same pacakge in `srcs` field in BUILD file
+
