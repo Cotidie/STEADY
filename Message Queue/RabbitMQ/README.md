@@ -39,3 +39,24 @@ apt-get install -y erlang-base \
 # Finally, install RabbitMQ
 apt-get install rabbitmq-server -y --fix-missing
 ```
+
+## Setting Up
+### Environment Variables
+| see: https://www.rabbitmq.com/configure.html#supported-environment-variables  
+RabbitMQ takes environment variables for setting up basic configuration. Environment variables are prioritized over `rabbitmq-env.conf` or `rabbitmq-env-conf.bat`, and will override env-variables in the file.
+```bash
+# Port to open to clients (Default: 5682)
+export RABBITMQ_NODE_PORT=5682
+# Port to open to nodes and CLI tools
+export RABBITMQ_DIST_PORT=20000+$RABBITMQ_NODE_PORT
+export RABBITMQ_NODENAME=rabbit$HOSTNAME
+# Database parent folder for nodes
+# Each mnesia(server's database) folder must belongs to one node
+export RABBITMQ_MNESIA_BASE=/var/lib/rabbitmq/mnesia/
+# Dedicated message store for current node
+export RABBITMQ_MNESIA_DIR=$RABBITMQ_MNESIA_BASE/$RABBITMQ_NODENAME
+# Config file to read (.conf .config)
+export RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq.conf
+```
+
+### Configuration
