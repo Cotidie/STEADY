@@ -60,3 +60,24 @@ export RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq.conf
 ```
 
 ### Configuration
+![channel](https://i.imgur.com/3XO6PZM.png)  
+| See: https://www.rabbitmq.com/configure.html#config-items
+```bash
+# A new style format snippet. This format is used by rabbitmq.conf files.
+ssl_options.cacertfile           = /path/to/ca_certificate.pem
+ssl_options.certfile             = /path/to/server_certificate.pem
+ssl_options.keyfile              = /path/to/server_key.pem
+ssl_options.verify               = verify_peer
+ssl_options.fail_if_no_peer_cert = true
+```
+Configuration file `rabbitmq.conf` is responsible for settings such as TCP, TLS, constraints, authentication...etc. Below are most important config entries.
+| Entry | Default | Desc |
+| ----- | ------- | ---- |
+| cluster_name | "" | Defines the name of a origin that messages belong to |
+| listeners.tcp.default | $RABBITMQ_NODE_PORT | A port number to open to clients |
+| management.tcp.port | 15672 | Port to open for management web service |
+| hearbeat | 60 (s) | Duration of time the TCP connection is considered to be unreachable. The smaller value will be used between server's and client's |
+| frame_max | 131072 (bytes) | Maximum size of each message frame. Larger size will increase throughput, smaller size will improve latency. |
+| channel_max | 0 (unlimited) | Number of channels to use to communicate. Increased size will use more memory (footprint) |
+
+### Plugins
