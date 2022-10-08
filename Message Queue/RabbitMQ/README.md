@@ -81,3 +81,26 @@ Configuration file `rabbitmq.conf` is responsible for settings such as TCP, TLS,
 | channel_max | 0 (unlimited) | Number of channels to use to communicate. Increased size will use more memory (footprint) |
 
 ### Plugins
+RabbitMQ supports various plugins such as system monitoring, message type extension, ans so on. Plugins can be enabled or disabled regardless of whether it is at runtime or not.
+```bash
+# To see a list of available plugins
+$ sudo rabbitmq-plugins list
+# To enable a plugin 
+$ sudo rabbitmq-plugins enable <plugin name>
+```
+#### Management Web
+![management-plugin](https://i.imgur.com/R3sesTw.png)
+```bash
+$ sudo rabbitmq-plugins enable rabbitmq-management
+```
+`rabbitmq-management` plugin provides visualized web page for easy management. Default user id and pw is `guest` for both. id/pw can be set in admin tab. The address to access the web board is `localhost:15682`, which port number comes from `management.tcp.port` config.
+
+### Run Server
+```bash
+# Start a RabbitMQ node
+$ sudo rabbitmq-server start
+# View status of running rabbitmq nodes
+$ sudo rabbitmqctl status
+# Stop running node
+$ sudo rabbitmq-server stop
+```
