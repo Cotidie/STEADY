@@ -104,3 +104,21 @@ $ sudo rabbitmqctl status
 # Stop running node
 $ sudo rabbitmq-server stop
 ```
+
+## Concepts
+RabbitMQ is a **broker** that connects Producers and Consumers.
+### Exchange
+| Refer to: https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html  
+![Broker](https://i.imgur.com/wEk5eUU.png)  
+Producer never send messages directly to the queue. Instead, it emits messages with a routing key to Exchange. Then Exchange delivers a message to a queue with a corresponding routing/binding key. So, it is responsible for routing messages to different queues with the help of routing keys and bindings.
+- **Routing**: A key that messages hold for finding a queue. Should match with a binding key. 
+- **Binding**: A key that binds a queue to an exchange
+
+There are four types of Exchange that can be used in different scenarios: direct, topic, fanout and headers.
+| Type | Scenario |
+|:----:| -------- |
+| Default | Binds to all existing queues. When users don't want to care about exchanges |
+| Fanout | Simply routes a received message to all queues bound to it. Routing key is ignored |
+| Direct | (=Nameless) Routes a message to the queue matching with routing key |
+| Topic | Routes a message to all queues with binding of a matching pattern. ex) app.log -> *log |
+| Headers | Routes a message based on header `x-match`, not with a routing key. |
