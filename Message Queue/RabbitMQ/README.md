@@ -93,7 +93,7 @@ $ sudo rabbitmq-plugins enable <plugin name>
 ```bash
 $ sudo rabbitmq-plugins enable rabbitmq-management
 ```
-`rabbitmq-management` plugin provides visualized web page for easy management. Default user id and pw is `guest` for both. id/pw can be set in admin tab. The address to access the web board is `localhost:15682`, which port number comes from `management.tcp.port` config.
+`rabbitmq-management` plugin provides visualized web interface for easy management. Default user id and pw is `guest` for both. id/pw can be set in admin tab. The address to the web page is `localhost:15682`, which port number comes from `management.tcp.port` config.
 
 ### Run Server
 ```bash
@@ -122,3 +122,17 @@ There are four types of Exchange that can be used in different scenarios: direct
 | Direct | (=Nameless) Routes a message to the queue matching with routing key |
 | Topic | Routes a message to all queues with binding of a matching pattern. ex) app.log -> *log |
 | Headers | Routes a message based on header `x-match`, not with a routing key. |
+
+### Queue
+![Federation](https://www.rabbitmq.com/img/federation/federated_queues00.png)  
+Queue is ordered collection of messages with FIFO manner. Queue has its unique name in a node and can be federated with queues in other nodes for higher capacity. Behaviors of each queue are configurable when initiating a queue with properties as:
+```go
+channel.queueDeclare(NAME, DURABLE, EXCLUSIVE, AUTO-DELETE, ARGUMENTS...)
+```
+- **Name**: a unique name for a queue, following a convention is highly recommended
+- **Durable**: durable queues will survive broker/node restart
+- **Auto Delete**: Queue will be deleted itself when there's no consumer
+- **Classic/Quorum**: Quorum queues provide safer messages against errors with message segmentation
+- **Exlusive**: Allows only one connection and auto-deleted
+- **Priority**: sets CPU priority for additional CPU cost
+- **Expiration Time**: both messages and queues can have TTL value, smaller one will be applied
