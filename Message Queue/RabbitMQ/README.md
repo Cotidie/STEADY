@@ -141,9 +141,32 @@ Queue is ordered collection of messages with FIFO manner. Queue has its unique n
 channel.queueDeclare(NAME, DURABLE, EXCLUSIVE, AUTO-DELETE, ARGUMENTS...)
 ```
 - **Name**: a unique name for a queue, following a convention is highly recommended
-- **Durable**: durable queues will survive broker/node restart
+- **Durable**: durable queues/exchanges will recreate messages when broker/node restarts
+  - **Persistency**: Message's ability to be restored in a disk (should work with durable queues)
 - **Auto Delete**: Queue will be deleted itself when there's no consumer
 - **Classic/Quorum**: Quorum queues provide safer messages against errors with message segmentation
 - **Exlusive**: Allows only one connection and auto-deleted
 - **Priority**: sets CPU priority for additional CPU cost
-- **Expiration Time**: both messages and queues can have TTL value, smaller one will be applied
+- **Expiration Time**: both messages and queues can have TTL value, smaller one will be applied  
+  
+## Usage
+### Publish a persistent message
+```go
+// 1. Send message as persistent message
+channel.basicPublish(
+  "", 
+  WORK_QUEUE_NAME, 
+  MessageProperties.PERSISTENT_TEXT_PLAIN,  // persistent messahe
+)
+// 2. Publish into durable exchange
+channel.exchangeDeclare(EXCHANGE_NAME, "topic", true /*durable*/)
+// 3. Message should be sent to durable queue
+channel.queueDeclare(QUEUE_NAME, true /*durable*/, ...)
+```
+
+### Acknoledgement
+Consumers should send acknowledgement to the queue whether or not they received messages correctly. Delivered messages will be marked as deletion by default, unless explicitly requeued by consumers.
+- **Reject**: When a consumer received a message but had some error while processing.
+- **NACK**: (Negative Acknowledgement) supports rejecting **in bulk**
+- **ACK**: Messages are delivered without an error
+
