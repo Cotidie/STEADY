@@ -182,3 +182,15 @@ Consumers should send acknowledgement to the queue whether or not they received 
 | Headers  | x-match: all <br> topic: sports <br> city: london | x-match: any <br> topic: sports <br> city: paris | Routing key will be ignored, provides more flexibility over other exchange types |
 
 
+### RPC
+![RPC](https://i.imgur.com/wyzNCNw.png)  
+| See: https://www.rabbitmq.com/tutorials/tutorial-six-go.html  
+
+AMQP 0-9-1 provides useful properties for RPC calls between clients(producer) and a server(consumer). RabbitMQ can be a good RPC wrapper with using `replyTo`, `correlationId` properties and exclusive queues. 
+1. Setup a request queue for server, a response queue for each client
+   - response queue should be `exclusive` for auto-deletion
+2. Clients send messages for RPC call with unique correlation id and replyTo
+   - UUID can be used for creating correlation id
+   - correlation id is for distinguishing asynchronous RPC calls
+   - replyTo is the name of the unique reply queue
+3. Server returns result from each RPC call to the exchange with routing key of value from `replyTo`  

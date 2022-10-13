@@ -13,6 +13,6 @@
 ## AMQP
 ![AMQP](https://paolopatierno.files.wordpress.com/2015/07/amqp_frame.png)  
 [Advanced Message Queue Protocol](https://www.rabbitmq.com/tutorials/amqp-concepts.html) is an application layer protocol that focuses on process-to-process communication across IP networks. It defines a message structure and transport procedures. Message is split into 3 parts:
-- **Header**: AMQP specifications (Key-Value pairs)
-- **Properties**: Application specific information (Key-Value pairs)
+- **Header**: Application specific information (Key-Value pairs) 
+- **Properties**: AMQP specifications (14 Key-Value pairs)
 - **Body**:  Payload
