@@ -11,6 +11,11 @@
   - [Concepts](#concepts)
     - [Exchange](#exchange)
     - [Queue](#queue)
+  - [Usage](#usage)
+    - [Persistent message](#persistent-message)
+    - [Acknoledgement](#acknoledgement)
+    - [Publish/Subscribe](#publishsubscribe)
+    - [RPC](#rpc)
 ## Install
 ### Using Docker
 ```docker
@@ -150,7 +155,7 @@ channel.queueDeclare(NAME, DURABLE, EXCLUSIVE, AUTO-DELETE, ARGUMENTS...)
 - **Expiration Time**: both messages and queues can have TTL value, smaller one will be applied  
   
 ## Usage
-### Publish a persistent message
+### Persistent message
 ```go
 // 1. Send message as persistent message
 channel.basicPublish(
