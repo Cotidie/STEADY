@@ -1,0 +1,177 @@
+{
+    "Name": "First Recording",
+    "SpanContext": {
+        "TraceID": "9532f7040d0f77cccaeb6cfbfd6b4ed6",
+        "SpanID": "9904f7b203a3624e",
+        "TraceFlags": "01",
+        "TraceState": "",
+        "Remote": false
+    },
+    "Parent": {
+        "TraceID": "00000000000000000000000000000000",
+        "SpanID": "0000000000000000",
+        "TraceFlags": "00",
+        "TraceState": "",
+        "Remote": false
+    },
+    "SpanKind": 1,
+    "StartTime": "2022-10-13T00:12:50.108602692Z",
+    "EndTime": "2022-10-13T00:12:50.208692477Z",
+    "Attributes": null,
+    "Events": null,
+    "Links": null,
+    "Status": {
+        "Code": "Unset",
+        "Description": ""
+    },
+    "DroppedAttributes": 0,
+    "DroppedEvents": 0,
+    "DroppedLinks": 0,
+    "ChildSpanCount": 0,
+    "Resource": [
+        {
+            "Key": "service.name",
+            "Value": {
+                "Type": "STRING",
+                "Value": ""
+            }
+        },
+        {
+            "Key": "service.version",
+            "Value": {
+                "Type": "STRING",
+                "Value": ""
+            }
+        },
+        {
+            "Key": "telemetry.sdk.language",
+            "Value": {
+                "Type": "STRING",
+                "Value": "go"
+            }
+        }
+    ],
+    "InstrumentationLibrary": {
+        "Name": "go.opentelemetry.io/otel/sdk/trace",
+        "Version": "",
+        "SchemaURL": ""
+    }
+}
+{
+    "Name": "Third Recording",
+    "SpanContext": {
+        "TraceID": "21fb9482aa08aa3d65240a9c7bf232b7",
+        "SpanID": "492b86335490c352",
+        "TraceFlags": "01",
+        "TraceState": "",
+        "Remote": false
+    },
+    "Parent": {
+        "TraceID": "00000000000000000000000000000000",
+        "SpanID": "0000000000000000",
+        "TraceFlags": "00",
+        "TraceState": "",
+        "Remote": false
+    },
+    "SpanKind": 1,
+    "StartTime": "2022-10-13T00:12:50.108453199Z",
+    "EndTime": "2022-10-13T00:12:50.208699263Z",
+    "Attributes": null,
+    "Events": null,
+    "Links": null,
+    "Status": {
+        "Code": "Unset",
+        "Description": ""
+    },
+    "DroppedAttributes": 0,
+    "DroppedEvents": 0,
+    "DroppedLinks": 0,
+    "ChildSpanCount": 0,
+    "Resource": [
+        {
+            "Key": "service.name",
+            "Value": {
+                "Type": "STRING",
+                "Value": ""
+            }
+        },
+        {
+            "Key": "service.version",
+            "Value": {
+                "Type": "STRING",
+                "Value": ""
+            }
+        },
+        {
+            "Key": "telemetry.sdk.language",
+            "Value": {
+                "Type": "STRING",
+                "Value": "go"
+            }
+        }
+    ],
+    "InstrumentationLibrary": {
+        "Name": "go.opentelemetry.io/otel/sdk/trace",
+        "Version": "",
+        "SchemaURL": ""
+    }
+}
+{
+    "Name": "Second Recording",
+    "SpanContext": {
+        "TraceID": "a35139792f8abe30abcb5fbd35d6a88a",
+        "SpanID": "47cbe5728dce3e73",
+        "TraceFlags": "01",
+        "TraceState": "",
+        "Remote": false
+    },
+    "Parent": {
+        "TraceID": "00000000000000000000000000000000",
+        "SpanID": "0000000000000000",
+        "TraceFlags": "00",
+        "TraceState": "",
+        "Remote": false
+    },
+    "SpanKind": 1,
+    "StartTime": "2022-10-13T00:12:50.108500505Z",
+    "EndTime": "2022-10-13T00:12:50.208650386Z",
+    "Attributes": null,
+    "Events": null,
+    "Links": null,
+    "Status": {
+        "Code": "Unset",
+        "Description": ""
+    },
+    "DroppedAttributes": 0,
+    "DroppedEvents": 0,
+    "DroppedLinks": 0,
+    "ChildSpanCount": 0,
+    "Resource": [
+        {
+            "Key": "service.name",
+            "Value": {
+                "Type": "STRING",
+                "Value": ""
+            }
+        },
+        {
+            "Key": "service.version",
+            "Value": {
+                "Type": "STRING",
+                "Value": ""
+            }
+        },
+        {
+            "Key": "telemetry.sdk.language",
+            "Value": {
+                "Type": "STRING",
+                "Value": "go"
+            }
+        }
+    ],
+    "InstrumentationLibrary": {
+        "Name": "go.opentelemetry.io/otel/sdk/trace",
+        "Version": "",
+        "SchemaURL": ""
+    }
+}

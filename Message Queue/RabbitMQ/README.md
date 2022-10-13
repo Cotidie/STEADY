@@ -170,3 +170,15 @@ Consumers should send acknowledgement to the queue whether or not they received 
 - **NACK**: (Negative Acknowledgement) supports rejecting **in bulk**
 - **ACK**: Messages are delivered without an error
 
+### Publish/Subscribe
+**Scenario**
+- Consumer 1: Wants news about sports
+- Consumer 2: Wants news about sports and weather
+
+| Exchange | Consumer 1 | Consumer 2 | Message |
+| -------- | ---------- | ---------- | ------- |
+| Direct   | sports     | sports, weather | Delivered to consumers with exact bindings |
+| Topic    | \*.sports.\* | \*.sports.\*, \*.weather.# | Delivered to consumers with matching patterns<br>(\*: One word, #: Zero or more words) |
+| Headers  | x-match: all <br> topic: sports <br> city: london | x-match: any <br> topic: sports <br> city: paris | Routing key will be ignored, provides more flexibility over other exchange types |
+
+
