@@ -111,6 +111,14 @@ $ sudo rabbitmq-plugins enable rabbitmq-management
 ```
 `rabbitmq-management` plugin provides visualized web interface for easy management. Default user id and pw is `guest` for both. id/pw can be set in admin tab. The address to the web page is `localhost:15682`, which port number comes from `management.tcp.port` config.
 
+#### Consistent Hash Exchange
+![Consistent Hashing](https://www.researchgate.net/profile/Benjamin-Erb/publication/236149101/figure/fig6/AS:669985961672724@1536748509654/Figure-Consistent-hashing-maps-nodes-and-data-items-into-the-same-ring-for.png)  
+| See: https://github.com/rabbitmq/rabbitmq-server/blob/main/deps/rabbitmq_consistent_hash_exchange/README.md  
+```bash
+sudo rabbitmq-plugins enable rabbitmq_consistent_hash_exchange
+```
+Consistent hashing makes it possible for queues to have a weight for load-balancing. It deploys nodes, which represents servers, into a hashring and distributes messages based on its hash value. Messages will belong to the nearest server that has close hash value.
+
 ### Run Server
 ```bash
 # Start a RabbitMQ node
@@ -153,7 +161,15 @@ channel.queueDeclare(NAME, DURABLE, EXCLUSIVE, AUTO-DELETE, ARGUMENTS...)
 - **Exlusive**: Allows only one connection and auto-deleted
 - **Priority**: sets CPU priority for additional CPU cost
 - **Expiration Time**: both messages and queues can have TTL value, smaller one will be applied  
-  
+
+### Dead Letter Exchange(DLE)
+![DLE](https://www.cloudamqp.com/img/blog/dead-letter-exchange.png)  
+Messages that are considered dead, and DLE directs those messages into Dead Letter Queues. Its usage is mainly for debugging purpose, or to increase latency intentionally between publishers and subscribers. Dead letters happen when:
+- NACK/rejected with requeue `false`
+  => Queues with `x-dead-letter-exchange` attribute
+- TTL exceeded
+  => Queues/Messages with `x-message-ttl`
+
 ## Usage
 ### Persistent message
 ```go
@@ -199,3 +215,12 @@ AMQP 0-9-1 provides useful properties for RPC calls between clients(producer) an
    - correlation id is for distinguishing asynchronous RPC calls
    - replyTo is the name of the unique reply queue
 3. Server returns result from each RPC call to the exchange with routing key of value from `replyTo`  
+
+
+### Delayed Messages
+Messages can be scheduled by using Dead Letter Exchange. To acheive this:
+1. Set a normal exchange and a normal queue with `x-dead-letter-exchange` attribute
+2. Set a dead letter exchange and a queue
+3. Connect consumers with the dead letter queue
+4. Publish messages with TTL attribute
+
