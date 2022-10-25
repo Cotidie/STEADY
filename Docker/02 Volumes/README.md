@@ -72,3 +72,14 @@ docker: Error response from daemon: failed to create shim task: OCI runtime crea
 ```bash
 $ docker run --rm --name feedback-app -p 3000:80 -v "/home/wonseok/repositories/STEADY/Docker/02 Volumes/note-app:/app:ro" -v feedback:/app/feedback -v /app/node_modules feedback-app:volume
 ```
+
+### Failed to create shim task
+```bash
+docker run --rm -it -v /home/wonseok/main:/app/app ...
+
+docker: Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "/app/app": permission denied: unknown.
+```
+- **Cause**: There are two possible causations
+  - `/home/wonseok/main` doesn't exist
+  - `/home/wonseok/main` doesn't have enough permission for user (=> fchmod)
+- **Solution**: Resolved by deleting the whole directory and making a new one

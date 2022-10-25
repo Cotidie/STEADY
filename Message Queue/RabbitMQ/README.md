@@ -158,9 +158,15 @@ channel.queueDeclare(NAME, DURABLE, EXCLUSIVE, AUTO-DELETE, ARGUMENTS...)
   - **Persistency**: Message's ability to be restored in a disk (should work with durable queues)
 - **Auto Delete**: Queue will be deleted itself when there's no consumer
 - **Classic/Quorum**: Quorum queues provide safer messages against errors with message segmentation
-- **Exlusive**: Allows only one connection and auto-deleted
+- **Exclusive**: Allows only one connection and auto-deleted
 - **Priority**: sets CPU priority for additional CPU cost
 - **Expiration Time**: both messages and queues can have TTL value, smaller one will be applied  
+
+### Acknoledgement
+Consumers should send acknowledgement to the queue whether or not they received messages correctly. Delivered messages will be marked as deletion by default, unless explicitly requeued by consumers.
+- **Reject**: When a consumer received a message but had some error while processing.
+- **NACK**: (Negative Acknowledgement) supports rejecting **in bulk**
+- **ACK**: Messages are delivered without an error
 
 ### Dead Letter Exchange(DLE)
 ![DLE](https://www.cloudamqp.com/img/blog/dead-letter-exchange.png)  
@@ -185,12 +191,6 @@ channel.exchangeDeclare(EXCHANGE_NAME, "topic", true /*durable*/)
 channel.queueDeclare(QUEUE_NAME, true /*durable*/, ...)
 ```
 
-### Acknoledgement
-Consumers should send acknowledgement to the queue whether or not they received messages correctly. Delivered messages will be marked as deletion by default, unless explicitly requeued by consumers.
-- **Reject**: When a consumer received a message but had some error while processing.
-- **NACK**: (Negative Acknowledgement) supports rejecting **in bulk**
-- **ACK**: Messages are delivered without an error
-
 ### Publish/Subscribe
 **Scenario**
 - Consumer 1: Wants news about sports
@@ -201,7 +201,6 @@ Consumers should send acknowledgement to the queue whether or not they received 
 | Direct   | sports     | sports, weather | Delivered to consumers with exact bindings |
 | Topic    | \*.sports.\* | \*.sports.\*, \*.weather.# | Delivered to consumers with matching patterns<br>(\*: One word, #: Zero or more words) |
 | Headers  | x-match: all <br> topic: sports <br> city: london | x-match: any <br> topic: sports <br> city: paris | Routing key will be ignored, provides more flexibility over other exchange types |
-
 
 ### RPC
 ![RPC](https://i.imgur.com/wyzNCNw.png)  
@@ -215,7 +214,6 @@ AMQP 0-9-1 provides useful properties for RPC calls between clients(producer) an
    - correlation id is for distinguishing asynchronous RPC calls
    - replyTo is the name of the unique reply queue
 3. Server returns result from each RPC call to the exchange with routing key of value from `replyTo`  
-
 
 ### Delayed Messages
 Messages can be scheduled by using Dead Letter Exchange. To acheive this:
