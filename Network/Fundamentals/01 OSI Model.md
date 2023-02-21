@@ -54,5 +54,5 @@ A packet from **A**(IP: 11.8.8.11) to **B**(IP: 22.7.7.22) would traverse throug
     - response is faster as all the required info is already recorded
 
 ## Question
-| How does port forwarding work while router is a Layer 3 device?
-: 
+**| How does port forwarding work while router is a Layer 3 device?**  
+: Port forwarding is managed by NAT router that maps external ip:port to internal ip:port. 
