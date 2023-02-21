@@ -27,7 +27,7 @@ Bazel is Google's own build tool for the automation of building and testing of l
 ### Workspace
 Workspace is a root directory of pacakges and is considered as a unit of applications. Directories containing ```WORKSPACE``` file are considered the root of a workspace. It specifies external dependencies for building a workspace.
 - Bazel ignores subdirectory trees containing a ```WORKSPACE``` file.
-- ```WORKSPACE.bazel``` is prioritized thans ```WORKSPACE``` file 
+- ```WORKSPACE.bazel``` is prioritized than ```WORKSPACE``` file 
 - The root directory(repository) is called ```@```
 - external repositories are defined here and can be used with ```@```
 

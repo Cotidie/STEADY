@@ -98,11 +98,13 @@ services:
 # Named volumes should be specified before usage
 volumes:
   data: <empty>
+    external: <bool> # To use a volume with exact name
   ...
 
 # Networks should be specified before usage
 networks:
   goals: <empty>
+    external: <bool>
   ...
 ```
 - Named volumes, networks should be specified as top-level entries before use
@@ -129,3 +131,11 @@ $ docker compose down (-v)
 ```
 - `up -d` starts in detached mode
 - `down -v` removes all named volumes used in the compose
+
+## Troubleshoot
+  | no configuration file provided: not found  
+- **Context**: When trying `docker compose <docker compose yaml> up`
+- **Cause**: If you want to specify a file, should use `-f` flag
+- **Solution**: `docker compose -f <docker compose yaml> up`
+
+  | volumes must be mapping

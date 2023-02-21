@@ -136,7 +136,7 @@ Docker hub is a public repository for sharing docker images. docker uses ```push
 1. Create a repositry on [Docker Hub](https://hub.docker.com/)
 2. ```docker login```
 3. build or rename an image to fit `username/repository` format
-4. ```docker pull username/repository:tag```
+4. ```docker push username/repository:tag```
 ### To Download
 - ```docker pull username/repository:tag```
 - ```docker run repository:tag``` will try to pull from Docker Hub if not in local.
