@@ -4,6 +4,10 @@
  IP is the address for host to host communication along with MAC address. It's the data that Layer 3 handles with packets, represented as **network.host/subnet** foramt.
 - If destination ip resides in the same subnet, it only uses MAC address(L2) for communication
 - If not, packet(L3) is delivered to the Default Gateway(Router)
+
+## Private Network
+![Private IP](https://i.imgur.com/QarFwtr.jpg)  
+ IPv4 has private IP range which is managed by routers and forms subnet. Any private network can make use of those ranges but in practice, it's devided into multiple subnets to better apply policies per subnet, e.g. blocking certain domain or allowing only text data.
   
 ## IP Packet
 ![IP Packet](https://i.imgur.com/YbOmhi9.png)  
