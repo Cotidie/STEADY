@@ -22,3 +22,24 @@
  - When TTL is exceeded, a medium router sends back ICMP packet to the Source IP with error code.
  - **Ping**: `ping <destination>`. Measures latency and connection status.
  - **Traceroute**: `traceroute <destination>`. Finds routing path to the destination, by sending multiple pings with incremented TTL.
+
+## ARP (Address Resolution Protocol)
+![ARP](https://i.imgur.com/WfVpdfj.jpg)  
+  Over L3 devices manage ARP table that maps IP address to MAC address. Any data frames(L2) that carry ARP request or replay are to be examined and help filling up ARP table dynamically. ARP protocol resides in L2 data so that L2 devices like switch can broadcast over network. It plays a critical role in Load Balancing as some server should absorb traffic which otherwise would be directed to a broken server.
+- **ARP Request**: Broadcasted to all the devices within a subnet.
+- **ARP Reply**: Unicast that a device with target IP sends to the source device.
+
+## Exercise
+### TCPDUMP
+```shell
+> sudo tcpdump -nvi <network interface> <protocol> <expression>
+
+> sudo tcpdump -nvi wlp0s20f3 arp src 10.0.0.1 or dest 10.0.0.1
+ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 10.0.0.48 tell 10.0.0.1, length 42
+ARP, Ethernet (len 6), IPv4 (len 4), Reply 10.0.0.48 is-at 00:93:37:2c:7c:16, length 28
+
+> sudo tcpdump -ni wlp0s20f3 icmp
+IP 10.0.0.48 > 8.8.8.8: ICMP echo request, id 10336, seq 1, length 64
+IP 8.8.8.8 > 10.0.0.48: ICMP echo reply, id 10336, seq 1, length 64
+```
+tcpdump allows sniffing network traffic on specific interface(wireless/ethernet...). Example above shows ARP traffic on `wlp0s20f3` interface, wirelss lan.
