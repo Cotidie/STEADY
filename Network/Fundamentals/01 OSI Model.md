@@ -19,8 +19,7 @@
 ![Proxy, Router](https://xuri.me/wp-content/uploads/2013/09/forward-proxy-3.jpg)  
 - **Swtich**: (Layer 2) It connects multiple hosts and makes a subnet. It needs only MAC address to find the destination within its subnet.
 - **Router**: (Layer 3) A device connected to internet. It need packet(IP) to find the destination router.
-- **Gateway**: (Layer 3) Gateway is a router that a subnet uses to communicate with internet.
-- **Proxy**: (Layer 4) A server that hides IP address for clients. It should be over Layer 3 to modify IP, and Layer 4 to maintain connections with multiple clients.
+- **Gateway**: (Layer 3) Ghttps://i.stack.imgur.com/oMOGd.png4 to maintain connections with multiple clients.
 - **Firewall**: (Layer 4) A device that controls flow over ports.
 - **Load Balancer/CDN**: (Layer 7) A server that caches content and redirects to an appropriate server.
 
