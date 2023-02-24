@@ -1,7 +1,7 @@
 # UDP & TCP
 ## UDP (User Datagram Protocol)
 ![UDP](https://i.imgur.com/C9cNJRP.jpg)  
- UDP is a Layer 4 protocol that doesn't required mutual connection, thereby provides faster connection speed and smaller datagram size. Header is only 8 bytes that only contain ports, length and checksum for 2 bytes each. VPN, Video Streaming, DNS, WebRTC, etc. prefers UDP over TCP since it's faster and stateless.  
+ UDP is a Layer 4 protocol that doesn't required `connection`, thereby provides faster connection speed and smaller datagram size. Header is only 8 bytes that only contain ports, length and checksum for 2 bytes each. VPN, Video Streaming, DNS, WebRTC, etc. prefers UDP over TCP since it's faster and stateless.  
  - UDP doesn't care datagram loss or error (One way delivery)
  - **Stateless**: No ordered datagram and no flow control (doesn't request re-send) 
 ### TCPDUMP
@@ -19,8 +19,34 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
     8.8.8.8.53 > 10.0.0.48.33191: 41500 4/0/0 naver.com. A 223.130.200.104, naver.com. A 223.130.195.95, naver.com. A 223.130.195.200, naver.com. A 223.130.200.107 (91)
 ```
   
-## TCP ()
+## TCP (Transmission Control Protocol)
+  TCP is a bidirectional protocol that offers reliable, ordered and error-checked delivery of data. It does Three way Handshake with `SYN, ACK` when making a connection, and Four way Handshake with `FIN, ACK` to destroy a connection.
+### Segment (Header)
+![TCP Header](https://i.imgur.com/MQQfXWc.png)  
+- **Sequence Number**: Segment offset, number of total sequence is largely affected by target's MTU (normaly 1500 bytes).
+-  
+### Handshake
+| Three Way      | Four Way |
+| :-----------: | :-----------: |
+| ![Three Way](https://i.imgur.com/h178fj8.png)      | ![Four Way](https://i.imgur.com/b2ieX1g.jpg)       |
+### Three way
+- Client sends `SYN` request to establish a connection
+- Server sends `SYN/ACK` response to notify a socket is open. 
+  - socket should be open beforehand
+- Client sends `ACK` response that connection is established.
 
+### Four way
+- Client sends `FIN` request to close a connection
+- Server sets a connection to `CLOSE_WAIT` status and sends `ACK`, `FIN`
+  - `CLOSE_WAIT` is to wait for `ACK`s to ensure all the data is sent, and there's no packet loss. 
+- Client sets a connection to `TIME_WAIT` status and sends `ACK`
+  - `TIME_WAIT` does the same role as `CLOSE_WAIT`.
+- Server closes connection
+- Client closes connection after timeout 
+  
 ## Questions
 **| Why is UDP/TCP header contained in IP packet?**  
 It's because that datagram/packet is formed from higher layer to lower layer, attaching headers. 
+
+**| How does a client receive UDP data, when it's not sure if ready to receive?**
+UDP data is accepted only when client checks the socket to receive the data from. System call `select()` waits or checks data in a socket, then `rcvfrom()` fetch the data.
