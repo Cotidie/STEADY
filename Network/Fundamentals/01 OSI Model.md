@@ -1,4 +1,11 @@
 # OSI Model
+  - [Overview](#overview)
+  - [Network Devices](#network-devices)
+  - [Packet Travelling](#packet-travelling)
+    - [Tables](#tables)
+    - [Process](#process)
+  - [Question](#question)
+
 ## Overview
 ![OSI Model](https://i.imgur.com/QV4qzXs.jpg)  
  **OSI**(Open Systems Interconnection) Model is a communication standard comprises of 7 layers that have hierachical relationship for networking: Physical, Data link, Network, Transport, Session, Presentation and Application. Without a standard, it would've been very difficult to handle with numerous mediums and technologies such as LTE, statelite, fiber and so on.  
