@@ -24,7 +24,8 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
 ### Segment (Header)
 ![TCP Header](https://i.imgur.com/MQQfXWc.png)  
 - **Sequence Number**: Segment offset, number of total sequence is largely affected by target's MTU (normaly 1500 bytes).
--  
+-  **ACK Number**: ACK for a Sequence Number. it matches Seq number since ACK response doesn't carry data and standalone.
+-  **Window Size**: Receiver's available buffer(window) size. It can be scaled by window scaling option.
 ### Handshake
 | Three Way      | Four Way |
 | :-----------: | :-----------: |
@@ -43,7 +44,16 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
   - `TIME_WAIT` does the same role as `CLOSE_WAIT`.
 - Server closes connection
 - Client closes connection after timeout 
-  
+
+### Flow Control
+![Flow Control](https://i.imgur.com/2rHXlEB.png)  
+ Flow Control is all about limiting the amount of packets to send/receive. It uses **sliding window** method to manage buffer size and packets. Receiver sends available window size in each `ACK`'s TCP header, and sender adjusts the number of packets to send next. Note that window size is adjustable by `window size scaling factor`, which multiplies the window size by 2^n. (if the factor is 4, then multiply by 2^4=16)
+ 1. In handshake phase, client and server negotiate window scaling factor.
+   - Client offers desirable scaling factor when `SYN`, then Server selects compatible scaling size when `SYN/ACK`  
+ 2. n packets are sent by sender, then receiver `ACK`s with the number it received and updated window size.
+    - `ACK` with the number less than n means there's packet loss
+ 3. sender slides the window according to `ACK` number, and adjusts the amount of packets for the next.
+
 ## Questions
 **| Why is UDP/TCP header contained in IP packet?**  
 It's because that datagram/packet is formed from higher layer to lower layer, attaching headers. 
