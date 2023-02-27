@@ -53,10 +53,23 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
  2. n packets are sent by sender, then receiver `ACK`s with the number it received and updated window size.
     - `ACK` with the number less than n means there's packet loss
  3. sender slides the window according to `ACK` number, and adjusts the amount of packets for the next.
+    - If there's packet loss, the window just shrinks and doesn't move to ensure round trip.
+
+### Congestion Control
+![Congestion Control](https://i.imgur.com/AsO6eWn.jpg)  
+ Congestion control is about preventing packet loss when travelling between routers, as routers would drop packets exceeding MTU or when their buffer lacks space. Sender first exponentially increase the window size until it reaches its threshold(**Slow Start**), and then slowly increase the size until congestion happens(**Congestion Avoidance**). The size shrinks to its half and start over again.
+- **Slow Start**: increase the size of CWND by 1 * MSS on each `ACK`
+  - if `ACK` is accumulated by `n`, `n` * MSS increases. 
+- **Congestion Avoidance**: increase the size of CWND by 1 * MSS on each finished round trip
+  - Round Trip means a complete trasmission of packets in CWND
+  - If there's packet loss, CWND can't move forth.
 
 ## Questions
 **| Why is UDP/TCP header contained in IP packet?**  
-It's because that datagram/packet is formed from higher layer to lower layer, attaching headers. 
+ It's because that datagram/packet is formed from higher layer to lower layer, attaching headers. 
 
 **| How does a client receive UDP data, when it's not sure if ready to receive?**
-UDP data is accepted only when client checks the socket to receive the data from. System call `select()` waits or checks data in a socket, then `rcvfrom()` fetch the data.
+ UDP data is accepted only when client checks the socket to receive the data from. System call `select()` waits or checks data in a socket, then `rcvfrom()` fetch the data.
+
+**| What's the relationship between MSS and Congestion Window?**
+ MSS(Maximum Segment Size) affects the number of packets while CWND manages the total size of window, which segmented packets reside. If MSS increases while CWND remains the same, the number of packets increase, while data transfer rate remains almost the same.
