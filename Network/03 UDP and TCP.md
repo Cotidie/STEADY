@@ -68,8 +68,8 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
 **| Why is UDP/TCP header contained in IP packet?**  
  It's because that datagram/packet is formed from higher layer to lower layer, attaching headers. 
 
-**| How does a client receive UDP data, when it's not sure if ready to receive?**
+**| How does a client receive UDP data, when it's not sure if ready to receive?**  
  UDP data is accepted only when client checks the socket to receive the data from. System call `select()` waits or checks data in a socket, then `rcvfrom()` fetch the data.
 
-**| What's the relationship between MSS and Congestion Window?**
+**| What's the relationship between MSS and Congestion Window?**  
  MSS(Maximum Segment Size) affects the number of packets while CWND manages the total size of window, which segmented packets reside. If MSS increases while CWND remains the same, the number of packets increase, while data transfer rate remains almost the same.

@@ -1,9 +1,10 @@
-# Internet Protocol (IP)(#internet-protocol-ip)
+# Internet Protocol (IP)
   - [Overview](#overview)
   - [Private Network](#private-network)
   - [IP Packet](#ip-packet)
   - [ICMP (Internet Control Message Protocol)](#icmp-internet-control-message-protocol)
   - [ARP (Address Resolution Protocol)](#arp-address-resolution-protocol)
+  - [NAT (Network Address Translation)](#nat-network-address-translation)
   - [Exercise](#exercise)
     - [TCPDUMP](#tcpdump)
 
@@ -40,6 +41,16 @@
   Over L3 devices manage ARP table that maps IP address to MAC address. Any data frames(L2) that carry ARP request or replay are to be examined and help filling up ARP table dynamically. ARP protocol resides in L2 data so that L2 devices like switch can broadcast over network. It plays a critical role in Load Balancing as some server should absorb traffic which otherwise would be directed to a broken server.
 - **ARP Request**: Broadcasted to all the devices within a subnet.
 - **ARP Reply**: Unicast that a device with target IP sends to the source device.
+
+## NAT (Network Address Translation)
+![NAT Router](https://i.imgur.com/eOcCuAf.png)  
+ NAT is a technique used by routers to allow devices on a private network to share a single public IP. Router with NAT maintains NAT table that maps SourceIP:Port to PublicIP:PublicPort, and PublicIP:PublicPort to DestIP:Port. It assigns available public port to a private device which requests connection. 
+ - Router + NAT is a Layer 4 device, while router is just a Layer 3 device
+ - Public Port is unique entry in NAT table in most cases
+ - Multiple private devices can share the same public port in special cases.
+   - **Outgoing**: maps the combination of SourceAddress and DestAddress
+   - **Incoming**: maps the combination of DestAddress and PublicAddress
+
 
 ## Exercise
 ### TCPDUMP
