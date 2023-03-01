@@ -20,7 +20,9 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
 ```
   
 ## TCP (Transmission Control Protocol)
-  TCP is a bidirectional protocol that offers reliable, ordered and error-checked delivery of data. It does Three way Handshake with `SYN, ACK` when making a connection, and Four way Handshake with `FIN, ACK` to destroy a connection.
+  TCP is a bidirectional protocol that offers reliable, ordered and error-checked delivery of data. It does Three way Handshake with `SYN, ACK` when making a connection, and Four way Handshake with `FIN, ACK` to destroy a connection. It guarantees the delivery by **Flow Control**, **Congestion Control** and `ACK`
+  - **Head of Line Blocking**: If the head of segments doesn't arrive it should wait for time-out and resend everything
+  - **TCP Meltdown**: If VPN uses TCP connection between Dest and Source, too much calculation is needed for communication
 ### Segment (Header)
 ![TCP Header](https://i.imgur.com/MQQfXWc.png)  
 - **Sequence Number**: Segment offset, number of total sequence is largely affected by target's MTU (normaly 1500 bytes).
@@ -63,6 +65,7 @@ IP (tos 0x0, ttl 122, id 27583, offset 0, flags [none], proto UDP (17), length 1
 - **Congestion Avoidance**: increase the size of CWND by 1 * MSS on each finished round trip
   - Round Trip means a complete trasmission of packets in CWND
   - If there's packet loss, CWND can't move forth.
+
 
 ## Questions
 **| Why is UDP/TCP header contained in IP packet?**  
