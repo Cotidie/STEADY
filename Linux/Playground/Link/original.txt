@@ -1,0 +1,9 @@
+This is the original file. I want to check if hard-linked file is updated when either of files change.
+
+#1
+File changed from original.txt
+Hard-linked file is also updated
+
+#2
+File changed from hard-linked.txt
+original file is also updated

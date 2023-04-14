@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/url"
+	"runtime"
 )
 
 // Defer keyword works in function scope.
@@ -26,6 +28,44 @@ func urlParsing() {
 	fmt.Printf("Host: %s\n Path: %s\n", url.Host, url.Path)
 }
 
+// Get caller function's name and pacakge
+func GetCallerPackage() {
+	pc, _, _, ok := runtime.Caller(1)
+	if !ok {
+		log.Println("Couldn't get caller infomation")
+		return
+	}
+
+	funcName := runtime.FuncForPC(pc).Name()
+	log.Printf("Caller info: %v\n", funcName)
+}
+
+// #############################################################################
+// Method Overriding Test
+// Conclusion: Inherited method can only access to the composited struct.
+// #############################################################################
+type Serializable interface {
+	JSON() []byte
+}
+
+type Base struct {
+	Name string `json:"name"`
+}
+
+type SubBase struct {
+	Base
+	Email string `json:"email"`
+}
+
+func (b *Base) JSON() []byte {
+	serialized, err := json.MarshalIndent(b, "", "\t")
+	if err != nil {
+		log.Panicf("Error! %v\n", err)
+	}
+
+	return serialized
+}
+
 func main() {
-	deferTiming()
+	TestNoTagMarshaling()
 }
