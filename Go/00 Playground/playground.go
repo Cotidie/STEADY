@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/url"
 	"runtime"
+
+	"wonseok/go/playground/lib"
 )
 
 // Defer keyword works in function scope.
@@ -67,5 +69,5 @@ func (b *Base) JSON() []byte {
 }
 
 func main() {
-	TestNoTagMarshaling()
+	lib.CanURLParseEmptyStringWithoutError()
 }
