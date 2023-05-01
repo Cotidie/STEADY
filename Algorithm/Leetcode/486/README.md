@@ -1,5 +1,5 @@
 ## Link
-[Predict the Winner](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/516)
+[Predict the Winner](https://leetcode.com/problems/predict-the-winner/)
 
 ## Topic
 * Dynamic Programming (2d)
@@ -11,7 +11,7 @@
 3. **Recurrence**: `DP(i, j)` is the max value of
    - `Nums[i]` + (`Sum[i+1:j]` - `DP(i+1, j)`) (the left end is chosen)
    - `Nums[j]` + (`Sum[i:j-1]` - `DP(i, j-1)`) (the right end is chosen)
-4. **Topology**: Smaller to Larger (fill dp table diagonally)
+4. **Topology**: smaller to larger (fill the dp table diagonally)
 5. **Solve**: `DP(0, n-1)`
    
 ## Note

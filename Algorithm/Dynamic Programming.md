@@ -4,14 +4,17 @@
 
 # Steps
 1. Define Subproblems
-   - Get the number of sub-problems
+   - Get the number of sub-problems (size of DP table)
    - Is it suffixed(`x[i:]`), prefixed(`x[:i]`) or sub-fixed(`x[i:j]`)?
 2. Guess the part of solution
    - Get the sample solution to a sub problem
+   - Which condition/choice would it lead to the solution?
 3. Find recurrence relation using min, max
    - Define DP equation
+   - Set the relation on the guess.
 4. Ensure topological order
    - Must be acyclic: left to right, smaller to larger, and so on.
+   - It will decide which direction to fill the DP table.
 5. Solve the original problem
 
 # Examples
@@ -19,9 +22,9 @@
 ![Matrix Multiplication](https://bruceoutdoors.files.wordpress.com/2015/11/parenthesized-matrices.png?w=640)  
  Fine the fastest way of calculation to associattive expression A0 * A1 * A2 * ... * An
 1. **Subproblems**: optimal evaluation of Ai...A(j-1) => sub-fixed
-2. **Guess**: What is the result of the outermost/last multiplication? 
+2. **Guess**: which position should you choose for the last/outmost multiplication?
 ![guess](https://i.imgur.com/iabN50N.png)  
-3. **Recurrence**  
+3. **Recurrence**: 
 ![recurrence](https://i.imgur.com/JQDnllT.png)  
 4. **Topological Order**: smaller to larger (increasing the subproblem size)
 5. **Original Problem**: `DP(0, n)`
