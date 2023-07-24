@@ -3,6 +3,7 @@
 |:-----: |:-------:|:------:|:--------:| ---- |
 | Medium | Recursion | 2610 | [Convert an Array Into a 2D Array With Conditions](https://leetcode.com/problems/convert-an-array-into-a-2d-array-with-conditions/description/) |  |
 | Medium | Two Pointers | 11 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/) |  |
+| Hard | Two Pointers | 42 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) | |
 | Medium | Linked List | 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/description/) |  |
 | Medium | Heap | 373 | [Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/) |  |
 | Medium | Tree | 98 | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) |  |
