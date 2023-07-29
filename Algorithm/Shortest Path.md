@@ -10,12 +10,10 @@
 - [Questions](#questions)
 
 
-
-
 This document explains popular algorithms for finding the shortest path between vertices. 
 
 ## Dijkstra
- Given a set of vertices and edges, Dijkstra algorithm finds the shortest paths **from the source** to all vertices. It's a greedy algorithm that finds the shortest subpaths from the source `A` to the destination `D`, meaning that any subpath in `A -> D` is also the shortest path from `A`.  
+ Given a set of vertices and edges, Dijkstra algorithm finds the shortest paths **from the source** to all vertices. It's a greedy algorithm that finds the shortest subpaths from the source `A` to the destination `D`, meaning that any subpath in between `A -> D` is also the shortest path from `A`.  
 
 ### Algorithm
 ![Algorithm](https://i.imgur.com/73tLrVZ.gif)  
@@ -60,7 +58,7 @@ The pseudo code below is gotten from [Wikipedia](https://en.wikipedia.org/wiki/D
 
 
 ## Floyd Warshall
-Floyd Warshall finds the shortest paths **between all the pairs of vertices**. It follows the dynamic programming approach for its implementation. 
+Floyd Warshall finds the shortest paths **between all the pairs of vertices**. It follows dynamic programming approach for its implementation. 
 
 ### Algorithm
 1. Prepare a distance table and a path table.
