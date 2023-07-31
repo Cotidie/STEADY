@@ -6,6 +6,7 @@
 | Hard | Two Pointers | 42 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) | |
 | Medium | Linked List | 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/description/) |  |
 | Medium | Stack | 71 | [Simplify Path](https://leetcode.com/problems/simplify-path/) |  |
+| Medium | Heap | 355 | [Degisn Twitter](https://leetcode.com/problems/design-twitter/) |  |
 | Medium | Heap | 373 | [Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/) |  |
 | Medium | Tree | 98 | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) |  |
 | Medium | Tree | 199 | [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/) |  |
