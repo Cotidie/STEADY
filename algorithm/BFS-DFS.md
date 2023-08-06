@@ -18,12 +18,12 @@ BFS (G, s)
         mark w as visited.
 ```
 1. Prepare a queue and an array
-  - **queue**: stores nodes to visit
-  - **array**: marks already visited nodes
+    - **queue**: stores nodes to visit
+    - **array**: marks already visited nodes
 2. Put a starting node into the queue
 3. Pop from the queue and
-  - put adjacent nodes
-  - mark adjacent nodes as visited
+    - put adjacent nodes
+    - mark adjacent nodes as visited
 3. Iterate until the queue is empty
 
 ### Level order traversal
