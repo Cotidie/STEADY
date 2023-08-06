@@ -7,7 +7,7 @@ using namespace std;
 class Graph {
 public:
     Graph(int size) {
-        inStack = vector<int>(size, false);
+        visiting = vector<int>(size, false);
         done = vector<int>(size, false);
         prerequisites = vector<vector<int>>(size);
     }
@@ -32,16 +32,16 @@ public:
 
     bool dfs(int node) {
         for (int next : prerequisites[node]) {
-            if (visited[next]) return false;
+            if (visiting[next]) return false;
             if (done[next]) continue;
 
-            visited[next] = true;
+            visiting[next] = true;
 
             bool finished = dfs(next);
             if (!finished) return false;
         }
 
-        visited[node] = false;
+        visiting[node] = false;
         done[node] = true;
 
         return true;
@@ -49,7 +49,7 @@ public:
 
 private:
     vector<int> done;
-    vector<int> visited;
+    vector<int> visiting;
     vector<vector<int>> prerequisites;
 };
 
