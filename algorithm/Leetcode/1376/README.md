@@ -1,7 +1,7 @@
 ## Link
 [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/description/)
 
-## 관련 개념
+## Concepts
 * Tree
 * Recursion
 

@@ -11,6 +11,8 @@
 | Medium | Tree | 98 | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) |  |
 | Medium | Tree | 105 | [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/) |  |
 | Medium | Tree | 199 | [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/) |  |
+| Medium | Graph | 207 | [Course Schedule](https://leetcode.com/problems/course-schedule/) | |
+| Medium | Graph | 743 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | |
 | Medium | Graph | 1376 | [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) | [1143](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/1143) |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)| [516](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/516) |

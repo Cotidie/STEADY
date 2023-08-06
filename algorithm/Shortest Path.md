@@ -30,7 +30,7 @@ This document explains popular algorithms for finding the shortest path between 
 
 ### Pseudo Code
 The pseudo code below is gotten from [Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm).  
-```
+```cpp
  1  function Dijkstra(Graph, source):
  2      
  3      for each vertex v in Graph.Vertices:
