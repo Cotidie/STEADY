@@ -18,12 +18,13 @@ This document explains popular algorithms for finding the shortest path between 
 ### Algorithm
 ![Algorithm](https://i.imgur.com/73tLrVZ.gif)  
 1. Prepare two 1d arrays and a priority queue.
-   - **distance**: updates shortest distance
-   - **previous**: updates shortest path (previous vertex)
-   - **priority queue**: queue of unvisited vertices, sorted by distance
+    - **distance**: updates shortest distance
+    - **previous**: updates shortest path (previous vertex)
+    - **priority queue**: queue of unvisited vertices, sorted by distance
 2. Start from the source, examine distances to adjacent vertices.
-   - Update distances of the `distance` array
-   - Update previous vertex of the `previous` array
+    - Put a pair of [adjacent node, cost `source -> adj node`] to the priority queue
+    - Update distances of the `distance` array
+    - Update previous vertex of the `previous` array
 3. Pick the shortest one and pop from the priority queue.
    - It's the shortest subpath from the source
 4. Repeat until no vertex is left in the priority queue.
