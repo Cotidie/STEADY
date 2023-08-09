@@ -14,6 +14,8 @@
 | Medium | Graph | 207 | [Course Schedule](https://leetcode.com/problems/course-schedule/) | |
 | Medium | Graph | 743 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | |
 | Medium | Graph | 1376 | [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | |
+| Medium | Binary Search | 34 | [Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | |
+| Medium | Binary Search | 1631 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) | [1143](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/1143) |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)| [516](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/516) |
 | Medium | DP | 486 | [Predict the Winner](https://leetcode.com/problems/predict-the-winner/) | [486](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/486) |
