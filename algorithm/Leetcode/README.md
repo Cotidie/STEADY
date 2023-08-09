@@ -8,6 +8,7 @@
 | Medium | Stack | 71 | [Simplify Path](https://leetcode.com/problems/simplify-path/) |  |
 | Medium | Heap | 355 | [Degisn Twitter](https://leetcode.com/problems/design-twitter/) |  |
 | Medium | Heap | 373 | [Find K Pairs with Smallest Sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/) |  |
+| Medium | Heap | 378 | [Kth Smallest Element in a Sorted Matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | |
 | Medium | Tree | 98 | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) |  |
 | Medium | Tree | 105 | [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/) |  |
 | Medium | Tree | 199 | [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/description/) |  |
@@ -15,7 +16,7 @@
 | Medium | Graph | 743 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | |
 | Medium | Graph | 1376 | [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | |
 | Medium | Binary Search | 34 | [Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | |
-| Medium | Binary Search | 1631 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | |
+| Medium | Shortest Path | 1631 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) | [1143](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/1143) |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)| [516](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/516) |
 | Medium | DP | 486 | [Predict the Winner](https://leetcode.com/problems/predict-the-winner/) | [486](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/486) |
