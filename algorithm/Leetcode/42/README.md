@@ -1,4 +1,4 @@
-## 링크
+## Link
 [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/)
 
 ## Concepts
