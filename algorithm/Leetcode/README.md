@@ -18,6 +18,8 @@
 | Medium | 3Sum | 15 | [3Sum](https://leetcode.com/problems/3sum/) | |
 | Hard | Two Pointers | 42 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) | |
 | Medium | Two Pointers | 167 | [Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | |
+| Medium | Greedy | 53 | [Maximum Subarray](https://leetcode.com/problems/jump-game/) | |
+| Medium | Greedy | 55 | [Jump Game](https://leetcode.com/problems/jump-game/) | |
 | Medium | Shortest Path | 1631 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) | [1143](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/1143) |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)| [516](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/516) |
