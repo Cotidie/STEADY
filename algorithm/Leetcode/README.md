@@ -2,8 +2,6 @@
 | Difficulty | Topic | Number | Title | Note |
 |:-----: |:-------:|:------:|:--------:| ---- |
 | Medium | Recursion | 2610 | [Convert an Array Into a 2D Array With Conditions](https://leetcode.com/problems/convert-an-array-into-a-2d-array-with-conditions/description/) |  |
-| Medium | Two Pointers | 11 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/) |  |
-| Hard | Two Pointers | 42 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) | |
 | Medium | Linked List | 92 | [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/description/) |  |
 | Medium | Stack | 71 | [Simplify Path](https://leetcode.com/problems/simplify-path/) |  |
 | Medium | Heap | 355 | [Degisn Twitter](https://leetcode.com/problems/design-twitter/) |  |
@@ -16,6 +14,9 @@
 | Medium | Graph | 743 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | |
 | Medium | Graph | 1376 | [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | |
 | Medium | Binary Search | 34 | [Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | |
+| Medium | Two Pointers | 11 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/) |  |
+| Medium | 3Sum | 15 | [3Sum](https://leetcode.com/problems/3sum/) | |
+| Hard | Two Pointers | 42 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) | |
 | Medium | Two Pointers | 167 | [Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | |
 | Medium | Shortest Path | 1631 | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) | [1143](https://github.com/Cotidie/STEADY/tree/main/Algorithm/Leetcode/1143) |
