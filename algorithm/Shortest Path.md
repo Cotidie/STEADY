@@ -41,6 +41,8 @@ The pseudo code below is gotten from [Wikipedia](https://en.wikipedia.org/wiki/D
  7      dist[source] ← 0
  8      
  9      while Q is not empty:
+            // Use completed[bool] array when implementing
+            // for practical reason.
 10          u ← vertex in Q with min dist[u]
 11          remove u from Q
 12          
