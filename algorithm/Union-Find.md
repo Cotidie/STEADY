@@ -51,6 +51,50 @@ void Union(vector<int>& parent, int i, int j) {
         parent[jRoot] -= iSize;
     }
 }
-
 ```
 
+### Linked List
+```cpp
+class Node {
+public:
+    Node* parent;
+    int val;
+    int size;
+};
+
+class DisjointSet {
+public:
+    Node& Find(int val) {
+        Node& node = set[val];
+
+        if (node.next == nullptr) {
+            return node;
+        }
+
+        Node& rootNode = Find(node.parent->val);
+        node.parent = &rootNode;
+
+        return rootNode;
+    }
+
+    bool Union(int a, int b) {
+        Node& aRoot = Find(a);
+        Node& bRoot = Find(b);
+
+        if (aRoot.val == bRoot.val) return false;
+
+        if (aRoot.size > bRoot.size) {
+            bRoot.parent = &aRoot;
+            aRoot.size += bRoot.size;
+        } else {
+            aRoot.parent = &bRoot;
+            bRoot.size += aRoot.size;
+        }
+
+        return true;
+    }
+
+private:
+    map<int, Node> set;
+}
+```

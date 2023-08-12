@@ -24,6 +24,7 @@
 | Medium | Greedy | 763 | [Partition Labels](763/README.md) | |
 | Medium | Shortest Path | 1514 | [Path with Maximum Probability](1514/README.md) | |
 | Medium | Shortest Path | 1631 | [Path With Minimum Effort](1631/README.md) | |
+| Medium | Union Find | 128 | [Longest Consecutive Sequence](128/README.md) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](1143/README.md) | |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](516/README.md)| |
 | Medium | DP | 486 | [Predict the Winner](486/README.md) |  |
