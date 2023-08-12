@@ -26,7 +26,7 @@
 | Medium | Shortest Path | 1631 | [Path With Minimum Effort](1631/README.md) | |
 | Medium | MST| 1584 | [Min Cost to Connect All Points](1584/README.md) | |
 | Medium | Union Find | 128 | [Longest Consecutive Sequence](128/README.md) | |
-| Medium | Union Find | 547 | [LNumber of Provinces](547/README.md) | |
+| Medium | Union Find | 547 | [Number of Provinces](547/README.md) | |
 | Medium | DP | 1143 | [Longest Common Subsequence](1143/README.md) | |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](516/README.md)| |
 | Medium | DP | 486 | [Predict the Winner](486/README.md) |  |
