@@ -14,6 +14,7 @@
 | Medium | Graph | 743 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | |
 | Medium | Graph | 1376 | [Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | |
 | Medium | Binary Search | 34 | [Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | |
+| Hard | Binary Search | 410 | [Split Array Largest Sum](https://leetcode.com/problems/split-array-largest-sum/) | |
 | Medium | Two Pointers | 11 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/) |  |
 | Medium | Two Pointers | 15 | [3Sum](https://leetcode.com/problems/3sum/) | |
 | Hard | Two Pointers | 42 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/description/) | |
