@@ -1,2 +1,2 @@
 # STEADY
-My personal study records in programming.
+My personal study records in programming
