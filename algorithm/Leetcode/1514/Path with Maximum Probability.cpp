@@ -32,17 +32,17 @@ public:
 class Graph {
 public: 
     Graph(int size) {
-        edges = vector<vector<Edge>>(size, vector<Edge>());
+        nodes = vector<vector<Edge>>(size, vector<Edge>());
     };
 
     void Set(int from, int to, double prob) {
-        edges[from].push_back(Edge(from, to, prob));
-        edges[to].push_back(Edge(to, from, prob));
+        nodes[from].push_back(Edge(from, to, prob));
+        nodes[to].push_back(Edge(to, from, prob));
     }
 
     double FindMaximumProb(int from, int to) {
-        vector<bool> fixed(edges.size(), false);
-        vector<double> maxProb(edges.size(), 0);
+        vector<bool> fixed(nodes.size(), false);
+        vector<double> maxProb(nodes.size(), 0);
         priority_queue<Pair> pq;
         pq.push(Pair(from, 1));
 
@@ -53,7 +53,7 @@ public:
             if (fixed[pair.node]) continue;
             fixed[pair.node] = true;
 
-            for (Edge& edge : edges[pair.node]) {
+            for (Edge& edge : nodes[pair.node]) {
                 if (fixed[edge.to]) continue;
 
                 double curMax = maxProb[edge.to];
@@ -69,7 +69,7 @@ public:
     }
 
 private:
-    vector<vector<Edge>> edges;
+    vector<vector<Edge>> nodes;
 };
 
 class Solution {

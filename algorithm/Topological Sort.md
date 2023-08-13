@@ -12,8 +12,10 @@ A reverse order of DFS from any given node is itself a topological sort.
     - Preferably a node of zero indegree
 2. Search paths using DFS
     - can use a stack or recursion
+    - mark the nodes as visiting (`temporary`)
 3. When returning from DFS, put searched nodes to a result array in reverse order
-    - mark the nodes as visited
+    - mark the nodes as completed (`permanent`)
+    - unmark the nodes from visiting (`temporary`)
 4. After emptying a stack, repeat until all nodes are visited
     - pick a node from unvisited list
 5. Finally the resulting array is a topological sort

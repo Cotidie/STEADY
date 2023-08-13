@@ -1,4 +1,4 @@
-## 링크
+## Link
 [Course Schedule](https://leetcode.com/problems/course-schedule/description/)
 
 ## Topic
