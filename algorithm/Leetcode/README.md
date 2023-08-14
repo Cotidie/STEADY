@@ -12,7 +12,8 @@
 | Medium | Tree | 199 | [Binary Tree Right Side View](199/README.md) |  |
 | Medium | Graph | 207 | [Course Schedule](207/README.md) | |
 | Medium | Graph | 743 | [Network Delay Time](743/README.md) | |
-| Medium | Graph | 802 | [Find Eventual Safe States](802/README.md) | |
+| Hard | DFS/BFS | 329 | [Longest Increasing Path in a Matrix](329/README.md) | |
+| Medium | DFS/BFS | 802 | [Find Eventual Safe States](802/README.md) | |
 | Medium | Graph | 1376 | [Time Needed to Inform All Employees](1376/README.md) | |
 | Medium | Binary Search | 34 | [Find First and Last Position of Element in Sorted Array](34/README.md) | |
 | Hard | Binary Search | 410 | [Split Array Largest Sum](410/README.md) | |
