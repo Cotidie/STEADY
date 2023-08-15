@@ -24,6 +24,7 @@
 | Medium | Greedy | 53 | [Maximum Subarray](53/README.md) | |
 | Medium | Greedy | 55 | [Jump Game](55/README.md) | |
 | Medium | Greedy | 763 | [Partition Labels](763/README.md) | |
+| Medium | Permutations II | 47 | [Permutations II](47/README.md) | |
 | Hard | Back Tracking | 51 | [N-Queens](51/README.md) | |
 | Medium | Shortest Path | 1514 | [Path with Maximum Probability](1514/README.md) | |
 | Medium | Shortest Path | 1631 | [Path With Minimum Effort](1631/README.md) | |
