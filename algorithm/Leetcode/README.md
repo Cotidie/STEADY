@@ -34,6 +34,7 @@
 | Medium | Union Find | 547 | [Number of Provinces](547/README.md) | |
 | Medium | Union Find | 721 | [Accounts Merge](721/README.md) | |
 | Medium | DP | 486 | [Predict the Winner](486/README.md) |  |
+| Medium | DP | 494 | [Target Sum](494/README.md) |  |
 | Medium | DP | 516 | [Longest Palindromic Subsequence](516/README.md)| |
 | Medium | DP | 688 | [Knight Probability in Chessboard](688/README.md)| |
 | Medium | DP | 1143 | [Longest Common Subsequence](1143/README.md) | |
