@@ -93,6 +93,8 @@ function bellmanFord(G, S)
         distance[V] <- tempDistance
         previous[V] <- U
 
+  // to detect all the vertices affected,
+  // repeat |V|-1 times.
   for each edge (U,V) in G
     If distance[U] + edge_weight(U, V) < distance[V]
       Error: Negative Cycle Exists
