@@ -14,6 +14,7 @@ This document explains popular algorithms for finding the shortest path between 
 
 ## Dijkstra
  Given a set of vertices and edges, Dijkstra algorithm finds the shortest paths **from the source** to all vertices. It's a greedy algorithm that finds the shortest subpaths from the source `A` to the destination `D`, meaning that any subpath in between `A -> D` is also the shortest path from `A`.  
+  - Dijkstra can't be used with negative edges since it's a greedy algorithm that can't be fixed afterwards
 
 ### Algorithm
 ![Algorithm](https://i.imgur.com/73tLrVZ.gif)  
@@ -59,6 +60,45 @@ The pseudo code below is gotten from [Wikipedia](https://en.wikipedia.org/wiki/D
 - `O(V logE)` if priority queue is used
 - `O(V^)` if vector is used
 
+## Bellman-Ford
+![bellman-ford](./.images/bellman-ford-negative-cycle.jpg)  
+
+Bellman Ford finds the shortest paths **from the source to all vertices** and can be used even with a graph which has negative edges and a cycle. Such a case, Dijkstra can't find the exact cost since it will be stuck in a infinite loop if it meets a negative weights cycle. 
+  - The distances of cycle-affected nodes are still inaccurate
+ 
+### Algorithm
+The algorithm is itself a slower version of Dijkstra which doesn't get stuck at a negative cycle. 
+
+1. Initialize an distances array as infinites and zero to the source node
+2. Iterate every edge `|V|-1` times
+    - `-1` means excluding the starting node
+    - It ensures visiting all the vertices
+3. Update the distances array on an edge `(u,v)` if
+    - `distances[v] > distances[u] + weight(u, v)`
+4. Detect a negetive cycle while iterating every edge again
+    - `distances[v] > distances[u] + weights(u, v)` -> a cycle
+
+### Pseudo Code
+```c
+function bellmanFord(G, S)
+  for each vertex V in G
+    distance[V] <- infinite
+    previous[V] <- NULL
+  distance[Start] <- 0
+
+  for each vertex V in G				
+    for each edge (U,V) in G
+      tempDistance <- distance[U] + edge_weight(U, V)
+      if tempDistance < distance[V]
+        distance[V] <- tempDistance
+        previous[V] <- U
+
+  for each edge (U,V) in G
+    If distance[U] + edge_weight(U, V) < distance[V]
+      Error: Negative Cycle Exists
+
+  return distance[], previous[]
+```
 
 ## Floyd Warshall
 Floyd Warshall finds the shortest paths **between all the pairs of vertices**. It follows dynamic programming approach for its implementation. 
