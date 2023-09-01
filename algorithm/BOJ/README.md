@@ -15,6 +15,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | Shortest Path  | 1238 | [파티](1238/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Shortest Path  | 11404 | [플로이드](11404/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Shortest Path  | 1753 | [최단경로](1753/README.md) | 기본 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 1043 | [거짓말](1043/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DP  | 17069 | [파이프 옮기기 2](17069/README.md) | 경로탐색 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | DP  | 12865 | [평범한 배낭](12865/README.md) | Knapsack |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | DP  | 2096 | [내려가기](2096/README.md) | 1차원 |
