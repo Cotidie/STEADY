@@ -1,90 +1,107 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
-struct Point {
-    int row, col;
+const int INTMAX = 200000000;
+
+struct Pair {
+    int node;
+    int cost;
 };
 
-class City {
+struct Edge {
+    int to;
+    int cost;
+};
+
+class Ascending {
 public:
-    City() {};
+    bool operator()(const Pair &left, const Pair &right) {
+        return left.cost > right.cost;
+    }
+};
 
-    void setHouse(int row, int col) {
-        houses.push_back({row, col});
+class Graph {
+public:
+    Graph(int size) {
+        graph = vector<vector<Edge>>(size, vector<Edge>());
     }
 
-    void setShop(int row, int col) {
-        shops.push_back({row, col});
+    void set(int from, int to, int cost) {
+        graph[from].push_back({to, cost});
+        graph[to].push_back({from, cost});
     }
 
-    int openShops() {
-        int min = 10000000;
+    vector<int> distances(int start) {
+        vector<int> dist = vector<int>(graph.size(), -1);
+        dist[start] = 0;
+        
+        priority_queue<Pair, vector<Pair>, Ascending> pq;
+        pq.push({start, 0});
 
-        for (auto chickens : combinations) {
-            int sum = 0;
+        while (!pq.empty()) {
+            Pair cur = pq.top();
+            pq.pop();
 
-            for (auto house : houses) {
-                int dist = 10000000;
-                for (auto chicken : chickens) {
-                    int newDist = getDist(house, chicken);
-                    if (dist > newDist) dist = newDist;
-                }
+            if (dist[cur.node] != -1 && cur.cost > dist[cur.node]) continue;
 
-                sum += dist;
+            for (auto edge : graph[cur.node]) {
+                int curDist = dist[edge.to];
+                int newDist = cur.cost + edge.cost;
+                if (curDist != -1 && curDist <= newDist) continue;
+
+                dist[edge.to] = newDist;
+                pq.push({edge.to, newDist});
             }
-
-            if (min > sum) min = sum;
         }
 
-        return min;
-    }
-
-    void findCombinations(int size) {
-        auto t = vector<Point>(size);
-        _findCombinations(t, 0, 0, size);
+        return dist;
     }
 
 private:
-    int getDist(Point &p1, Point &p2) {
-        return abs(p1.row - p2.row) + abs(p1.col - p2.col);
-    }
-
-    void _findCombinations(vector<Point> &comb, int idx, int depth, int size) {
-        if (depth == size) {
-            combinations.push_back(comb);
-            return;
-        }
-
-        for (int i=idx; i<shops.size(); i++) {
-            comb[depth] = shops[i];
-            _findCombinations(comb, i+1, depth+1, size);
-        }
-    }
-
-    vector<Point> houses;
-    vector<Point> shops;
-
-    vector<vector<Point>> combinations;
+    vector<vector<Edge>> graph;
 };
 
 int main() {
-    int size, shops;
-    cin >> size >> shops;
+    int nodes, edges;
+    cin >> nodes >> edges;
 
-    City city;
-    for (int r=0; r<size; r++) {
-        for (int c=0; c<size; c++) {
-            int val;
-            cin >> val;
+    Graph g(nodes);
+    for (int i=0; i<edges; i++) {
+        int from, to, cost;
+        cin >> from >> to >> cost;
 
-            if (val == 1) city.setHouse(r, c);
-            if (val == 2) city.setShop(r, c);
-        }
+        g.set(from-1, to-1, cost);
     }
 
-    city.findCombinations(shops);
+    int med1, med2;
+    cin >> med1 >> med2;
+    med1--; med2--;
+
+    vector<int> distStart = g.distances(0);
+    vector<int> distMed1 = g.distances(med1);
+    vector<int> distMed2 = g.distances(med2);
+
+    int shortest = -1;
+
+    int startToMed1 = distStart[med1];
+    int medToMed = distMed1[med2];
+    int med1ToEnd = distMed1[nodes-1];
+    int med2ToEnd = distMed2[nodes-1];
+
+    if (medToMed == -1 || med1ToEnd == -1 || med2ToEnd == -1) {
+        cout << -1 << '\n';
+        return 0;
+    }
+
+    shortest = min(
+        // 시작 -> i -> j -> 도착
+        distStart[med1] + distMed1[med2] + distMed2[nodes-1],
+        // 시작 -> j -> i -> 도착
+        distStart[med2] + distMed2[med1] + distMed1[nodes-1]
+    );
     
-    cout << city.openShops() << '\n';
+    cout << shortest << '\n';
 }
