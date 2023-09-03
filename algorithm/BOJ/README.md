@@ -8,6 +8,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Tree  | 1967 | [트리의 지름](1967/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | Tree  | 1967 | [이진 검색 트리](5639/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/14.svg" width="20pt" /> | DFS/BFS  | 1167 | [트리의 지름](1167/README.md) | 특수 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DFS/BFS  | 16236 | [아기 상어](16236/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DFS/BFS  | 2638 | [치즈](2638/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DFS/BFS  | 2206 | [벽 부수고 이동하기](2206/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DFS/BFS  | 14500 | [테트로미노](14500/README.md) | 응용 |
