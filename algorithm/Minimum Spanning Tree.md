@@ -6,6 +6,7 @@
 ![kruskal](https://www.dotnetlovers.com/Images/KruskalsAlgorithmforMinimumSpanningTreeMST110201931155AM.png)  
  Kruskal's algorithm builds a MST based on edges in order. It selects the next minimum edge to add it to the growing MST, and stops when there are all the vertices in the growing MST. When connecting two vertices, it uses `disjoint set` to detect a cycle. 
 
+### Algorithm
 1. Prepare an array and a priority queue
     - **array**: to detect a cycle using union-find (disjoint set)
     - **priority queue**: to sort edges
@@ -14,3 +15,15 @@
     - if not, merge two nodes 
 3. Stop when there are (V-1) edges in MST
 
+### Pseudo Code
+```cpp
+KRUSKAL(G):
+    A = ∅
+    For each vertex v ∈ G.V:
+        MAKE-SET(v)
+    For each edge (u, v) ∈ G.E ordered by increasing order by weight(u, v):
+        if FIND-SET(u) ≠ FIND-SET(v):       
+        A = A ∪ {(u, v)}
+        UNION(u, v)
+    return A
+```
