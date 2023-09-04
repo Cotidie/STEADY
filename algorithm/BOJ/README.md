@@ -21,7 +21,8 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | Shortest Path  | 1238 | [파티](1238/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Shortest Path  | 11404 | [플로이드](11404/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Shortest Path  | 1753 | [최단경로](1753/README.md) | 기본 |
-| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1197 | [최소 스패닝 트리](1753/README.md) | 기본 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1197 | [최소 스패닝 트리](1197/README.md) | 기본 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1647 | [도시 분할 계획](1647/README.md) | 활용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 1043 | [거짓말](1043/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DP  | 17069 | [파이프 옮기기 2](17069/README.md) | 경로탐색 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | DP  | 12865 | [평범한 배낭](12865/README.md) | Knapsack |
