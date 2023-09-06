@@ -5,6 +5,7 @@
 Union-Find is another name of a data structure `disjoint set`, which has `union()` and `find()` methods to **detect a cycle** between two sets/trees. A cycle can be detected by checking whether two sets/trees have the same root. 
     - `find()`: Find which set an element `k` belongs => find root.
     - `union()`: Merge two disjoint sets/trees => connect to one's root. 
+Union-Find can be also used to the problems where it needs propagation of status change to all nodes in the same group.
 
 ## Implementation
 Either linked list or array can be used for implementation. Note that when merging, parent should be the one whose size/rank is bigger to avoid unbalanced tree. It optimizes `find()` operation by reducing the number of travel. 
