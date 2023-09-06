@@ -1,13 +1,17 @@
 # Shortest Path
-- [Dijkstra](#dijkstra)
+- [Shortest Path](#shortest-path)
+  - [Dijkstra](#dijkstra)
     - [Algorithm](#algorithm)
     - [Pseudo Code](#pseudo-code)
     - [Time Complexity](#time-complexity)
-- [Floyd Warshall](#floyd-warshall)
+  - [Bellman-Ford](#bellman-ford)
     - [Algorithm](#algorithm-1)
     - [Pseudo Code](#pseudo-code-1)
+  - [Floyd Warshall](#floyd-warshall)
+    - [Algorithm](#algorithm-2)
+    - [Pseudo Code](#pseudo-code-2)
     - [Time Complexity](#time-complexity-1)
-- [Questions](#questions)
+  - [Questions](#questions)
 
 
 This document explains popular algorithms for finding the shortest path between vertices. 
