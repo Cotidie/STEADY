@@ -4,6 +4,7 @@
 
 # Steps
 1. Define Subproblems
+   - Which factor would you introduce at each step?
    - Get the number of sub-problems (size of DP table)
    - Is it suffixed(`x[i:]`), prefixed(`x[:i]`) or sub-fixed(`x[i:j]`)?
 2. Guess the part of solution

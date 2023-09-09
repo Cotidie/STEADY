@@ -26,6 +26,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1647 | [도시 분할 계획](1647/README.md) | 활용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 1043 | [거짓말](1043/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 20040 | [사이클 게임](20040/README.md) | 기본 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DP  | 2342 | [Dance Dance Revolution](2342/README.md) | 테이블 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DP  | 10942 | [팰린드롬?](10942/README.md) | 2차원 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DP  | 9252 | [LCS 2](9252/README.md) | 2차원 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DP  | 17069 | [파이프 옮기기 2](17069/README.md) | 경로탐색 |
