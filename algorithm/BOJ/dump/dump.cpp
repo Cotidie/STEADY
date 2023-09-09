@@ -1,60 +1,102 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-const int INTMAX = 2001;
-vector<vector<int>> constraints = {
-    {0, 1}, {0, 2},
-    {1, 0}, {1, 2},
-    {2, 0}, {2, 1},
-};
+vector<long> numsA = vector<long>(1001, 0);
+vector<long> numsB = vector<long>(1001, 0);
+
+int findLeftIdx(long target, vector<long> nums) {
+    int low = 0;
+    int high = nums.size()-1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+
+        if (nums[mid] < target) {
+            low = mid+1;
+        } else {
+            high = mid-1;
+        }
+    }
+
+    return low;
+}
+
+int findRightIdx(long target, vector<long> nums) {
+    int low = 0;
+    int high = nums.size()-1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+
+        if (nums[mid] <= target) {
+            low = mid+1;
+        } else {
+            high = mid-1;
+        }
+    }
+
+    return low;
+}
 
 int main() {
-    int size;
-    cin >> size;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    vector<vector<int>> costs = vector<vector<int>>(
-        size+1, vector<int>(
-            3, 0
-        )
-    );
+    long target;
+    cin >> target;
 
-    for (int i=1; i<=size; i++) {
-        for (int j=0; j<3; j++) {
-            int cost;
-            cin >> cost;
+    int n;
+    cin >> n;
 
-            costs[i][j] = cost;
+    for (int i=0; i<n; i++) {
+        int val;
+        cin >> val;
+
+        numsA[i] = val;
+    }
+
+    int m;
+    cin >> m;
+
+    for (int i=0; i<m; i++) {
+        int val;
+        cin >> val;
+
+        numsB[i] = val;
+    }
+
+    vector<long> sumsA;
+    for (int i=0; i<n; i++) {
+        long sum=0;
+        for (int j=i; j<n; j++) {
+            sum += numsA[j];
+            sumsA.push_back(sum);
         }
     }
 
-    // [집 번호][고른 색상][시작 색상]
-    auto dp = vector<vector<vector<int>>>(
-        size+1, vector<vector<int>>(
-            3, vector<int>(
-                3, 1001
-            )
-        )
-    );
-    dp[1][0][0] = costs[1][0];
-    dp[1][1][1] = costs[1][1];
-    dp[1][2][2] = costs[1][2];
-
-    for (int i=2; i<=size; i++) {
-        for (int j=0; j<3; j++) {
-            dp[i][0][j] = min(dp[i-1][1][j], dp[i-1][2][j]) + costs[i][0];
-            dp[i][1][j] = min(dp[i-1][0][j], dp[i-1][2][j]) + costs[i][1];
-            dp[i][2][j] = min(dp[i-1][0][j], dp[i-1][1][j]) + costs[i][2];
+    vector<long> sumsB;
+    for (int i=0; i<m; i++) {
+        long sum = 0;
+        for (int j=i; j<m; j++) {
+            sum += numsB[j];
+            sumsB.push_back(sum);
         }
     }
+    
+    sort(sumsB.begin(), sumsB.end());
 
-    int redMin = min(dp[size][1][0], dp[size][2][0]);
-    int greenMin = min(dp[size][0][1], dp[size][2][1]);
-    int blueMin = min(dp[size][0][2], dp[size][1][2]);
+    long cnt = 0;
+    for (auto sumA : sumsA) {
+        int diff = target - sumA;
+        
+        auto leftIdx = lower_bound(sumsB.begin(), sumsB.end(), diff);
+        auto rightIdx = upper_bound(sumsB.begin(), sumsB.end(), diff);
 
-    int minCost = min(redMin, greenMin);
-    minCost = min(minCost, blueMin);
+        cnt += (rightIdx - leftIdx);
+    }
 
-    cout << minCost << '\n';
+    cout << cnt << '\n';
 }
