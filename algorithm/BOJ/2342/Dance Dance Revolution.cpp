@@ -3,13 +3,10 @@
 
 using namespace std;
 
-struct Point {
-    int left=0;
-    int right=0;
-};
+const int INTMAX = 10000000;
 
 int getCost(int from, int to) {
-    if (from == 0) return 2;
+    if (from == 0 || to == 0) return 2;
     if (abs(from-to) == 2) return 4;
     if (from == to) return 1;
 
@@ -17,43 +14,51 @@ int getCost(int from, int to) {
 }
 
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
     vector<int> inputs;
-    
     int input;
     while (cin >> input, input != 0) {
         inputs.push_back(input);
     }
-    
-    int size = inputs.size();
-    
-    vector<vector<int>> dp(size+1, vector<int>(2, 0));
-    vector<vector<Point>> location(size+1, vector<Point>(2));
 
-    int minCost;
-    Point minPoint;
+    int size = inputs.size();
+
+    vector<vector<vector<int>>> memo = vector<vector<vector<int>>>(
+        size+1, vector<vector<int>>(
+            5, vector<int>(
+                5, INTMAX
+            )
+        )
+    );
+    memo[0][0][0] = 0;
+
     for (int i=1; i<=size; i++) {
         int input = inputs[i-1];
-        
-        int leftMoveFromLeft = dp[i-1][0] + getCost(location[i-1][0].left, input);
-        int leftMoveFromRight = dp[i-1][1] + getCost(location[i-1][1].left, input);
-        if (leftMoveFromLeft <= leftMoveFromRight) {
-            dp[i][0] = leftMoveFromLeft;
-            location[i][0] = Point{input, location[i-1][0].right};
-        } else {
-            dp[i][0] = leftMoveFromRight;
-            location[i][0] = Point{input, location[i-1][1].right};
-        }
+        for (int left=0; left<5; left++) {
+            for (int right=0; right<5; right++) {
+                // 왼쪽 발을 left -> input으로 옮긴다.
+                memo[i][input][right] = min(
+                    memo[i][input][right], 
+                    memo[i-1][left][right] + getCost(left, input)
+                );
 
-        int rightMoveFromLeft = dp[i-1][0] + getCost(location[i-1][0].right, input);
-        int rightMoveFromRight = dp[i-1][1] + getCost(location[i-1][1].right, input);
-        if (rightMoveFromLeft <= rightMoveFromRight) {
-            dp[i][1] = rightMoveFromLeft;
-            location[i][1] = Point{location[i-1][0].left, input};
-        } else {
-            dp[i][1] = rightMoveFromRight;
-            location[i][1] = Point{location[i-1][1].left, input};
+                // 오른쪽 발을 right -> input으로 옮긴다. 
+                memo[i][left][input] = min(
+                    memo[i][left][input],
+                    memo[i-1][left][right] + getCost(right, input)
+                );
+            }
         }
     }
 
-    cout << min(dp[size][0], dp[size][1]) << '\n';
+    int minCost = 10000000;
+    for (int left=0; left<5; left++) {
+        for (int right=0; right<5; right++) {
+            minCost = min(minCost, memo[size][left][right]);
+        }
+    }
+
+    cout << minCost << '\n';
 }
