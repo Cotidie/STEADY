@@ -10,6 +10,7 @@
 2. Guess the part of solution
    - Get the sample solution to a sub problem
    - Which condition/choice would it lead to the solution?
+   - How to make use of the newly introduced element
 3. Find recurrence relation using min, max
    - Define DP equation
    - Set the relation on the guess.

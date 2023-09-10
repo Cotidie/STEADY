@@ -1,102 +1,130 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <queue>
+#include <cmath>
 
 using namespace std;
 
-vector<long> numsA = vector<long>(1001, 0);
-vector<long> numsB = vector<long>(1001, 0);
+struct Point {
+    float x, y;
+};
 
-int findLeftIdx(long target, vector<long> nums) {
-    int low = 0;
-    int high = nums.size()-1;
+struct Edge {
+    int from, to;
+    float cost;
+};
 
-    while (low <= high) {
-        int mid = (low + high) / 2;
+class Ascending {
+public:
+    // right은 새로 들어오는 간선
+    bool operator()(const Edge &left, const Edge &right) {
+        return left.cost > right.cost;
+    }
+};
 
-        if (nums[mid] < target) {
-            low = mid+1;
+class Disjoint {
+public:
+    Disjoint(int size) {
+        parents = vector<int>(size, -1);
+    }
+
+    int find(int n) {
+        if (parents[n] < 0) return n;
+
+        int root = find(parents[n]);
+        parents[n] = root;
+
+        return root;
+    }
+
+    bool unite(int a, int b) {
+        int aRoot = find(a);
+        int bRoot = find(b);
+
+        if (aRoot == bRoot) return true;
+
+        int aSize = parents[aRoot] * -1;
+        int bSize = parents[bRoot] * -1;
+
+        if (aSize > bSize) {
+            parents[bRoot] = aRoot;
+            parents[aRoot] -= bSize;
         } else {
-            high = mid-1;
+            parents[aRoot] = bRoot;
+            parents[bRoot] -= aSize;
+        }
+
+        return false;
+    }
+
+private:
+    vector<int> parents;
+};
+
+class NightSky {
+public:
+    NightSky(int stars) {
+        this->stars = vector<Point>(stars);
+        this->edges = vector<Edge>(stars);
+    }
+
+    void set(float x, float y, int star) {
+        stars[star].x = x;
+        stars[star].y = y;
+    }
+
+    void connect() {
+        for (int i=0; i<stars.size(); i++) {
+            for (int j=i+1; j<stars.size(); j++) {
+                float xDiff = stars[i].x - stars[j].x;
+                float yDiff = stars[i].y - stars[j].y;
+
+                float cost = sqrtf(pow(xDiff, 2) + pow(yDiff, 2));
+                edges.push_back({i, j, cost});
+            }
         }
     }
 
-    return low;
-}
+    float mst() {
+        priority_queue<Edge, vector<Edge>, Ascending> pq(edges.begin(), edges.end());
+        Disjoint distSet(stars.size());
 
-int findRightIdx(long target, vector<long> nums) {
-    int low = 0;
-    int high = nums.size()-1;
+        int cnt = 0;
+        float cost = 0;
+        while (cnt < stars.size() && !pq.empty()) {
+            Edge cur = pq.top();
+            pq.pop();
 
-    while (low <= high) {
-        int mid = (low + high) / 2;
+            bool isCycle = distSet.unite(cur.from, cur.to);
+            if (isCycle) continue;
 
-        if (nums[mid] <= target) {
-            low = mid+1;
-        } else {
-            high = mid-1;
+            cnt++;
+            cost += cur.cost;
         }
+
+        return cost;
     }
 
-    return low;
-}
+private:
+    vector<Point> stars;
+    vector<Edge> edges;
+};
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
 
-    long target;
-    cin >> target;
+    int nums;
+    cin >> nums;
 
-    int n;
-    cin >> n;
+    NightSky sky(nums);
+    for (int i=0; i<nums; i++) {
+        float x, y;
+        cin >> x >> y;
 
-    for (int i=0; i<n; i++) {
-        int val;
-        cin >> val;
-
-        numsA[i] = val;
+        sky.set(x, y, i);
     }
+    sky.connect();
 
-    int m;
-    cin >> m;
-
-    for (int i=0; i<m; i++) {
-        int val;
-        cin >> val;
-
-        numsB[i] = val;
-    }
-
-    vector<long> sumsA;
-    for (int i=0; i<n; i++) {
-        long sum=0;
-        for (int j=i; j<n; j++) {
-            sum += numsA[j];
-            sumsA.push_back(sum);
-        }
-    }
-
-    vector<long> sumsB;
-    for (int i=0; i<m; i++) {
-        long sum = 0;
-        for (int j=i; j<m; j++) {
-            sum += numsB[j];
-            sumsB.push_back(sum);
-        }
-    }
-    
-    sort(sumsB.begin(), sumsB.end());
-
-    long cnt = 0;
-    for (auto sumA : sumsA) {
-        int diff = target - sumA;
-        
-        auto leftIdx = lower_bound(sumsB.begin(), sumsB.end(), diff);
-        auto rightIdx = upper_bound(sumsB.begin(), sumsB.end(), diff);
-
-        cnt += (rightIdx - leftIdx);
-    }
-
-    cout << cnt << '\n';
+    cout << sky.mst() << '\n';
 }
