@@ -89,3 +89,49 @@ if graph has edges then
 else
     return L “a topologically sorted order” 
 ```
+
+### Implementation
+```cpp
+struct Node {
+    int indegree = 0;
+    vector<int> next; 
+};
+
+class Topsort {
+public:
+    Topsort(int size) {
+        nodes = vector<Node>(size+1);
+    }
+
+    void set(int before, int next) {
+        if (before == next) return;
+        nodes[before].next.push_back(next);
+        nodes[next].indegree += 1;
+    }
+
+    vector<int> sort() {
+        vector<int> result;
+        queue<int> q;
+        
+        for (int i=1; i<nodes.size(); i++) {
+            if (nodes[i].indegree == 0) q.push(i);
+        }
+
+        while (!q.empty()) {
+            int cur = q.front();
+            q.pop();
+
+            result.push_back(cur);
+
+            for (int next : nodes[cur].next) {
+                nodes[next].indegree -= 1;
+                if (nodes[next].indegree == 0) q.push(next);
+            }
+        }
+
+        return result;
+    }
+private:
+    vector<Node> nodes;
+};
+```
