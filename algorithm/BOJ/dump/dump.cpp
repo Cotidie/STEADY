@@ -1,31 +1,34 @@
 #include <iostream>
-#include <algorithm>
+#include <vector>
+#include <queue>
+
 using namespace std;
 
+class Topsort {
+public:
+    Topsort(int size) {
+
+    }
+
+    void sort() {
+
+    }
+private:
+    vector<int> nums;
+};
+
 int main() {
-    int num;
-    cin >> num;
+    int nums, deps;
+    cin >> nums >> deps;
 
-    vector<int> nums(num);
-    for (int i=0; i<num; i++) {
-        cin >> nums[i];
+    Topsort topsort(nums);
+    for (int i=0; i<deps; i++) {
+        int first, after;
+        cin >> first >> after;
+
+        solver.set(after, first);
     }
 
-    vector<int> LIS;
-    vector<int> answer;
-
-    LIS.push_back(nums[0]);
-    
-    for (int i=1; i<num; i++) {
-        if (nums[i] > LIS.back()) {
-            LIS.push_back(nums[i]);
-            answer = LIS;
-        } else {
-            int low = lower_bound(LIS.begin(), LIS.end(), nums[i]) - LIS.begin();
-            if (low == LIS.size()-1) LIS[low] = nums[i];
-        }
-    }
-
-    cout << LIS.size() << '\n';
-    for (auto ans :answer) cout << ans << " ";
+    solver.solve();
+    cout << '\n';
 }
