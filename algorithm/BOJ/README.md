@@ -7,6 +7,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Stack  | 9935 | [문자열 폭발](9935/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Tree  | 1967 | [트리의 지름](1967/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | Tree  | 1967 | [이진 검색 트리](5639/README.md) | 기본 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/15.svg" width="20pt" /> | DFS/BFS  | 13460 | [구슬 탈출 2](13460/README.md) | 구현 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/14.svg" width="20pt" /> | DFS/BFS  | 1167 | [트리의 지름](1167/README.md) | 특수 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DFS/BFS  | 16236 | [아기 상어](16236/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DFS/BFS  | 2638 | [치즈](2638/README.md) | 응용 |
