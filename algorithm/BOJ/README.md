@@ -29,6 +29,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 1043 | [거짓말](1043/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 20040 | [사이클 게임](20040/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/14.svg" width="20pt" /> | Greedy  | 1202 | [보석 도둑](1202/README.md) | 응용 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/15.svg" width="20pt" /> | DP  | 1509 | [팰린드롬 분할](1509/README.md) | 2차원 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DP  | 11049 | [행렬 곱셈 순서](11049/README.md) | 2차원 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DP  | 2342 | [Dance Dance Revolution](2342/README.md) | 메모 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | DP  | 7579 | [앱](7579/README.md) | Knapsack |
