@@ -2,7 +2,8 @@
 | Difficulty | Topic | Number | Title | Note |
 |:-----: |:-------:|:------:|:--------:| ---- |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/15.svg" width="20pt" /> | Binary Search  | 1114 | [통나무 자르기](1114/README.md) | 응용 |
-| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Recursion  | 2448 | [별 찍기 11](2448/README.md) |  |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Recursion  | 2448 | [별 찍기 11](2448/README.md) | 구현 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/15.svg" width="20pt" /> | Implementation | 17143 | [낚시왕](17143/README.md) | 구현 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/14.svg" width="20pt" /> | Stack  | 1918 | [후위 표기식](1918/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Stack  | 9935 | [문자열 폭발](9935/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Tree  | 1967 | [트리의 지름](1967/README.md) | 기본 |
