@@ -26,6 +26,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | Shortest Path  | 1238 | [파티](1238/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Shortest Path  | 11404 | [플로이드](11404/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Shortest Path  | 1753 | [최단경로](1753/README.md) | 기본 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/16.svg" width="20pt" /> | MST  | 2887 | [행성 터널](2887/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1197 | [최소 스패닝 트리](1197/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1647 | [도시 분할 계획](1647/README.md) | 활용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 9466 | [텀 프로젝트](9466/README.md) | 응용 |
