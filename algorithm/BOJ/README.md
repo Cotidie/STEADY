@@ -29,6 +29,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/16.svg" width="20pt" /> | MST  | 2887 | [행성 터널](2887/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1197 | [최소 스패닝 트리](1197/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | MST  | 1647 | [도시 분할 계획](1647/README.md) | 활용 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/14.svg" width="20pt" /> | Union Find  | 10775 | [공항](10775/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 9466 | [텀 프로젝트](9466/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 1043 | [거짓말](1043/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Union Find  | 20040 | [사이클 게임](20040/README.md) | 기본 |
