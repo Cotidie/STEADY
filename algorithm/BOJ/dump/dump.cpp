@@ -1,115 +1,109 @@
 #include <iostream>
 #include <vector>
 
+long INTMAX = 100001;
+
 using namespace std;
 
-struct Point {
-    int row, col;
-};
-
-class Disjoint {
+class Floyd {
 public:
-    Disjoint(int rows, int cols) {
-        parents = vector<vector<Point>>(
-            rows, vector<Point>(cols, Point{-1, -1})
-        );
+    Floyd(int size): size(size+1) {
+        cost = vector<vector<long>>(size+1, vector<long>(size+1, INTMAX));
+        path = vector<vector<int>>(size+1, vector<int>(size+1, -1));
     }
 
-    // 참조자로 개선 가능
-    Point find(Point p) {
-        if (isRoot(p)) return p;
+    void set(int city1, int city2, int val) {
+        if (val > cost[city1][city2]) return;
 
-        Point root = find(parents[p.row][p.col]);
-        parents[p.row][p.col] = root;
-
-        return root;
+        cost[city1][city2] = val;
+        path[city1][city2] = city2;
+        
     }
 
-    bool unite(Point a, Point b) {
-        Point aRoot = find(a);
-        Point bRoot = find(b);
+    void findShortestPath() {
+        for (int k=1; k<size; k++) {
+            for (int r=1; r<size; r++) {
+                if (k == r) continue;
+                for (int c=1; c<size; c++) {
+                    if (r==c) continue;
 
-        if (isSamePoint(aRoot, bRoot)) return true;
-
-        parents[a.row][a.col] = bRoot;
-        return false;
-    }
-
-private:
-    bool isRoot(Point &p) {
-        return parents[p.row][p.col].row == -1;
-    }
-
-    bool isSamePoint(Point &a, Point &b) {
-        return a.row == b.row && a.col == b.col;
-    }
-
-    vector<vector<Point>> parents;
-};
-
-class Board {
-public:
-    Board(int rows, int cols): rows(rows), cols(cols) {
-        board = vector<string>(rows);
-    }
-
-    void set(int row, string cols) {
-        board[row] = cols;
-    }
-
-    int makeSafezones() {
-        Disjoint distSet(rows, cols);
-
-        int cnt = 0;
-        for (int r=0; r<rows; r++) {
-            for (int c=0; c<cols; c++) {
-                Point cur = {r, c};
-                Point next = getNext(r, c);
-                if (!isInbound(next.row, next.col)) {
-                    cnt++;
-                    continue;
+                    long med1 = cost[r][k];
+                    long med2 = cost[k][c];
+                    if (med1+med2 < cost[r][c]) {
+                        cost[r][c] = med1+med2;
+                        path[r][c] = path[r][k];
+                    }
                 }
-
-                bool isCycle = distSet.unite(cur, next);
-                if (isCycle) cnt++;
             }
         }
-
-        return cnt;
     }
 
+    void printCosts() {
+        for (int r=1; r<size; r++) {
+            for (int c=1; c<size; c++) {
+                if (cost[r][c] == INTMAX) cout << 0 << " ";
+                else cout << cost[r][c] << " ";
+            }
+            cout <<'\n';
+        }
+    }
+
+    void printPaths(int start) {
+        for (int c=1; c<size; c++) {
+            if (!isPathExists(start, c)) {
+                cout << 0 << '\n';
+                continue;
+            }
+
+            vector<int> trace;
+            getTrace(start, c, trace);
+
+            cout << trace.size() << " ";
+            for (int i=0; i<trace.size(); i++) {
+                cout << trace[i] << " ";
+            }
+            cout << '\n';
+        }
+    }
 private:
-    Point getNext(int row, int col) {
-        char dir = board[row].at(col);
-
-        if (dir == 'L') return {row, col-1};
-        if (dir == 'R') return {row, col+1};
-        if (dir == 'U') return {row-1, col};
-        if (dir == 'D') return {row+1, col};
-
-        return {row, col};
+    bool isPathExists(int start, int dest) {
+        return cost[start][dest] != INTMAX;
     }
 
-    bool isInbound(int row, int col) {
-        return (row >= 0 && col >= 0) &&
-            (row < rows && col < cols);
+    void getTrace(int start, int dest, vector<int> &trace) {
+        if (start == dest) {
+            trace.push_back(dest);
+            return;
+        }
+
+        trace.push_back(start);
+        start = path[start][dest];
+
+        getTrace(start, dest, trace);
     }
 
-    vector<string> board;
-    int rows, cols;
+    vector<vector<long>> cost;
+    // path[start][end]: start 다음에 방문할 노드
+    vector<vector<int>> path;
+    int size;
 };
 
 int main() {
-    int rows, cols;
-    cin >> rows >> cols;
+    int cities, buses;
+    cin >> cities >> buses;
 
-    Board board(rows, cols);
-    for (int i=0; i<rows; i++) {
-        string val;
-        cin >> val;
+    Floyd floyd(cities);
+    for (int b=0; b<buses; b++) {
+        int start, dest, cost;
+        cin >> start >> dest >> cost;
 
-        board.set(i, val);
+        floyd.set(start, dest, cost);
     }
 
-    cout << board.makeSafezones() << '\n';
+    floyd.findShortestPath();
+
+    floyd.printCosts();
+    for (int i=1; i<=cities; i++) {
+        floyd.printPaths(i);
+    }
 }

@@ -16,6 +16,7 @@
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | DFS/BFS  | 14500 | [테트로미노](14500/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | DFS/BFS  | 13549 | [숨바꼭질 3](13549/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/11.svg" width="20pt" /> | DFS/BFS  | 16928 | [뱀과 사다리 게임](16928/README.md) | 응용 |
+| <img src="https://d2gd6pc034wcta.cloudfront.net/tier/14.svg" width="20pt" /> | Heap  | 7662 | [가운데를 말해요](1655/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/12.svg" width="20pt" /> | Heap  | 7662 | [이중 우선순위 큐](7662/README.md) | 기본 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | Divide & Conquer  | 2263 | [트리의 순회](2263/README.md) | 응용 |
 | <img src="https://d2gd6pc034wcta.cloudfront.net/tier/13.svg" width="20pt" /> | Two Pointers  | 2473 | [세 용액](2473/README.md) | 응용 |
