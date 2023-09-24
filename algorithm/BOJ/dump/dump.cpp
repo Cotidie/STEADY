@@ -1,109 +1,82 @@
 #include <iostream>
 #include <vector>
-
-long INTMAX = 100001;
+#include <string>
+#include <map>
 
 using namespace std;
 
-class Floyd {
+struct Node {
+    string name = "";
+    int size = 1;
+    Node *parent = nullptr;
+};
+
+class Disjoint {
 public:
-    Floyd(int size): size(size+1) {
-        cost = vector<vector<long>>(size+1, vector<long>(size+1, INTMAX));
-        path = vector<vector<int>>(size+1, vector<int>(size+1, -1));
-    }
+    Disjoint() {}
 
-    void set(int city1, int city2, int val) {
-        if (val > cost[city1][city2]) return;
-
-        cost[city1][city2] = val;
-        path[city1][city2] = city2;
-        
-    }
-
-    void findShortestPath() {
-        for (int k=1; k<size; k++) {
-            for (int r=1; r<size; r++) {
-                if (k == r) continue;
-                for (int c=1; c<size; c++) {
-                    if (r==c) continue;
-
-                    long med1 = cost[r][k];
-                    long med2 = cost[k][c];
-                    if (med1+med2 < cost[r][c]) {
-                        cost[r][c] = med1+med2;
-                        path[r][c] = path[r][k];
-                    }
-                }
-            }
+    Node* find(string name) {
+        if (!exists(name)) {
+            parents[name] = {name, 1, nullptr};
+            return &parents[name];
         }
+
+        Node *cur = &parents[name];
+        if (cur->parent == nullptr) return cur;
+
+        Node *root = find(cur->parent->name);
+        cur->parent = root;
+
+        return root;
     }
 
-    void printCosts() {
-        for (int r=1; r<size; r++) {
-            for (int c=1; c<size; c++) {
-                if (cost[r][c] == INTMAX) cout << 0 << " ";
-                else cout << cost[r][c] << " ";
-            }
-            cout <<'\n';
+    bool unite(string a, string b) {
+        Node *aRoot = find(a);
+        Node *bRoot = find(b);
+
+        if (aRoot == bRoot) return true;
+
+        if (aRoot->size < bRoot->size) {
+            aRoot->parent = bRoot;
+            bRoot->size += aRoot->size; 
+        } else {
+            bRoot->parent = aRoot;
+            aRoot->size += bRoot->size;
         }
+
+        return false;
     }
 
-    void printPaths(int start) {
-        for (int c=1; c<size; c++) {
-            if (!isPathExists(start, c)) {
-                cout << 0 << '\n';
-                continue;
-            }
-
-            vector<int> trace;
-            getTrace(start, c, trace);
-
-            cout << trace.size() << " ";
-            for (int i=0; i<trace.size(); i++) {
-                cout << trace[i] << " ";
-            }
-            cout << '\n';
-        }
+    int getSize(string name) {
+        return find(name)->size;
     }
+
 private:
-    bool isPathExists(int start, int dest) {
-        return cost[start][dest] != INTMAX;
+    bool exists(string name) {
+        return parents.find(name) != parents.end();
     }
 
-    void getTrace(int start, int dest, vector<int> &trace) {
-        if (start == dest) {
-            trace.push_back(dest);
-            return;
-        }
-
-        trace.push_back(start);
-        start = path[start][dest];
-
-        getTrace(start, dest, trace);
-    }
-
-    vector<vector<long>> cost;
-    // path[start][end]: start 다음에 방문할 노드
-    vector<vector<int>> path;
-    int size;
+    map<string, Node> parents;
 };
 
 int main() {
-    int cities, buses;
-    cin >> cities >> buses;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    Floyd floyd(cities);
-    for (int b=0; b<buses; b++) {
-        int start, dest, cost;
-        cin >> start >> dest >> cost;
+    int T;
+    cin >> T;
 
-        floyd.set(start, dest, cost);
-    }
+    for (int t=0; t<T; t++) {
+        int nums;
+        cin >> nums;
 
-    floyd.findShortestPath();
+        Disjoint distSet;
+        for (int n=0; n<nums; n++) {
+            string a, b;
+            cin >> a >> b;
 
-    floyd.printCosts();
-    for (int i=1; i<=cities; i++) {
-        floyd.printPaths(i);
+            distSet.unite(a, b);
+            cout << distSet.getSize(a) << '\n';
+        }
     }
 }
