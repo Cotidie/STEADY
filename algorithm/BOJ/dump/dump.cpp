@@ -1,82 +1,58 @@
+// #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
-#include <string>
 #include <map>
+#include <cmath>
+#include <algorithm>
 
 using namespace std;
 
-struct Node {
-    string name = "";
-    int size = 1;
-    Node *parent = nullptr;
+struct Weight {
+    char ch;
+    int weight=0;
 };
 
-class Disjoint {
+class Descending {
 public:
-    Disjoint() {}
-
-    Node* find(string name) {
-        if (!exists(name)) {
-            parents[name] = {name, 1, nullptr};
-            return &parents[name];
-        }
-
-        Node *cur = &parents[name];
-        if (cur->parent == nullptr) return cur;
-
-        Node *root = find(cur->parent->name);
-        cur->parent = root;
-
-        return root;
+    bool operator()(const Weight &a, const Weight &b) {
+        return a.weight > b.weight;
     }
-
-    bool unite(string a, string b) {
-        Node *aRoot = find(a);
-        Node *bRoot = find(b);
-
-        if (aRoot == bRoot) return true;
-
-        if (aRoot->size < bRoot->size) {
-            aRoot->parent = bRoot;
-            bRoot->size += aRoot->size; 
-        } else {
-            bRoot->parent = aRoot;
-            aRoot->size += bRoot->size;
-        }
-
-        return false;
-    }
-
-    int getSize(string name) {
-        return find(name)->size;
-    }
-
-private:
-    bool exists(string name) {
-        return parents.find(name) != parents.end();
-    }
-
-    map<string, Node> parents;
 };
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-    int T;
-    cin >> T;
+    int n;
+    cin >> n;
 
-    for (int t=0; t<T; t++) {
-        int nums;
-        cin >> nums;
+    vector<string> words(n);
+    for (int i=0; i<n; i++) {
+        cin >> words[i];
+    }
 
-        Disjoint distSet;
-        for (int n=0; n<nums; n++) {
-            string a, b;
-            cin >> a >> b;
+    vector<Weight> weights(26);
+    for (int c=0; c<26; c++) {
+        char ch = c+'A';
+        weights[c] = {ch, 0};
+    }
 
-            distSet.unite(a, b);
-            cout << distSet.getSize(a) << '\n';
+    for (string word : words) {
+        for (int i=0; i<word.length(); i++) {
+            int power = pow(10, word.length()-1-i);
+            weights[word.at(i)-'A'].weight += power;
         }
     }
+
+    sort(weights.begin(), weights.end(), Descending());
+
+    long sum = 0;
+    int num = 9;
+
+    for (int i=0; i<9; i++) {
+        sum += weights[i].weight * num;
+        num--;
+    }
+
+    cout << sum << '\n';
 }
