@@ -39,6 +39,48 @@ J(w,b)=\frac{1}{2m}\sum_{i}^{m}{(\hat{y}^{i}-y^{(i)})^2}
 $$
 
 The goal is to **minimize $J(w,b)$** using varius methods, mainly using `Gradient Descent`.  
-![cost-function](.images/introduction-cost-function-1.png)  
 
 ## Gradient Descent
+![Alt text](.images/introduction-gradient-descent-1.png)  
+Gradient Descent is a way to find **local minima** by repeatedly adjusting the parameters according to its gradient. **Convex Function** such as squared error cost function has one and only global minima and therefore never diverges.
+
+### Algorithm
+$$
+\omega=\omega-\alpha\frac{\partial J(w,b)}{\partial\omega}
+$$  
+
+$$
+b=b-\alpha\frac{\partial J(w,b)}{\partial{b}}
+$$
+- **local minima** is found when the cost converges
+- $\alpha$ stands for **learning rate**, which becomes aggressive when it's big enough
+- `w`, `b` must be updated simultaneously
+- (0, 0) is largely used for the initial (`w`, `b`)
+
+### Learning Rate
+- if $\alpha$ is too small, it becomes slow to converge
+- if $\alpha$ is too large, it might never converge or might diverge
+- Around 0.001 is chosen for the initial $\alpha$
+
+### Linear Regression
+The algorithm can easily be calculated if the given cost function is linear regression with one variable:
+
+$$
+f_{w,b}(x^{(i)})=wx^{(i)}+b
+$$  
+
+$$
+J(w,b)=\frac{1}{2m}\sum_{i=1}^{m}{(\hat{y}^{(i)}-y^{(i)})}^2
+$$
+
+Since partial derivatives are as below, the algorithm now becomes programmable:  
+
+$$
+\frac{\partial{J(w,b)}}{\partial{w}}=\frac{1}{m}\sum_{i=1}^{m}{(\hat{y}^{(i)}-y^{(i)})x^{(i)}}
+$$  
+
+$$
+\frac{\partial{J(w,b)}}{\partial{b}}=\frac{1}{m}\sum_{i=1}^{m}{(\hat{y}^{(i)}-y^{(i)})}
+$$
+
+It's called **batch** gradient descent if all of the training set is used for each step of the cost function calculation.
