@@ -25,12 +25,15 @@ $$
   
 ### Problem
 &nbsp; Since the learning rate $\alpha$ is evenly applied when updating, the **larger feature might diverge**. This is why feature scaling is needed.
+
 $$
     Let\ J(w,b) = w_1^2+20w_2^2, \ \alpha=0.1\ then
 $$  
+
 $$
     w_1=10\rightarrow 8 \rightarrow 6.4 \cdots
 $$  
+
 $$
     w_2=10\rightarrow -30 \rightarrow 90 \cdots
 $$
@@ -39,13 +42,21 @@ $$
 feature scaling is needed when **1)** value range is too wide, or **2)** value itself is too large, since it will require learning rate to be tiny enough to slow down gradient descent. 
 
 **By Mean**  
+
 $$
     x=\frac{x-\mu}{max-min}
 $$
   
 **By Z-Score**  
+
 $$
     x=\frac{x-\mu}{\sigma}
 $$
 
 After z-score normalization, all features will have a mean of 0 and a standard deviation of 1.
+
+## Polynomial Regression
+![polynomial-regression](.images/multiple-linear-regression-4.png)  
+Regression functions sometimes doesn't fit to linear function. In this case, a part of features needs to be polynomial or feature engineering is needed to create new features.
+- Feature scaling should be taken for polynomial parameters
+- *Feature Engineering* refers to creating new features by transforming or combining existing features
