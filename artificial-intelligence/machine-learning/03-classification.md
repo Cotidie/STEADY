@@ -69,5 +69,37 @@ $$
 \end{cases}
 $$
 
+## Overfitting
+![generalization](.images/classification-4.png)    
+Generalization emerges when it comes to training model. If the model fits too well to the training data(**overfitting**), it's less likely to predict the new examples well. On the other hand, if the model doesn't fit well to the training data(**underfitting**), the result would be inaccurate as well. 
+
+### How to address
+- Gather more training data
+- Feature selection
+- Reduce size of parameters (`Regularization`)
+
+### Regularization
+
+$$
+    J(w,b)=\frac{1}{m}\sum{\frac{1}{2}(f_{w,b}(x)-y)^2}+\frac{\lambda}{2m}\sum^n{w_i^2}
+$$
+
+Regularization works by penalizing coefficients that are not important or relevant for prediction. The cost function is modified so that unrelevant parameters would result in small enough values. Then it gives three questions:
+- How to choose $\lambda$?
+- Which parameters to regularize
+
+The updating rule for `w` will be as below, which indicates that `w` is reduced by little every step of gradient descent:
+
+$$
+    w=w-\alpha(\frac{1}{m}\sum{(f_{w,b}(x)-y)x}+\frac{\lambda}{m}w)=w(1-\alpha\frac{\lambda}{m})-\alpha\frac{1}{m}\sum{(f_{w,b}(x)-y)}x
+$$  
+
+$$
+    b=b-\alpha\frac{1}{m}\sum{(f_{w,b}(x)-y)}
+$$
+
+Note that updating `b` remains the same regardless of regularization.
+
 ## Questions
 - How do you decide degree of polynomial function?
+- Why do you use regularization over feature selection?
