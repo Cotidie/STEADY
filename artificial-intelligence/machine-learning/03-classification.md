@@ -15,7 +15,6 @@ $$
     f_{w,b}(x)=wx+b
 $$
 
-### Terms
 - **sigmoid function**: a function that turns linear regression to probability regression
 - **threshold**: a value that decides P(Y=1) or P(Y=0)
 
@@ -25,12 +24,12 @@ Decision boundary is a regression function when its output makes the sigmoid fun
 
 ## Gradient Descent
 ### Cost Function
-
+![loss-function](.images/classification-3.png)  
 $$
 J(w,b)=\frac{1}{m}\sum^m{Loss(f_{w,b}(x^{(i)}), y^{(i)})}
 $$
 
-Cost function now one step further generalized by introducing **Loss** function, which measures difference of a single example to its target value.
+Cost function now one step further generalized by introducing **Loss** function, which measures difference of a single example to its target value. Below is an popular example of logistic loss function which effectively gives cost of binary classification.
 
 $$
 \begin{equation}
@@ -39,6 +38,35 @@ $$
     -\log{(1-f)}, & \text{if $y=0$}
   \end{cases}
 \end{equation}
+$$  
+
+$$
+    Loss(f_{w,b}{(x),y})=-y^{(i)}\log{f}-(1-y^{(i)})\log(1-f)
+$$
+
+### Gradient Descent
+Now that the cost function is ready, it can update parameters using derivative term $\partial{w}$ and $\partial{b}$, with learning rate $\alpha$. If we use the following derivatives of composite function:
+
+$$
+\begin{cases}
+    J(w,b)=\frac{1}{m}\sum{Loss(f(z))}\\
+    Loss(f(z),y)=-y\ln{f(z)}-(1-y)\ln{(1-f(z))}\\
+    f(z)=\frac{1}{1+e^{-z}}=\frac{e^z}{1+e^z}\\
+    z=wx+b
+\end{cases}
+$$  
+
+$$
+find\ \frac{\partial{J(w, b)}}{\partial{w}}\ and\ \frac{\partial{J(w, b)}}{\partial{b}}
+$$  
+
+Surprisingly, the update rule is the same as the one derived by using the sum of the squared errors in linear regression. As a result, we can use the same gradient descent formula for logistic regression as well.
+
+$$
+\begin{cases}
+    w=w-\alpha\frac{1}{m}\sum{(f_{w,b}(x)-y)}x\\
+    b=b-\alpha\frac{1}{m}\sum{(f_{w,b}(x)-y)}
+\end{cases}
 $$
 
 ## Questions
