@@ -19,6 +19,7 @@ sudo -u postgres createdb <username>
 # 4. `psql` command to run postgreSQL shell
 sudo psql
 # 5. list databases and switch to it
+$ ALTER USER <username> WITH PASSWORD 'your password';
 $ CREATE DATABASE <name>
 $ \list
 $ \connect <name>
@@ -26,6 +27,7 @@ $ \connect <name>
  PostgreSQL authentication process requires both a role and a DB with the same name as UNIX account, or else login will fail. After successfully logging in to `psql shell`, you can type SQL commands for your liking.
 
 ### PostgreSQL GUI
+![pgadmin](./images/06-pgadmin.png)  
 > Link: [Install pgAdmin](https://www.pgadmin.org/download/pgadmin-4-apt/)  
 
 ```bash
@@ -41,78 +43,44 @@ sudo apt install pgadmin4
 # Configure the webserver, if you installed pgadmin4-web:
 sudo /usr/pgadmin4/bin/setup-web.sh
 ```
+Then you can launch pgAdmin from the Ubuntu's application dock. To connect the `psql` databases, proceed with `Connect New Server` steps.
 
-## Challenges
-- [ ] Writing efficienet queries
-- [ ] Designing database (schema, structure)
-- [ ] Understanding when to use advanced features
-- [ ] Managing database
+## Types
+### Numeric
+![numeric-types](./images/07-numeric-types.png)  
+- `INTEGER`: Use when needs to store numbers without decimal points
+- `NUMERIC`: Use when needs to store numbers with very accurate precision, such as scienctific data.
+- `SEIRAL`: Use for primary keys like `id`
+- `DOUBLE`: Use for any float numbers
 
-## SQL
-To create a database, a schema should be defined for a table. It holds:
-- What kind of thing to store
-- What kind of properties it has
-- What types of data they need
+To forcefully treat a value to a certain type, use `::type` keyword on a column.
+- `ex) SELECT (2+2::SMALLINT)`
 
-Let's create a table to store info about world's largest cities.  
-The dataset can be found 🔗️[here](https://en.wikipedia.org/wiki/List_of_largest_cities).
+### Character
+![character-types](./images/08-character-types.png)  
+There's no difference in performance between types behind the scenes, and you can limit the size for validating data.
+
+### Date
+- `DATE`: 1980-11-20, NOV-20-1980, ...
+- `TIME`: 01:23 AM, 20:23, ...
+- `TIMESTAMP`: 1980-11-20 20:23, ...
+- `TIME/TIMESTAMP WITH TIME ZONE`: 01:23 AM EST
+- `INTERVAL`: duration of times which can be calculated 
+
+
+## Validation
 ```sql
-CREATE TABLE cities(
+CREATE TABLE products(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50),
-    country VARCHAR(50),
-    population INTEGER,
-    area INTEGER
-);
+    name VARCHAR UNIQUE,                       -- Constraint: Unique
+    department VARCHAR NOT NULl DEFAULT 'new', -- Constraint: NOT NULL
+    price INTEGER CHECK (price > 0), -- Constraint: Check
+    UNIQUE(name, department), -- Multi Uniqueness
+    CHECK(name != department) -- Multi Check
+)
 ```
-- **keyword**: (upper-case) reserved keywords for PostgreSQL
-- **identifier**: (lower-case) user defined variables
-
-### CREATE
-```sql
-INSERT INTO cities(name, country, population, area)
--- Multiple rows are separated by commas(,)
-VALUES 
-    ('Delhi', 'India', 28125000, 2240),
-    ('Shanghai', 'China', 22125000, 4015),
-    ('Sao Paulo', 'Brazil', 20935000, 3043),
-    ('Tokyo', 'Japan', 38505000, 8223);
-```
-
-### READ
-![phones-table](./images/01-phones-table.png)  
-
-> - Write a query that will select the `name` of each phone and calculate the total revenue for each phone (`price` X `units_sold`)
-> - Rename this calculated column to `revenue`
->- Filter out for all phones created by `Apple` or `Samsung`
-```sql
-SELECT name, price*units_sold as revenue
-FROM phones
-WHERE manufacturer IN ('Apple', 'Samsung');
-```
-- aliases (such as `revenue`) cannot be used in `WHERE`, `GROUP BY` clauses.
-
-### UPDATE
-```sql
-UPDATE <table>
-SET <expression>
-WHERE ...
-```
-
-### DELETE
-```sql
-DELETE FROM <table>
-WHERE ...
-```
-
-### INSERt
-```sql
-INSERT INTO <table>(<columns>)
-VALUES (columns), (columns), ...;
-```
-
-## Operators
-### String
-- `||`, `CONCAT()`: Join two strings
-- `LENGTH()`: Get the length of a string
-- `UPPER()`, `LOWER()`: Make a string upper/lower cased
+ You can prevent bad data from being inserted or updated before the query is applied, either using `Constraints` or `Validation Rules`.
+- `CONSTRAINTS`: `UNIQUE`, `NOT NULL`, `DEFAULT`, `CHECK`
+  
+![validation-location](./images/09-validation-rules.png)  
+It's advisable to spread validation rules across web server for complex business rules, and database for critical data rules, as there might be multiple clients who use the same database with different purposes.

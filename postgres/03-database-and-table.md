@@ -42,7 +42,7 @@ CREATE TABLE cities(
 ## Join
  `JOIN` produces values by merging rows together from different tables having relationships, mostly by foreign key references. Below are SQL use-cases using JOIN.  
 
- ### Types
+### Types
 ![joins](./images/04-four-kinds-of-joins.png)  
 #### Inner Join
 ```sql
@@ -58,15 +58,24 @@ LEFT/RIGHT JOIN users ON users.id = phones.user_id;
 ```
 Results in printing all the records on the left / right table and set to NULL on the other columns not matching the foreign keys. In this case, `phones` (the table selecting from) is to be `LEFT` and `users` to be `RIGHT`.
 
-
- ### Exercises
- (run `photo-sharing-app-data.sql` to set up and populate tables)
+### UNION/INTERSECT/EXCEPT
 ```sql
--- For each comments, show the contents of the comment and the username of the user who wrote the comment
-SELECT c.contents AS contents, u.username AS username
-FROM comments as c
-JOIN users AS u ON c.user_id = u.id;
+-- Parentheses are syntax error, remove them before running a query.
+(
+    SELECT *
+    ...
+)
+UNION/INTERSECT/EXCEPT (ALL)
+(
+    SELECT *
+    ...
+);
 ```
+- `Union`: appends rows of two connecting queries, and removes duplacates by default. 
+- `INTERSECT`: finds rows that exist in both queries.
+- `EXCEPT`: takes out the latter rows from the first query.
+
+Column names and data types should be matching to properly join two queries.
 
 ## Group
 ![grouped](./images/05-grouped-picturing.png)  
@@ -82,4 +91,41 @@ GROUP BY manufacturer
 HAVING SUM(price * units_sold) > 2000000;
 ```
 
+## Subquery
+```sql
+-- subquery as a source of a value
+SELECT p1.ratio,
+    (SELECT COUNT(name) FROM products)
+-- subqueries as a source of rows
+FROM (
+    SELECT id, price/weight AS ratio FROM products
+) AS p1
+JOIN (SELECT * FROM products) AS p2 ON p1.id = p2.id
+-- subquery as a source of a column
+WHERE p1.id IN (SELECT id FROM products);
+```
+Subqueries are useful in combining multiple tables to make complex queries as it needs. For example, scalar queries or column queries can be a value in `WHERE` statement.
+- subqueries in `FROM` must have an alias to refer to it
+- subqueries returning data compatible with `ON` clause can be used in `JOIN` (e.g. IDs)
 
+### ALL/SOME
+```sql
+SELECT name, price FROM products
+WHERE price > SOME (
+    SELECT price FROM products
+    WHERE department = 'Industrial'
+);
+```
+`ALL`, `SOME` operators are combined with logical operators to check whether a value matches all or at least one condition specified in `WHERE` clause.
+
+### Correlated
+```sql
+SELECT name, department, price
+FROM products as p1
+WHERE price = (
+    SELECT MAX(price)
+    FROM products AS p2
+    WHERE p1.department = p2.department
+);
+```
+Subqueries run like a nested `for` loop for every row on the outer table. The example above results in the rows with the highest price of each department. Note that the time complexity is `N^2`.
