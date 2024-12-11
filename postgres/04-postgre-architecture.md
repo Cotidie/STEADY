@@ -57,3 +57,6 @@ To avoid full scans on a heap file to find desirable data and to improve hit rat
 But `index` has some downsides in terms of performance. It's import to create an index on prequently used columns.
 - Might take up large space proportional to the size of its table (`ex - 150kb to 800kb table`)
 - Might slow down update/insert/delete operations since the index should be updated too
+
+![index-illustration](./images/22-index-illustration.png)  
+The search on `index` happens based on Btree which nodes indicate `less than` or `greater than` relationship to a target value. 

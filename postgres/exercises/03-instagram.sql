@@ -18,3 +18,16 @@ SELECT username, COUNT(*) AS "Number of Likes"
 FROM likes
 JOIN users ON likes.user_id = users.id
 GROUP BY users.username;
+
+-- 4. Show the username of users who were tagged in a caption or photo before Jan 7th, 2010
+-- Also show the date they were tagged.
+SELECT username, created_at
+FROM users
+JOIN (
+    SELECT user_id, created_at FROM caption_tags
+    UNION ALL
+    SELECT user_id, created_at FROM photo_tags
+) AS tags ON tags.user_id = users.id
+WHERE users.created_at < '2010-01-07';
+
+-- 5. Suggest a list of followers from the user with id 1000's friends. 
