@@ -30,4 +30,39 @@ JOIN (
 ) AS tags ON tags.user_id = users.id
 WHERE users.created_at < '2010-01-07';
 
--- 5. Suggest a list of followers from the user with id 1000's friends. 
+-- 5. Suggest a list of followers from the user with id 1000's friends.
+WITH RECURSIVE suggestions(leader_id, follower_id, depth) AS (
+        SELECT leader_id, follower_id, 1
+        FROM followers
+        WHERE follower_id = 1000
+    UNION
+        SELECT followers.leader_id, followers.follower_id, depth+1
+        FROM followers
+        JOIN suggestions ON suggestions.leader_id = followers.follower_id
+        WHERE depth < 3
+)
+
+SELECT id, username FROM users
+JOIN suggestions ON suggestions.leader_id = users.id; 
+
+-- 6. Show users by an descending order that the most tagged user would
+-- come as the first row. A user can be tagged either by captions or photos.
+SELECT username, COUNT(*)
+FROM users
+JOIN (
+        SELECT user_id FROM photo_tags
+    UNION ALL
+        SELECt user_id FROM caption_tags
+) AS tags ON users.id = tags.user_id
+GROUP BY username
+ORDER BY COUNT(*) DESC;
+
+-- 7. Create a view that merges all the tags from captions and photos
+-- and make a new column representing the type of its tag as: 'photo_tag' and 'caption_tag'
+CREATE VIEW tags AS (
+        SELECT id, created_at, user_id, post_id, 'photo_tag' AS type
+        FROM photo_tags
+    UNION ALL
+        SELECT id, created_at, user_id, post_id, 'caption_tag' AS type 
+        FROM caption_tags
+);
