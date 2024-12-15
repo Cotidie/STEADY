@@ -1,6 +1,6 @@
-# View
+## View
 
-## Simple View
+### Simple View
 ```sql
 -- create a view
 CREATE VIEW tags AS (
@@ -23,7 +23,7 @@ A view is a fake table residing in memory that can be reffered to anytime after 
 - View is useful when creating a new table with existing data, without touching the original ones.
 - Views execute its query every time when it's refered 
 
-## Materialized View
+### Materialized View
 > [PostgreSQL Materialized View](https://www.postgresql.org/docs/current/sql-creatematerializedview.html)  
 ```sql
 CREATE MATERIALIZED VIEW <table name> AS (
@@ -38,3 +38,10 @@ Materialized ones execute its query only at specific times such as once a week o
   - `ex) the 10 most recent posts -> can be used at many use-cases`
 - If the data set is large and want to populate at another time, use `WITH NO DATA` option.
 - Should be regularly refreshed to keep updated, otherwise it might have no longer invalid data.
+
+## Transaction
+![transaction](./images/25-transaction-begin-commit.png)  
+- `BEGIN` to start a transaction section, which is isolated from other connections.
+- Writing operations won't immediately applied to the table until `COMMIT` runs
+- Loosing connection or crashing leads to automatic `ROLLBACK`
+- When there's an error while on transaction, it becomes `aborted` state, and can be resolved by `ROLLBACK`
