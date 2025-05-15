@@ -65,6 +65,8 @@ The pseudo code below is gotten from [Wikipedia](https://en.wikipedia.org/wiki/D
 - `O(V^)` if vector is used
 
 ## Bellman-Ford
+| 🔗 [Naver Blog](https://10000cow.tistory.com/entry/%EB%B2%A8%EB%A7%8C-%ED%8F%AC%EB%93%9C-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%ED%95%9C-%EC%82%B4%EB%8F%84-%EC%9D%B4%ED%95%B4%ED%95%98%EB%8A%94-%EB%B2%A8%EB%A7%8C-%ED%8F%AC%EB%93%9C-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98Bellman-Ford-Algorithm)  
+
 ![bellman-ford](./.images/bellman-ford-negative-cycle.jpg)  
 
 Bellman Ford finds the shortest paths **from the source to all vertices** and can be used even with a graph which has negative edges and a cycle. Such a case, Dijkstra can't find the exact cost since it will be stuck in a infinite loop if it meets a negative weights cycle. 
@@ -75,7 +77,7 @@ The algorithm is itself a slower version of Dijkstra which doesn't get stuck at 
 
 1. Initialize an distances array as infinites and zero to the source node
 2. Iterate every edge `|V|-1` times
-    - `-1` means excluding the starting node
+    - The shortest path between `V` nodes contains at most `V-1` edges
     - It ensures visiting all the vertices
 3. Update the distances array on an edge `(u,v)` if
     - `distances[v] > distances[u] + weight(u, v)`
