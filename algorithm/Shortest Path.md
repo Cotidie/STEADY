@@ -92,7 +92,7 @@ function bellmanFord(G, S)
     previous[V] <- NULL
   distance[Start] <- 0
 
-  for each vertex V in G				
+  for i = 1...(|v|-1)
     for each edge (U,V) in G
       tempDistance <- distance[U] + edge_weight(U, V)
       if tempDistance < distance[V]
