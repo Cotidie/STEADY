@@ -95,7 +95,7 @@ cv2.GaussianBlur(
 )
 ```
 
-### Morphological Operator
+### Morphological Operators
 A set of kernels for various effects, such as reducing noise. Popular operations include `Erosion, Dilation, Opening, Closing`. `Erosion` and `Dilation` are fundamental operations.
 
 #### Erosion
@@ -123,3 +123,11 @@ An erosion followed by a dilation. This removes small, isolated objects/noises.
 A dilation followed by an erosion. This closes small holes which expanded during the first dilation step.
 1. **Dilation**: expands objects and fill in small holes
 2. **Erosion**: shrinks the dilated objects back to original size, but not those holes integrated to the objects
+
+#### Gradient (Sobel Filter)
+![sobel](../.images/02-image-processing-6.png)  
+Gradient kernels are called edge-detection operator that uses 3x3 matrix to calculating the gradient of the image's intensity. Color images need to be converted to gray scale first. To do an effective edge-detection, follow those steps:
+
+1. Apply Sobel filter (both `x` and `y`)
+2. Combine two gradients with the same weight
+3. Apply threshold to leave only edges 
