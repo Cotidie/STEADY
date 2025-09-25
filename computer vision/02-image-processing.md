@@ -95,39 +95,41 @@ cv2.GaussianBlur(
 )
 ```
 
-### Morphological Operators
+## Morphological Operators
 A set of kernels for various effects, such as reducing noise. Popular operations include `Erosion, Dilation, Opening, Closing`. `Erosion` and `Dilation` are fundamental operations.
 
-#### Erosion
+### Erosion
 ![erosion](../.images/02-image-processing-3.png)  
 Erosion shrinks the edges of an object in an image. If the structuring element does not fully overlap with the foreground pixels, the center pixel is removed(set to 0). 
   - **Noise Reduction**: effective in removing 'salt-and-pepper' noise
   - **Object Separation**: can separate two objects close together
 
 
-#### Dilation
+### Dilation
 ![dilation](../.images/02-image-processing-dilation.gif)  
 Adds pixels to the boundaries of foreground regions in an image, making them grow. In most cases n-by-n kernel of ones convolves over the image, making edge pixels to blender to brighter neighborhood. 
   - **Filling Gaps**: connects broken parts of objects (ex - scanned documents) -> smoothing
   - **Enlarging**: makes objects larger and more visible
 
-#### Opening
+### Opening
 ![opening](../.images/02-image-processing-4.png)  
 An erosion followed by a dilation. This removes small, isolated objects/noises.
 1. **Erosion** -> shrinks the foreground objects and removes salt-like noise
 2. **Dilation** -> expanding the remaining objects back to original size
 
 
-#### Closing
+### Closing
 ![closing](../.images/02-image-processing-5.png)  
 A dilation followed by an erosion. This closes small holes which expanded during the first dilation step.
 1. **Dilation**: expands objects and fill in small holes
 2. **Erosion**: shrinks the dilated objects back to original size, but not those holes integrated to the objects
 
-#### Gradient (Sobel Filter)
+### Gradient (Sobel Filter)
 ![sobel](../.images/02-image-processing-6.png)  
 Gradient kernels are called edge-detection operator that uses 3x3 matrix to calculating the gradient of the image's intensity. Color images need to be converted to gray scale first. To do an effective edge-detection, follow those steps:
 
 1. Apply Sobel filter (both `x` and `y`)
 2. Combine two gradients with the same weight
 3. Apply threshold to leave only edges 
+
+## Color Histogram
